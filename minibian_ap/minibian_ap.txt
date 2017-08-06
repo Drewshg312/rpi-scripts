@@ -1,0 +1,55 @@
+DEFAULTS:
+Hostname: minibian
+users[groups]/passwords:
+    root[root]/raspberry
+#-------------------------------------------------------------------------------
+# MINIBIAN_AP
+Wifi access point set up with hostapd and isc-dhcp-server
+#-------------------------------------------------------------------------------
+Hostname: raspberrypi
+users[groups]/passwords:
+    root[root]/my_usual_root_passwd
+
+Interfaces:
+    eth0 - wired
+        IP:     192.168.2.2
+        subnet: 255.255.255.0
+    wlan0 - Broadcom BCM43438 Built-in Wireless
+        IP: dhcp
+        Type: managed
+    wlan1 - Ralink RT5370 USB Wireless Adapter
+        IP: 192.168.42.254
+        type: Access Point
+        dhcp server
+
+packages:
+    raspi-conf
+    rpi-update
+    firmware-brcm80211
+    pi-bluetooth
+    wpasupplicant
+    usbutils (lsusb and others…)
+    dnsutils
+        dig
+        nslookup
+        ...
+    locate
+    traceroute
+    tcpdump
+    vim
+
+    hostapd
+    isc-dhcp-server
+    iptables-persistent
+    firmware-ralink
+    iw
+
+Features:
+    custom prompt
+    vim customization (Mustang theme and plugins)
+    static if names for wlan0 and wlan1
+
+To do:
+    aliases
+
+#-------------------------------------------------------------------------------

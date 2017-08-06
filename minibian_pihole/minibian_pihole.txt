@@ -1,0 +1,131 @@
+#-------------------------------------------------------------------------------
+# MINIBIAN_PIHOLE
+#-------------------------------------------------------------------------------
+Pi-Hole Ad-Blocker with DNSSEC and DNSCRYPT support.
+Uses the ns0.dnscrypt.is DNS Resolver (DNSSEC and DNSCRYPT enabled),
+sponsored by 1984 Hosting, Iceland, Reykjavik
+Dynamic DNS Client included
+
+Hostname: pihole.bearden.local
+users[groups]/passwords:
+    root[root]/my_usual_root_passwd
+    drew/usual_drew_passwd
+    dnscrypt
+
+Web Interface:
+    http://pi.hole/admin
+OR:
+    http://pihole.bearden.local
+Pi-hole admin Password:a_CAJa7-
+
+Interfaces:
+    eth0 - wired
+        IP: dhcp
+    eth0:1 - wired
+        IP:     192.168.2.2
+        subnet: 255.255.255.0
+
+    wlan0 - Broadcom BCM43438 Built-in Wireless
+        IP: dhcp
+            192.168.1.2 (second ip set statically in /etc/dhcpcd.conf)
+        Type: managed
+
+packages:
+    raspi-conf
+    rpi-update
+    firmware-brcm80211
+    pi-bluetooth
+    wpasupplicant
+    usbutils                (lsusb and others…)
+    locate
+    traceroute
+    tcpdump
+    sudo
+    vim-nox (with python support for Powerline)
+    tightvncserver
+
+    xserver-xorg            (Display Server)
+    lxde-core               (Desktop Environment)
+    lxappearance            (Desktop Environment)
+    openbox                 (Window Manager)
+    lightdm                 (Login Manager)
+
+    gtk2-engines-murrine    (arc-theme dependency)
+    gtk2-engines-pixbuf     (arc-theme dependency)
+    gtk3-engines-unico      (arc-theme dependency)
+    fonts-noto              (nice fonts for Desktop Environment)
+    xfce4-notifyd           (xfce notifications)
+    libnotify-bin           (xfce notifications)
+    docky                   (GUI dock)
+    blueman                 (bluetooth manager)
+    guake                   (nice terminal)
+    git
+    tmux
+    powerline
+        fonts-powerline
+        python-powerline
+        python-powerline-doc
+
+    pavucontrol             (Volume Control)
+    pulseaudio              (Volume Control)
+        gstreamer0.10-pulseaudio
+        libasound2-plugins
+        libspeexdsp1
+        pulseaudio-esound-compat
+        pulseaudio-module-x11
+        pulseaudio-utils
+        rtkit
+
+    locate
+    unzip
+    conky-std
+
+    wget
+    curl
+    iproute2
+    iputils-ping
+    cron
+    apt-utils
+    debconf
+    dhcpcd5
+    git
+    whiptail
+
+    dnsmasq
+    lighttpd
+    bc
+    dnsutils
+    lsof
+    netcat
+    php5-common
+    php5-cgi
+    unzip
+
+    build-essential
+    libsodium-dev
+    bash-completion
+    libsystemd-dev
+    pkg-config
+    ddclient
+
+Features:
+    custom prompt
+    vim customization (Mustang theme and plugins + Powerline)
+    tmux customization (Powerline)
+    fonts added:
+        Terminus 4.40.1 (Powerline Support from 4.39)
+        ttf-bitstream-vera (for Emoji fonts support)
+
+    cron job for reboot every day at 04:00am
+
+    EDITOR=/usr/bin/vim.nox - set globally in custom file /etc/profile.d/env_var.sh
+    USB Serial Console Cable enabled in boot partition /config.txt file
+    Built-in interfaces (eth0 and wlan0) will always have same names independently of their MAC
+
+    Whitelisted:
+        aliexpress.com
+        s.click.aliexpress.com
+
+ToDo:
+    usb0 - Ethernet over USB - Recompile the kernel
+#-------------------------------------------------------------------------------

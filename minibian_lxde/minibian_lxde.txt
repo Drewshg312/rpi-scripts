@@ -1,0 +1,91 @@
+DEFAULTS:
+Hostname: minibian
+users[groups]/passwords:
+    root[root]/raspberry
+#-------------------------------------------------------------------------------
+# MINIBIAN_LXDE
+#-------------------------------------------------------------------------------
+Hostname: raspberrypi
+users[groups]/passwords:
+    root[root]/my_usual_root_passwd
+    drew/usual_drew_passwd
+
+Interfaces:
+    eth0 - wired
+        IP:     192.168.2.2
+        subnet: 255.255.255.0
+    wlan0 - Broadcom BCM43438 Built-in Wireless
+        IP: dhcp
+        Type: managed
+
+packages:
+    raspi-conf
+    rpi-update
+    firmware-brcm80211
+    pi-bluetooth
+    wpasupplicant
+    usbutils                (lsusb and others…)
+    locate
+    traceroute
+    tcpdump
+    sudo
+    vim-nox (with python support for Powerline)
+    tightvncserver
+
+    xserver-xorg            (Display Server)
+    lxde-core               (Desktop Environment)
+    lxappearance            (Desktop Environment)
+    openbox                 (Window Manager)
+    lightdm                 (Login Manager)
+
+    gtk2-engines-murrine    (arc-theme dependency)
+    gtk2-engines-pixbuf     (arc-theme dependency)
+    gtk3-engines-unico      (arc-theme dependency)
+    fonts-noto              (nice fonts for Desktop Environment)
+    xfce4-notifyd           (xfce notifications)
+    libnotify-bin           (xfce notifications)
+    docky                   (GUI dock)
+    blueman                 (bluetooth manager)
+    guake                   (nice terminal)
+    git
+    tmux
+    powerline
+        fonts-powerline
+        python-powerline
+        python-powerline-doc
+
+    pavucontrol             (Volume Control)
+    pulseaudio              (Volume Control)
+        gstreamer0.10-pulseaudio
+        libasound2-plugins
+        libspeexdsp1
+        pulseaudio-esound-compat
+        pulseaudio-module-x11
+        pulseaudio-utils
+        rtkit
+
+    locate
+    unzip
+    conky-std
+
+Features:
+    custom prompt
+    vim customization (Mustang theme and plugins + Powerline)
+    tmux customization (Powerline)
+    fonts added:
+        Terminus 4.40.1 (Powerline Support from 4.39)
+        ttf-bitstream-vera (for Emoji fonts support)
+
+ToDo:
+    aliases
+
+    nmap
+    htop
+
+    screenfetch
+    cmatrix
+
+    zsh
+    oh-my-zsh
+
+#-------------------------------------------------------------------------------
