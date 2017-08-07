@@ -48,6 +48,7 @@ endif
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:.
 
+set paste
 set pastetoggle=<F2>  " PASTEMODE
 nmap <F3> :NERDTreeToggle<CR>  " NERDTree PLUGIN
 
