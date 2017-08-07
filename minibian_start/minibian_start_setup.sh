@@ -17,10 +17,12 @@ set -o nounset
 # Power off the host and unplug all the interfaces except the one you want to be first (wlan0)
 # To enable it to control the assignment of permanent names to wlan devices we need to edit file
 #
-fgrep -q 'KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*"' /lib/udev/rules.d/75-persistent-net-generator.rules
+fgrep -q 'KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*"' \
+	/lib/udev/rules.d/75-persistent-net-generator.rules
 if [[ ! $? -eq 0 ]]; then
 	sed -i '/^KERNEL!="/ s/^/#/' /lib/udev/rules.d/75-persistent-net-generator.rules && \
-	sed -i '/^#KERNEL!="/a KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*", \\' /lib/udev/rules.d/75-persistent-net-generator.rules
+	sed -i '/^#KERNEL!="/a KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*", \\' \
+		/lib/udev/rules.d/75-persistent-net-generator.rules
 fi
 #
 # After boot file will be generated /etc/udev/rules.d/70-persistent-net.rules
@@ -63,6 +65,7 @@ apt-get install -y raspi-config
 # Expand file system:
 raspi-config nonint do_expand_rootfs
 partprobe
+resize2fs /dev/mmcblk0p2
 
 # Set hostname:
 hostnamectl set-hostname "${hostname}"
