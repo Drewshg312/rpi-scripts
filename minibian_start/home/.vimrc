@@ -1,21 +1,12 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
-"---------------------------------
-"
-" Use pathogen to easily modify the runtime path to include all
-" plugins under the ~/.vim/bundle directory
-"call pathogen#helptags()
-"call pathogen#infect()
-"---------------------------------
 
 " change the mapleader (default is \)
 let mapleader= ","
-"---------------------------------
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
-"---------------------------------
 
 nnoremap ; :
 
@@ -59,8 +50,11 @@ set listchars=tab:>.,trail:.,extends:#,nbsp:.
 
 set pastetoggle=<F2>  " PASTEMODE
 nmap <F3> :NERDTreeToggle<CR>  " NERDTree PLUGIN
-"---------------------------------
-"------------- VUNDLE ------------
+
+set laststatus=2
+
+"=================================
+"============= VUNDLE ============
 filetype off    " Required
 
 set rtp+=~/.vim/bundle/vundle/
@@ -87,8 +81,9 @@ Plugin 'L9'
 Plugin 'FuzzyFinder'
 " non github repos:
 Plugin 'git://git.wincent.com/command-t.git'
-"---------------------------------
-"---------- COLORSCHEME ----------
+
+"=================================
+"========== COLORSCHEME ==========
 set t_Co=256 " REQUIRED for Tmux
 if &t_Co >= 256 || has("gui_running")
     colorscheme mustang
@@ -99,14 +94,14 @@ if &t_Co > 2 || has("gui_running")
     syntax on
 endif
 
-"---------------------------------
-set laststatus=2
-"---------- POWERLINE ------------
+"=================================
+"========== POWERLINE ============
 "source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
 
 let g:Powerline_symbols = 'fancy'
-"---------------------------------
-"------------- EMOJI -------------
+
+"=================================
+"============= EMOJI =============
 " Git Gutter
 silent! if emoji#available()
   let g:gitgutter_sign_added = emoji#for('small_blue_diamond')
@@ -131,8 +126,9 @@ set completefunc=emoji#complete
 
 " Replace :emoji_name: into Emojis
 :command Emoji %s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g
-"---------------------------------
-"---------- Vim-AiRLINE ----------
+
+"=================================
+"========== Vim=AiRLINE ==========
 "set guifont=Literation\ Mono\ for\ Powerline\ 16
 "let g:airline_powerline_fonts = 1
 "set ttimeoutlen=50
@@ -146,9 +142,12 @@ set completefunc=emoji#complete
 "" TMUXLINE
 "" make tmuxline have different colors then AiRLINE:
 "let g:airline#extensions#tmuxline#enabled = 0
-"---------------------------------
-"-------------  TMUX  ------------
+
+"=================================
+"=============  TMUX  ============
 " Make color scheme look good in TMUX:
 " Also make sure to add "export TERM='xterm-256color'" line in your ~/.bashrc
 set term=screen-256color
-"---------------------------------
+
+"=================================
+
