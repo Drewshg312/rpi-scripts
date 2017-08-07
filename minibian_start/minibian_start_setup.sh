@@ -125,4 +125,5 @@ cp etc/profile.d/env_var /etc/profile.d
 # Remove all packages that aren't needed for the system:
 apt-get autoremove
 apt-get clean
+echo "please reboot the host"
 #-------------------------------------------------------------------------------
