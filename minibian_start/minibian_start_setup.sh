@@ -89,7 +89,7 @@ dpkg-reconfigure -f noninteractive tzdata		2>> ${LOGFILE} 1> /dev/null
 #apt-get upgrade -y
 
 # Update Firmware:
-apt-get install -y rpi-update					2>> ${LOGFILE} 1> /dev/null
+apt-get install -y apt-utils rpi-update			2>> ${LOGFILE} 1> /dev/null
 rpi-update										2>> ${LOGFILE} 1> /dev/null
 
 # Change root password:
