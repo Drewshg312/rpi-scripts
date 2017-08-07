@@ -83,9 +83,9 @@ apt-get install -y rpi-update
 rpi-update
 
 # Change root password:
-#apt-get install -y python3
-#pass_hash=`python3 -c 'import crypt; print(crypt.crypt(${new_root_passwd}, crypt.mksalt(crypt.METHOD_SHA512)))'`
-#echo "root:${pass_hash}" | chpasswd -e
+apt-get install -y python3
+pass_hash=`python3 -c 'import crypt; print(crypt.crypt(${new_root_passwd}, crypt.mksalt(crypt.METHOD_SHA512)))'`
+echo "root:${pass_hash}" | chpasswd -e
 
 #=========================================================================
 #-----------------------------CONFIGURE PROMPT----------------------------
