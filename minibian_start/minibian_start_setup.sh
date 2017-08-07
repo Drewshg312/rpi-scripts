@@ -111,8 +111,8 @@ apt-get install -y firmware-brcm80211 pi-bluetooth wpasupplicant #firmware-linux
 apt-get install -y vim
 
 #Upload FROM ANOTHER MACHINE CONFIGS:
-cp -r vim/.vim ~/
-cp vim/.vimrc ~/
+cp -r home/.vim ~/
+cp home/.vimrc ~/
 
 # Make vim default editor for visudo:
 update-alternatives --set editor /usr/bin/vim
