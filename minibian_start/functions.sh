@@ -26,6 +26,7 @@ function check_root() {
 #-------------------SEARCH AND ADD------------------
 # Find text pattern (first argument) in the specified file (third argument)
 # and if the pattern is found then substitute it to another pattern (second argument)
+# otherwise - append the pattern (second argument) to the end of the file
 #
 # call example:
 #   search_add '^[ \t\s]*net.ipv4.ip_forward=[0-1]' 'net.ipv4.ip_forward=1' '/etc/sysctl.conf'
