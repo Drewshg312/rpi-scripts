@@ -64,7 +64,7 @@ EOF
 
 # Restart networking service:
 systemctl daemon-reload							2>> ${LOGFILE} 1> /dev/null
-systemctl restart networking.service			2>> ${LOGFILE} 1> /dev/null
+service_restart 'networking'					2>> ${LOGFILE} 1> /dev/null
 
 #==========================================================================
 #
