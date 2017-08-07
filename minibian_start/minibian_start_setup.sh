@@ -60,7 +60,7 @@ systemctl restart networking.service
 #=========================================================================
 #
 # Update packages and install raspi-config:
-apt-get update
+apt-get update -y
 apt-get install -y raspi-config
 
 # Expand file system:
@@ -78,8 +78,8 @@ sh -c "echo ${timezone} > /etc/timezone"
 dpkg-reconfigure -f noninteractive tzdata
 
 # Update packages and upgrade distro:
-apt-get dist-upgrade
-apt-get upgrade
+#apt-get dist-upgrade -y
+#apt-get upgrade -y
 
 # Update Firmware:
 apt-get install -y rpi-update
@@ -103,7 +103,8 @@ cp /etc/skel/.profile /root/.profile && source /root/.profile
 # Enable Wifi and Bluetooth on the new Raspberry Pi 3:
 # https://minibianpi.wordpress.com/how-to/rpi3/
 # https://minibianpi.wordpress.com/how-to/wifi/
-apt-get install -y firmware-brcm80211 pi-bluetooth wpasupplicant
+apt-get install -y firmware-brcm80211 pi-bluetooth wpasupplicant #firmware-linux-nonfree wireless-tools
+
 
 #-------------------------------------------------------------------------------
 #-----------------------------CONFIGURE VIM-------------------------------------
@@ -121,9 +122,11 @@ update-alternatives --set editor /usr/bin/vim
 cp etc/profile.d/env_var /etc/profile.d
 
 #-------------------------------------------------------------------------------
------------------------------CLEANUP-------------------------------------------
+#-----------------------------CLEANUP-------------------------------------------
 # Remove all packages that aren't needed for the system:
 apt-get autoremove
 apt-get clean
-echo "please reboot the host"
+echo ""
+echo "DONE!"
+echo "Please reboot the host"
 #-------------------------------------------------------------------------------
