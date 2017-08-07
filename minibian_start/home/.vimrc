@@ -4,8 +4,8 @@ set nocompatible
 "
 " Use pathogen to easily modify the runtime path to include all
 " plugins under the ~/.vim/bundle directory
-call pathogen#helptags()
-call pathogen#infect()
+"call pathogen#helptags()
+"call pathogen#infect()
 "---------------------------------
 
 " change the mapleader (default is \)
@@ -66,27 +66,27 @@ filetype off    " Required
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 filetype plugin indent on
 " BUNDLES:
 " original repos on github:
 "Plugin 'bling/vim-airline'
-"Bundle 'edkolev/tmuxline.vim'
+"Plugin 'edkolev/tmuxline.vim'
 "
-Bundle 'tpope/vim-git'
+Plugin 'tpope/vim-git'
 Plugin 'airblade/vim-gitgutter'
-Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-rails.git'
-Bundle 'scrooloose/nerdtree'
-Bundle 'junegunn/vim-emoji'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'tpope/vim-rails.git'
+Plugin 'scrooloose/nerdtree'
+Plugin 'junegunn/vim-emoji'
 " vim-scripts repos:
-Bundle 'L9'
-Bundle 'FuzzyFinder'
+Plugin 'L9'
+Plugin 'FuzzyFinder'
 " non github repos:
-Bundle 'git://git.wincent.com/command-t.git'
+Plugin 'git://git.wincent.com/command-t.git'
 "---------------------------------
 "---------- COLORSCHEME ----------
 set t_Co=256 " REQUIRED for Tmux

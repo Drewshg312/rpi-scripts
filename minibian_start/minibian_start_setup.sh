@@ -111,6 +111,10 @@ apt-get install -y vim
 cp -r home/.vim ~/
 cp home/.vimrc ~/
 
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+
+vim +PluginInstall +qall
+
 # Make vim default editor for visudo:
 update-alternatives --set editor /usr/bin/vim
 # Every shell script in /etc/profile.d/ will be sourced during the boot process.
