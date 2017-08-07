@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 #=========================================================================
-# MINIBIAN_START
+#                           MINIBIAN_START
 #=========================================================================
 source config.cfg
 
 set -o nounset
 
-#============================NETWORK SETUP================================
+#=========================================================================
+#----------------------------NETWORK SETUP--------------------------------
+#=========================================================================
+#
 # Make sure that wireless interfaces will be assigned permanent names.
 # Make wifi interfaces to be always wlan0 independently of their mac address
 # This is important for our distro to be usable on different physical pi.
@@ -51,12 +54,6 @@ EOF
 systemctl daemon-reload
 systemctl restart networking.service
 
-# If the wlan0 did not get an ip do:
-#ip addr flush dev wlan0
-#ip link set wlan0 down
-#ip addr flush dev wlan0
-#ip link set wlan0 up
-#dhclient wlan0
 #=========================================================================
 #
 # Update packages and install raspi-config:
@@ -69,9 +66,6 @@ partprobe
 
 # Set hostname:
 hostnamectl set-hostname "${hostname}"
-## OLD way:
-#vim /etc/hostname
-#/etc/init.d/hostname.sh
 
 # Set correct Time Zone:
 sh -c "echo ${timezone} > /etc/timezone"
@@ -86,12 +80,13 @@ apt-get install -y rpi-update
 rpi-update
 
 # Change root password:
-apt-get install -y python3
-pass_hash=`python3 -c 'import crypt; print(crypt.crypt(${new_root_passwd}, crypt.mksalt(crypt.METHOD_SHA512)))'`
-echo "root:${pass_hash}" | chpasswd -e
+#apt-get install -y python3
+#pass_hash=`python3 -c 'import crypt; print(crypt.crypt(${new_root_passwd}, crypt.mksalt(crypt.METHOD_SHA512)))'`
+#echo "root:${pass_hash}" | chpasswd -e
 
-#-------------------------------------------------------------------------------
-#-----------------------------CONFIGURE PROMPT----------------------------------
+#=========================================================================
+#-----------------------------CONFIGURE PROMPT----------------------------
+#=========================================================================
 mv /etc/skel /etc/skel.dist
 cp -r etc/skel /etc/
 
@@ -101,15 +96,13 @@ cp /etc/skel/.bashrc /root/.bashrc && source /root/.bashrc
 cp /etc/skel/.profile /root/.profile && source /root/.profile
 
 # Enable Wifi and Bluetooth on the new Raspberry Pi 3:
-# https://minibianpi.wordpress.com/how-to/rpi3/
-# https://minibianpi.wordpress.com/how-to/wifi/
 apt-get install -y firmware-brcm80211 pi-bluetooth wpasupplicant #firmware-linux-nonfree wireless-tools
 
-
-#-------------------------------------------------------------------------------
-#-----------------------------CONFIGURE VIM-------------------------------------
+#=========================================================================
+#-----------------------------CONFIGURE VIM-------------------------------
+#=========================================================================
 #Install vim:
-apt-get install vim
+apt-get install -y vim
 
 #Upload FROM ANOTHER MACHINE CONFIGS:
 cp -r vim/.vim ~/
@@ -121,12 +114,13 @@ update-alternatives --set editor /usr/bin/vim
 # This will happen before login so all Env Variables will be declared Globally.
 cp etc/profile.d/env_var /etc/profile.d
 
-#-------------------------------------------------------------------------------
-#-----------------------------CLEANUP-------------------------------------------
+#=========================================================================
+#-----------------------------CLEANUP-------------------------------------
+#=========================================================================
 # Remove all packages that aren't needed for the system:
 apt-get autoremove
 apt-get clean
 echo ""
 echo "DONE!"
 echo "Please reboot the host"
-#-------------------------------------------------------------------------------
+#=========================================================================
