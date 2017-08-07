@@ -84,7 +84,7 @@ rpi-update
 
 # Change root password:
 apt-get install -y python3
-pass_hash=`python3 -c 'import crypt; print(crypt.crypt(${new_root_passwd}, crypt.mksalt(crypt.METHOD_SHA512)))'`
+pass_hash=`python3 -c 'import crypt; print(crypt.crypt("${new_root_passwd}", crypt.mksalt(crypt.METHOD_SHA512)))'`
 echo ""
 echo "${pass_hash}"
 echo ""
@@ -118,7 +118,7 @@ cp vim/.vimrc ~/
 update-alternatives --set editor /usr/bin/vim
 # Every shell script in /etc/profile.d/ will be sourced during the boot process.
 # This will happen before login so all Env Variables will be declared Globally.
-cp etc/profile.d/env_var /etc/profile.d
+cp etc/profile.d/env_var.sh /etc/profile.d
 
 #=========================================================================
 #-----------------------------CLEANUP-------------------------------------
