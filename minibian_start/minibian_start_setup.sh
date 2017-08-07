@@ -116,7 +116,7 @@ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 vim +PluginInstall +qall
 
 # Make vim default editor for visudo:
-update-alternatives --set editor /usr/bin/vim
+update-alternatives --set editor /usr/bin/vim.basic
 # Every shell script in /etc/profile.d/ will be sourced during the boot process.
 # This will happen before login so all Env Variables will be declared Globally.
 cp etc/profile.d/env_var.sh /etc/profile.d
