@@ -98,7 +98,7 @@ echo ""
 echo "${new_root_passwd}"
 echo ""
 pass_hash=`python3 -c 'import crypt; print(crypt.crypt("${new_root_passwd}", crypt.mksalt(crypt.METHOD_SHA512)))'`
-#echo "root:${pass_hash}" | chpasswd -e			2>> ${LOGFILE} 1> /dev/null
+echo "root:${pass_hash}" | chpasswd -e			2>> ${LOGFILE} 1> /dev/null
 echo ""
 echo "${pass_hash}"
 echo ""
