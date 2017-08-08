@@ -85,10 +85,13 @@ resize2fs /dev/mmcblk0p2  2>> ${LOGFILE} 1> /dev/null
 
 # Set hostname:
 hostnamectl set-hostname "${hostname}"			2>> ${LOGFILE} 1> /dev/null
+check_exit "Hostname is changed to ${hostname}" "Failed to change a hostname to ${hostname}"
 
 # Set correct Time Zone:
 sh -c "echo ${timezone} > /etc/timezone"  2>> ${LOGFILE} 1> /dev/null
+check_exit "/etc/timezone modified with timezone: ${timezone}" "Failed to modify /etc/timezone by adding ${timezone}"
 dpkg-reconfigure -f noninteractive tzdata  2>> ${LOGFILE} 1> /dev/null
+check_exit "Successfully changed timezone to ${timezone}" "Failed to setup timezone to ${timezone}"
 
 # Update packages and upgrade distro:
 #apt-get dist-upgrade -y
@@ -96,11 +99,13 @@ dpkg-reconfigure -f noninteractive tzdata  2>> ${LOGFILE} 1> /dev/null
 
 # Update Firmware:
 apt-get install -y rpi-update  2>> ${LOGFILE} 1> /dev/null
+check_exit "Installed rpi-update package" "Failed to install rpi-update package"
 rpi-update  2>> ${LOGFILE} 1> /dev/null
+check_exit "Successfully updated firmware" "Failed to update firmware"
 
 # Change root password:
 echo "root:${new_root_passwd}" | chpasswd -c SHA512  2>> ${LOGFILE} 1> /dev/null
-
+check_exit "Root password changed" "Failed to change root password"
 #==========================================================================
 #------------------------------CONFIGURE PROMPT----------------------------
 #==========================================================================
@@ -126,6 +131,7 @@ apt-get install -y firmware-brcm80211 \
 print_status "CONFIGURING VIM"
 #Install vim:
 apt-get install -y vim  2>> ${LOGFILE} 1> /dev/null
+check_exit "Installed vim package (vim.basic and vim.tiny)" "Failed to install vim package"
 
 #Upload FROM ANOTHER MACHINE CONFIGS:
 cp -r home/.vim ~/ 2>> ${LOGFILE} 1> /dev/null
@@ -141,6 +147,7 @@ update-alternatives --set editor /usr/bin/vim.basic 2>> ${LOGFILE} 1> /dev/null
 # Every shell script in /etc/profile.d/ will be sourced during the boot process.
 # This will happen before login so all Env Variables will be declared Globally.
 cp etc/profile.d/env_var.sh /etc/profile.d
+
 
 #==========================================================================
 #------------------------------CLEANUP-------------------------------------
