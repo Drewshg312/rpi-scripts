@@ -14,7 +14,7 @@ declare LOGFILE="/tmp/install-${NOW}.log"
 
 check_root
 
-print_status "THE LOG FILE ${LOGFILE} IS GENERATED"
+print_status "THE LOG FILE: ${LOGFILE}"
 #==========================================================================
 #-----------------------------NETWORK SETUP--------------------------------
 #==========================================================================
@@ -69,6 +69,7 @@ service_restart 'networking'					2>> ${LOGFILE} 1> /dev/null
 
 #==========================================================================
 #
+print_status "CONFIGURING HOST SETTINGS (Expanding File System, Setting up Timezone)"
 # Update packages and install raspi-config:
 apt-get update -y								2>> ${LOGFILE} 1> /dev/null
 apt-get install -y raspi-config					2>> ${LOGFILE} 1> /dev/null
@@ -94,15 +95,7 @@ apt-get install -y apt-utils rpi-update			2>> ${LOGFILE} 1> /dev/null
 rpi-update										2>> ${LOGFILE} 1> /dev/null
 
 # Change root password:
-apt-get install -y python3						2>> ${LOGFILE} 1> /dev/null
-echo ""
-echo "${new_root_passwd}"
-echo ""
-pass_hash=`python3 -c 'import crypt; print(crypt.crypt("${new_root_passwd}", crypt.mksalt(crypt.METHOD_SHA512)))'`
-echo "root:${pass_hash}" | chpasswd -e			2>> ${LOGFILE} 1> /dev/null
-echo ""
-echo "${pass_hash}"
-echo ""
+echo "root:${new_root_passwd}" | chpasswd -c SHA512		2>> ${LOGFILE} 1> /dev/null
 
 #==========================================================================
 #------------------------------CONFIGURE PROMPT----------------------------
