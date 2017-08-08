@@ -62,9 +62,11 @@ iface default inet dhcp
 EOF
 #This will add a second static IP address to eth0 interface
 #(useful when connecting to network without dhcp)
+check_exit "/etc/network/interfaces modified" "failed to modify /etc/network/interfaces"
 
 # Restart networking service:
 systemctl daemon-reload  2>> ${LOGFILE} 1> /dev/null
+check_exit "Networking Daemon Reloaded" "Networking Daemon Reload Failed"
 service_restart 'networking'
 
 #==========================================================================
@@ -72,7 +74,9 @@ service_restart 'networking'
 print_status "CONFIGURING HOST SETTINGS (Expanding File System, Setting up Timezone)"
 # Update packages and install raspi-config:
 apt-get update -y  2>> ${LOGFILE} 1> /dev/null
+check_exit "apt-get package lists are updated" "Failed to update apt-get package lists"
 apt-get install -y raspi-config  2>> ${LOGFILE} 1> /dev/null
+check_exit "raspi-config package is installed" "Failed to install raspi-config package"
 
 # Expand file system:
 raspi-config nonint do_expand_rootfs  2>> ${LOGFILE} 1> /dev/null
