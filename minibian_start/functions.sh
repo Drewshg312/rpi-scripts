@@ -47,6 +47,9 @@ function search_add() {
 # And print out the Success Message (first argumment)
 # or Error message (second argument)
 #
+# call example:
+#   check_exit 'Success' 'Error'
+#
 function check_exit() {
 	if [[ $? -eq 0 ]]; then
 		print_good "$1"
@@ -85,7 +88,7 @@ function cp_file() {
 			rm -rf ${sys_file}
 		fi
 	fi
-cp ${new_file} ${sys_file}
+	cp ${new_file} ${sys_file}
 }
 #---------------------------------------------------
 
