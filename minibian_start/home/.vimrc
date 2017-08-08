@@ -77,7 +77,7 @@ Plugin 'tpope/vim-rails.git'
 Plugin 'scrooloose/nerdtree'
 Plugin 'junegunn/vim-emoji'
 Plugin 'vim-scripts/L9'
-Plugin 'vim-scripts/FuzzyFinder''
+Plugin 'vim-scripts/FuzzyFinder'
 " Non-Github Repos:
 Plugin 'git://git.wincent.com/command-t.git'
 
