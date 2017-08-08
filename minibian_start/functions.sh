@@ -43,6 +43,10 @@ function search_add() {
 #---------------------------------------------------
 
 #-------------------CHECK EXITCODE------------------
+# Check Exit Code.
+# And print out the Success Message (first argumment)
+# or Error message (second argument)
+#
 function check_exit() {
 	if [[ $? -eq 0 ]]; then
 		print_good "$1"
@@ -56,10 +60,13 @@ function check_exit() {
 #---------------------------------------------------
 
 #---------------------CP FILE-----------------------
-# Check if the file exists and changes it
-# to a new version saving the original one appending '_orig' postfix
-# if 0 is specified as a third argument
-# Or removing the original one if 1 specified as a third argument
+# Copy file.
+# If the file already exists
+# then back it up by appending '_orig' postfix
+# (if 0 is specified as a third argument)
+#
+# Or remove the original one
+# (if 1 specified as a third argument)
 #
 # call example:
 #   cp_file 'src/etc/nsd/nsd.conf' '/etc/nsd/nsd.conf' 0
@@ -83,12 +90,15 @@ cp ${new_file} ${sys_file}
 #---------------------------------------------------
 
 #----------------------MV FILE----------------------
-# Check if the file exists and if third argument is 0
-# then backs up the original one appending '_orig' postfix
-# OR
-# if 1 is specified as a third argument
-# then removes the original file
-# And renames the specified file (first argument)
+# Move File.
+# If the destination file exists
+# then back it up by appending '_orig' postfix
+# (if 0 is specified as a third argument)
+#
+## Or remove the original one
+# (if 1 specified as a third argument)
+#
+# And rename(move) the specified file (first argument)
 # to a new file (second argument)
 #
 # call example:
@@ -141,86 +151,6 @@ function check_dir() {
 }
 #---------------------------------------------------
 
-#---------------SED CONFIG FUNCTION-----------------
-# Search through the list of all template config files
-# and substitute the specified strings.
-#
-# First argument is an associative array (-A),
-# where Key is a pattern to find,
-# and Value is a pattern to replace with.
-#
-# second argument is a simple array (-A)
-# which contains a list of files to be edited by sed
-#
-# call example:
-#	sed_conf "$(declare -p nsd_string)" "$(declare -p nsd_config)"
-#
-#
-# If the simple array needs to be passed to a function,
-# Declare it within the function this way:
-#	declare -a config=("${!2}") # where 2 - function argument number
-#
-# And call the function this way:
-#	sed_conf "$(declare -p nsd_string)" nsd_config[@] "${LOGFILE}"
-#
-#
-function sed_conf() {
-	#declare -a config=("${!2}") 		# Simple array
-	eval "declare -A config="${2#*=}
-	eval "declare -A string="${1#*=}	# Associative array
-	#declare -p string	# prove the associative array was created
-	log="$3"
-	for key in "${!config[@]}"; do
-		exitcode=0
-		for K in "${!string[@]}"; do
-			sed -i -r "s/${K}/${string[${K}]}/g" "${config[${key}]}" 2>> "${log}"
-			let "exitcode+=$?"
-		done
-		if [[ $exitcode -eq 0 ]]; then
-			print_good "	${config[${key}]} was successfully configured"
-		else
-			print_error "	${config[${key}]} configuration failed"
-		fi
-	done
-}
-#---------------------------------------------------
-
-#---------------------------------------------------
-# PTR function
-# creates the name for PTR zone from subnet IP address
-# call example:
-#	ptr_name=(ptr "${cidr[LAN]}" "${net[LAN]}" )
-#
-#10.10.10.10
-function ptr() {
-	cidr=$1
-	net=$2
-	if [[ ${cidr} -eq 24 ]]; then
-	octets=3
-	elif [[ ${cidr} -eq 16 ]]; then
-	octets=2
-	elif [[ ${cidr} -eq 8 ]]; then
-	octets=1
-	else
-		if [[ ${cidr} -gt 24 ]]; then
-			octets=3
-		elif [ ${cidr} -gt 16 -a ${cidr} -lt 24 ]; then
-			octets=2
-		elif [ ${cidr} -gt 8 -a ${cidr} -lt 16 ]; then
-			octets=1
-		fi
-		#oct=(${octets}+1)
-		#net_part=`echo "${net}" | cut -d"." -f${oct}-`
-		#echo "${net_part}"
-	fi
-	
-	for (( i=${octets}; i>0; i-- )); do
-		v=`echo "${net}" | cut -d"." -f ${i}`
-		ptr_value+="${v}."
-	done
-	echo "${ptr_value}in-addr.arpa"
-}
-
 #-----------------SERVICE RESTART-------------------
 # Some services like nsd or unbound return 0 exitcode,
 # but staying in the failed state, as systemctl status showing.
@@ -246,23 +176,4 @@ function service_restart() {
 		fi
 	fi
 }
-
-#-------------------CIDR TO MASK--------------------
-function cidr2mask() {
-	local i mask=""
-	local full_octets=$(($1/8))
-	local partial_octet=$(($1%8))
-	for ((i=0;i<4;i+=1)); do
-		if [ $i -lt $full_octets ]; then
-			mask+=255
-		elif [ $i -eq $full_octets ]; then
-			mask+=$((256 - 2**(8-$partial_octet)))
-		else
-			mask+=0
-		fi
-		test $i -lt 3 && mask+=.
-	done
-	echo $mask
-}
-#---------------------------------------------------
 

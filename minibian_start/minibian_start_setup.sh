@@ -33,7 +33,7 @@ fgrep -q 'KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*"' \
 if [[ ! $? -eq 0 ]]; then
 	sed -i '/^KERNEL!="/ s/^/#/' /lib/udev/rules.d/75-persistent-net-generator.rules && \
 	sed -i '/^#KERNEL!="/a KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*", \\' \
-		/lib/udev/rules.d/75-persistent-net-generator.rules			2>> ${LOGFILE} 1> /dev/null
+		/lib/udev/rules.d/75-persistent-net-generator.rules  2>> ${LOGFILE} 1> /dev/null
 fi
 #
 # After boot file will be generated /etc/udev/rules.d/70-persistent-net.rules
@@ -64,55 +64,55 @@ EOF
 #(useful when connecting to network without dhcp)
 
 # Restart networking service:
-systemctl daemon-reload							2>> ${LOGFILE} 1> /dev/null
-service_restart 'networking'					2>> ${LOGFILE} 1> /dev/null
+systemctl daemon-reload  2>> ${LOGFILE} 1> /dev/null
+service_restart 'networking'
 
 #==========================================================================
 #
 print_status "CONFIGURING HOST SETTINGS (Expanding File System, Setting up Timezone)"
 # Update packages and install raspi-config:
-apt-get update -y								2>> ${LOGFILE} 1> /dev/null
-apt-get install -y raspi-config					2>> ${LOGFILE} 1> /dev/null
+apt-get update -y  2>> ${LOGFILE} 1> /dev/null
+apt-get install -y raspi-config  2>> ${LOGFILE} 1> /dev/null
 
 # Expand file system:
-raspi-config nonint do_expand_rootfs			2>> ${LOGFILE} 1> /dev/null
-partprobe										2>> ${LOGFILE} 1> /dev/null
-resize2fs /dev/mmcblk0p2						2>> ${LOGFILE} 1> /dev/null
+raspi-config nonint do_expand_rootfs  2>> ${LOGFILE} 1> /dev/null
+partprobe  2>> ${LOGFILE} 1> /dev/null
+resize2fs /dev/mmcblk0p2  2>> ${LOGFILE} 1> /dev/null
 
 # Set hostname:
 hostnamectl set-hostname "${hostname}"			2>> ${LOGFILE} 1> /dev/null
 
 # Set correct Time Zone:
-sh -c "echo ${timezone} > /etc/timezone"		2>> ${LOGFILE} 1> /dev/null
-dpkg-reconfigure -f noninteractive tzdata		2>> ${LOGFILE} 1> /dev/null
+sh -c "echo ${timezone} > /etc/timezone"  2>> ${LOGFILE} 1> /dev/null
+dpkg-reconfigure -f noninteractive tzdata  2>> ${LOGFILE} 1> /dev/null
 
 # Update packages and upgrade distro:
 #apt-get dist-upgrade -y
 #apt-get upgrade -y
 
 # Update Firmware:
-apt-get install -y apt-utils rpi-update			2>> ${LOGFILE} 1> /dev/null
-rpi-update										2>> ${LOGFILE} 1> /dev/null
+apt-get install -y rpi-update  2>> ${LOGFILE} 1> /dev/null
+rpi-update  2>> ${LOGFILE} 1> /dev/null
 
 # Change root password:
-echo "root:${new_root_passwd}" | chpasswd -c SHA512		2>> ${LOGFILE} 1> /dev/null
+echo "root:${new_root_passwd}" | chpasswd -c SHA512  2>> ${LOGFILE} 1> /dev/null
 
 #==========================================================================
 #------------------------------CONFIGURE PROMPT----------------------------
 #==========================================================================
 print_status "CONFIGURING SHELL PROMPT"
-mv /etc/skel /etc/skel.dist						2>> ${LOGFILE} 1> /dev/null
-cp -r etc/skel /etc/							2>> ${LOGFILE} 1> /dev/null
+mv /etc/skel /etc/skel.dist  2>> ${LOGFILE} 1> /dev/null
+cp -r etc/skel /etc/  2>> ${LOGFILE} 1> /dev/null
 
 # Also for root do this:
-rm -rf /root/.bashrc /root/.profile				2>> ${LOGFILE} 1> /dev/null
-cp /etc/skel/.bashrc /root/.bashrc				2>> ${LOGFILE} 1> /dev/null
-cp /etc/skel/.profile /root/.profile			2>> ${LOGFILE} 1> /dev/null
+rm -rf /root/.bashrc /root/.profile  2>> ${LOGFILE} 1> /dev/null
+cp /etc/skel/.bashrc /root/.bashrc  2>> ${LOGFILE} 1> /dev/null
+cp /etc/skel/.profile /root/.profile  2>> ${LOGFILE} 1> /dev/null
 
 # Enable Wifi and Bluetooth on the new Raspberry Pi 3:
 apt-get install -y firmware-brcm80211 \
 	pi-bluetooth \
-	wpasupplicant 								2>> ${LOGFILE} 1> /dev/null
+	wpasupplicant  2>> ${LOGFILE} 1> /dev/null
 	#firmware-linux-nonfree
 	#wireless-tools
 
@@ -121,20 +121,18 @@ apt-get install -y firmware-brcm80211 \
 #==========================================================================
 print_status "CONFIGURING VIM"
 #Install vim:
-apt-get install -y vim							2>> ${LOGFILE} 1> /dev/null
+apt-get install -y vim  2>> ${LOGFILE} 1> /dev/null
 
 #Upload FROM ANOTHER MACHINE CONFIGS:
-cp -r home/.vim ~/								2>> ${LOGFILE} 1> /dev/null
-cp home/.vimrc ~/								2>> ${LOGFILE} 1> /dev/null
+cp -r home/.vim ~/ 2>> ${LOGFILE} 1> /dev/null
+cp home/.vimrc ~/  2>> ${LOGFILE} 1> /dev/null
 
-git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle \
-												2>> ${LOGFILE} 1> /dev/null
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle 2>> ${LOGFILE} 1> /dev/null
 
-vim +PluginInstall +qall						2>> ${LOGFILE} 1> /dev/null
+vim +PluginInstall +qall 2>> ${LOGFILE} 1> /dev/null
 
 # Make vim default editor for visudo:
-update-alternatives --set editor /usr/bin/vim.basic \
-												2>> ${LOGFILE} 1> /dev/null
+update-alternatives --set editor /usr/bin/vim.basic 2>> ${LOGFILE} 1> /dev/null
 
 # Every shell script in /etc/profile.d/ will be sourced during the boot process.
 # This will happen before login so all Env Variables will be declared Globally.
@@ -145,8 +143,8 @@ cp etc/profile.d/env_var.sh /etc/profile.d
 #==========================================================================
 print_status "CLEANING THINGS UP"
 # Remove all packages that aren't needed for the system:
-apt-get autoremove								2>> ${LOGFILE} 1> /dev/null
-apt-get clean									2>> ${LOGFILE} 1> /dev/null
+apt-get autoremove  2>> ${LOGFILE} 1> /dev/null
+apt-get clean  2>> ${LOGFILE} 1> /dev/null
 echo ""
 echo "DONE!"
 echo "Please reboot the host"

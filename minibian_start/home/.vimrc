@@ -65,10 +65,9 @@ Plugin 'gmarik/vundle'
 
 filetype plugin indent on
 " BUNDLES:
-" original repos on github:
+" Github-Repos:
 "Plugin 'bling/vim-airline'
 "Plugin 'edkolev/tmuxline.vim'
-"
 Plugin 'tpope/vim-git'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
@@ -77,10 +76,9 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'tpope/vim-rails.git'
 Plugin 'scrooloose/nerdtree'
 Plugin 'junegunn/vim-emoji'
-" vim-scripts repos:
-Plugin 'L9'
-Plugin 'FuzzyFinder'
-" non github repos:
+Plugin 'vim-scripts/L9'
+Plugin 'vim-scripts/FuzzyFinder''
+" Non-Github Repos:
 Plugin 'git://git.wincent.com/command-t.git'
 
 "=================================
