@@ -158,6 +158,6 @@ apt-get autoremove  2>> ${LOGFILE} 1> /dev/null
 apt-get clean  2>> ${LOGFILE} 1> /dev/null
 echo ""
 echo "DONE!"
-echo "Please reboot the host"
+echo "Please reboot the host... or at least relogin :)"
 #==========================================================================
 
