@@ -80,11 +80,11 @@ function cp_file() {
 	sys_file=$2
 	rm_file=$3
 
-	if [[ -f $sys_file ]]; then
-		if [[ $rm_file -eq 0 ]]; then
+	if [[ -f ${sys_file} ]]; then
+		if [[ ${rm_file} -eq 0 ]]; then
 			mv ${sys_file} "${sys_file}_orig"
 		fi
-		if [[ $rm_file -eq 1 ]]; then
+		if [[ ${rm_file} -eq 1 ]]; then
 			rm -rf ${sys_file}
 		fi
 	fi
@@ -113,10 +113,10 @@ function mv_file() {
 	new_filename=$2
 	rm_file=$3
 
-	if [[ -f $new_filename ]]; then
-		if [[ $rm_file -eq 1 ]]; then
+	if [[ -f ${new_filename} ]]; then
+		if [[ ${rm_file} -eq 1 ]]; then
 			rm -rf ${new_filename}
-		elif [[ $rm_file -eq 0 ]]; then
+		elif [[ ${rm_file} -eq 0 ]]; then
 			mv  ${new_filename} "${new_filename}_orig"
 		else
 			echo "cp_file func: Please specify the third argument (0 | 1)"
@@ -127,30 +127,35 @@ mv ${sys_file} ${new_filename}
 }
 #---------------------------------------------------
 
-#------------------CHECK DIRECTORY------------------
+#------------------COPY DIRECTORY------------------
 # Copy all files from specified directory (first argument)
-# to equivalent system directory (for example: from ./src/etc/nsd to /etc/nsd)
-# It uses check_file function and behavies in accordance with second argument:
-# 0 -- backup original files in system dir
-# 1 -- remove original files from system dir
+# to system directory (second argument)
+# and if the system directory already exists, then
+# according the third argiment:
+# either - 1 -- backup system dir by appending '.dist' to it's name
+# or     - 0 -- remove original files from system dir
 #
 # call example:
-#  check_dir 'src/etc/nsd' 0                        # copy all dir content and backup all original files if they exist
-#  check_dir 'src/etc/sysconfig/network-scripts' 1  # copy all dir content and remove original files if they exist
+#  check_dir 'src/etc/skel' '/etc/skel' 1 # backup the old dir to /etc/skel.dist 
+#                                         # and copy all src/etc/skel content to /etc/skel
 #
-function check_dir() {
+function cp_dir() {
 	dir=$1
-	sys_dir=`echo $dir | sed -r 's/src|\.\/src//'`
-	rm_files=$2
-	files=`ls $dir`
-	
-	if [[ ! -d $sys_dir ]]; then
-		mkdir $sys_dir
+	sys_dir=$2
+	backup=$3
+	files=`ls ${dir}`
+	if [[ -d ${sys_dir} ]]; then
+		if [[ ${backup} -eq 1 ]]; then
+			if [[ ! -d "${sys_dir}.dist" ]]; then
+				mv "${sys_dir}" "${sys_dir}.dist"
+			fi
+		else
+			rm -rf "${sys_dir}/*"
+		fi
+	else
+		mkdir -p "${sys_dir}"
 	fi
-	for i in ${files}
-	do
-		cp_file "${dir}/${i}" "${sys_dir}/${i}" "${rm_files}"
-	done
+	cp -r "${dir}/" "${sys_dir}/"
 }
 #---------------------------------------------------
 

@@ -110,8 +110,7 @@ check_exit "Root password changed" "Failed to change root password"
 #------------------------------CONFIGURE PROMPT----------------------------
 #==========================================================================
 print_status "CONFIGURING SHELL PROMPT"
-mv /etc/skel /etc/skel.dist  2>> ${LOGFILE} 1> /dev/null
-cp -r etc/skel /etc/  2>> ${LOGFILE} 1> /dev/null
+cp_dir 'etc/skel' '/etc/skel' 1 2>> ${LOGFILE} 1> /dev/null
 
 # Also for root do this:
 rm -rf /root/.bashrc /root/.profile  2>> ${LOGFILE} 1> /dev/null
@@ -134,7 +133,7 @@ apt-get install -y vim  2>> ${LOGFILE} 1> /dev/null
 check_exit "Installed vim package (vim.basic and vim.tiny)" "Failed to install vim package"
 
 #Upload FROM ANOTHER MACHINE CONFIGS:
-cp -r home/.vim ~/ 2>> ${LOGFILE} 1> /dev/null
+cp_dir 'home/.vim' '~/.vim' 0  2>> ${LOGFILE} 1> /dev/null
 cp home/.vimrc ~/  2>> ${LOGFILE} 1> /dev/null
 
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle 2>> ${LOGFILE} 1> /dev/null
