@@ -17,15 +17,13 @@ check_root
 print_status "THE LOG FILE: ${LOGFILE}"
 
 # Set correct Time Zone:
-ex=0
-sh -c "echo ${timezone} > /etc/timezone"  2>> ${LOGFILE} 1> /dev/null
-ex=+`check_exit "/etc/timezone modified with timezone: ${timezone}" "Failed to modify /etc/timezone by adding ${timezone}"`
-dpkg-reconfigure -f noninteractive tzdata  2>> ${LOGFILE} 1> /dev/null
-ex=+$?
-if [[ ex -eq 0 ]]; then
->...print_good ""
-else
->...print_error ""
-fi
-ex=+`check_exit "Successfully changed timezone to ${timezone}" "Failed to setup timezone to ${timezone}"`
+declare -a cmds=(
+	'sh -c "echo ${timezone}" > /etc/timezone'
+	"dpkg-reconfigure -f noninteractive tzdata"
+)
+
+task cmds[@] \
+	"Timezone ${timezone} is configured" \
+	"Failed to configre timezone ${timezone}" \
+	"${LOGFILE}"
 

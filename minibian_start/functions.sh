@@ -187,3 +187,42 @@ function service_restart() {
 	fi
 }
 
+#-------------------PERFORM TASK--------------------
+# This function takes a Simple array ($1 - first arg)
+# which contains a list of shell commands that needs
+# to be run in order to perform specific task.
+#
+# IF all commands in the array succeded, then
+# task assumed successful and the function spits out
+# Good message ($2 - second arg)
+#
+# IF any of commands in the array fail, then
+# the whole task is failed and the function spits out
+# and Error message ($3 - third ard).
+#
+# STDOUT from all commands is redirected to /dev/null
+# STDERR from all commands is redirected to log ($4)
+#
+# call example:
+#    task cmds[@] \
+#         "Timezone ${timezone} is configured" \
+#         "Failed to configre timezone ${timezone}" \
+#         "${LOGFILE}"
+#
+function task() {
+	declare -a commands=("${!1}")
+	declare good=$2
+	declare error=$3
+	declare log=$4
+	ex=0
+	for cmd in "${commands[@]}"; do
+		eval ${cmd} 2>> ${log} 1> /dev/null
+		let "ex+=$?"
+	done
+	if [[ "${ex}" -eq 0 ]]; then
+		print_good "${good}"
+	else
+		print_error "${error}"
+	fi
+}
+
