@@ -139,11 +139,13 @@ mv ${sys_file} ${new_filename}
 #  check_dir 'src/etc/skel' '/etc/skel' 1 # backup the old dir to /etc/skel.dist 
 #                                         # and copy all src/etc/skel content to /etc/skel
 #
+#  check_dir "home/.vim" "~/.vim" 0       # do not backup the originnal directory
+#                                         # NOTE: double quotes used to interpret ~ properly
+#
 function cp_dir() {
 	dir=$1
 	sys_dir=$2
 	backup=$3
-	files=`ls ${dir}`
 	if [[ -d ${sys_dir} ]]; then
 		if [[ ${backup} -eq 1 ]]; then
 			if [[ ! -d "${sys_dir}.dist" ]]; then
