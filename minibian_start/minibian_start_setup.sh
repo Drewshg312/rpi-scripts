@@ -133,11 +133,11 @@ check_exit "Installed vim package (vim.basic and vim.tiny)" "Failed to install v
 
 #Upload FROM ANOTHER MACHINE CONFIGS:
 cp_dir 'home/.vim' '~/.vim' 0  2>> ${LOGFILE} 1> /dev/null
-cp home/.vimrc ~/  2>> ${LOGFILE} 1> /dev/null
+cp home/.vimrc ~/  #2>> ${LOGFILE} 1> /dev/null
 
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle 2>> ${LOGFILE} 1> /dev/null
 
-vim +PluginInstall +qall 2>> ${LOGFILE} 1> /dev/null
+vim +PluginInstall +qall #2>> ${LOGFILE} 1> /dev/null
 
 # Make vim default editor for visudo:
 update-alternatives --set editor /usr/bin/vim.basic 2>> ${LOGFILE} 1> /dev/null
