@@ -118,6 +118,8 @@ check_exit "Root password changed" "Failed to change root password"
 #==========================================================================
 print_status "CONFIGURING SHELL PROMPT"
 cp_dir 'etc/skel' '/etc/skel' 1 2>> ${LOGFILE} 1> /dev/null
+check_exit "Customized /etc/skel content. Original is saved in /etc/skel.dist" \
+           "Failed to customize /etc/skel content"
 
 rm -rf /root/.bashrc /root/.profile  2>> ${LOGFILE} 1> /dev/null
 cp /etc/skel/.bashrc /root/.bashrc  2>> ${LOGFILE} 1> /dev/null
