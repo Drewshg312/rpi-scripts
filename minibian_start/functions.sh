@@ -152,7 +152,7 @@ function cp_dir() {
 				mv "${sys_dir}" "${sys_dir}.dist"
 			fi
 		else
-			rm -rf "${sys_dir}/*"
+			rm -rf ${sys_dir}/*
 		fi
 	else
 		mkdir -p "${sys_dir}"
