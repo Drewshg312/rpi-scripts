@@ -132,7 +132,7 @@ apt-get install -y vim  2>> ${LOGFILE} 1> /dev/null
 check_exit "Installed vim package (vim.basic and vim.tiny)" "Failed to install vim package"
 
 #Upload FROM ANOTHER MACHINE CONFIGS:
-cp_dir "home/.vim" "~/.vim" 0  2>> ${LOGFILE} 1> /dev/null
+cp_dir "home/.vim" "/root/.vim" 0  2>> ${LOGFILE} 1> /dev/null
 cp home/.vimrc ~/  #2>> ${LOGFILE} 1> /dev/null
 
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle 2>> ${LOGFILE} 1> /dev/null
@@ -145,7 +145,8 @@ update-alternatives --set editor /usr/bin/vim.basic 2>> ${LOGFILE} 1> /dev/null
 # Every shell script in /etc/profile.d/ will be sourced during the boot process.
 # This will happen before login so all Env Variables will be declared Globally.
 cp etc/profile.d/env_var.sh /etc/profile.d
-
+check_exit "Environment variables set in /etc/profile.d/env_var.sh" \
+           "Failed to set environment variables in /etc/profile.d/env_var.sh"
 
 #==========================================================================
 #------------------------------CLEANUP-------------------------------------
