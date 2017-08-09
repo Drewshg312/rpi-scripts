@@ -97,6 +97,13 @@ check_exit "Successfully changed timezone to ${timezone}" "Failed to setup timez
 #apt-get dist-upgrade -y
 #apt-get upgrade -y
 
+# Enable Wifi and Bluetooth on the new Raspberry Pi 3:
+apt-get install -y firmware-brcm80211 \
+	pi-bluetooth \
+	wpasupplicant  2>> ${LOGFILE} 1> /dev/null
+	#firmware-linux-nonfree
+	#wireless-tools
+
 # Update Firmware:
 apt-get install -y rpi-update  2>> ${LOGFILE} 1> /dev/null
 check_exit "Installed rpi-update package" "Failed to install rpi-update package"
@@ -112,17 +119,9 @@ check_exit "Root password changed" "Failed to change root password"
 print_status "CONFIGURING SHELL PROMPT"
 cp_dir 'etc/skel' '/etc/skel' 1 2>> ${LOGFILE} 1> /dev/null
 
-# Also for root do this:
 rm -rf /root/.bashrc /root/.profile  2>> ${LOGFILE} 1> /dev/null
 cp /etc/skel/.bashrc /root/.bashrc  2>> ${LOGFILE} 1> /dev/null
 cp /etc/skel/.profile /root/.profile  2>> ${LOGFILE} 1> /dev/null
-
-# Enable Wifi and Bluetooth on the new Raspberry Pi 3:
-apt-get install -y firmware-brcm80211 \
-	pi-bluetooth \
-	wpasupplicant  2>> ${LOGFILE} 1> /dev/null
-	#firmware-linux-nonfree
-	#wireless-tools
 
 #==========================================================================
 #------------------------------CONFIGURE VIM-------------------------------
