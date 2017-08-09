@@ -134,7 +134,7 @@ apt-get install -y vim  2>> ${LOGFILE} 1> /dev/null
 check_exit "Installed vim package (vim.basic and vim.tiny)" "Failed to install vim package"
 
 #Upload FROM ANOTHER MACHINE CONFIGS:
-cp_dir 'home/.vim' '/root/.vim' 0  2>> ${LOGFILE} 1> /dev/null
+cp_dir 'home/.vim' '/root/.vim' 0  #2>> ${LOGFILE} 1> /dev/null
 cp home/.vimrc /root/  #2>> ${LOGFILE} 1> /dev/null
 
 git clone https://github.com/gmarik/vundle.git /root/.vim/bundle/vundle 2>> ${LOGFILE} 1> /dev/null

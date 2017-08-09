@@ -158,7 +158,7 @@ function cp_dir() {
 		mkdir -p "${sys_dir}"
 	fi
 	echo "copy ${dir}/ to ${sys_dir}/"
-	cp -r "${dir}/*" "${sys_dir}/"
+	cp -r "${dir}/" "${sys_dir}/"
 }
 #---------------------------------------------------
 
