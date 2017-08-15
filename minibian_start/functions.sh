@@ -147,7 +147,7 @@ function cp_dir() {
 	sys_dir=$2
 	backup=$3
 	if [[ -d ${sys_dir} ]]; then
-		if [[ ${backup} -eq 1 -a ! -d "${sys_dir}.dist" ]]; then
+		if [ ${backup} -eq 1 -a ! -d "${sys_dir}.dist" ]; then
 			cp -r "${sys_dir}" "${sys_dir}.dist"
 		fi
 			rm -rf ${sys_dir}/*
@@ -175,7 +175,7 @@ function service_restart() {
 		print_error "For troubleshooting check ${LOGFILE}, run systemclt status ${service} and journalctl -xe"
 	else
 		active=`systemctl status ${service}.service | fgrep 'Active: active'`
-		if [[ $active == '' ]]; then
+		if [[ ${active} == '' ]]; then
 			print_error "${service}.service restart failed"
 			print_error "For troubleshooting check ${LOGFILE}, run systemctl status ${service} and journalctl -xe"
 		else
