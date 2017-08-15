@@ -154,7 +154,7 @@ function cp_dir() {
 	else
 		mkdir -p "${sys_dir}"
 	fi
-	cp -r ${dir}/* ${sys_dir}/
+	cp -r ${dir}/. ${sys_dir}/
 }
 #---------------------------------------------------
 
