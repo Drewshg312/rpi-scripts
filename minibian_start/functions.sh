@@ -147,13 +147,10 @@ function cp_dir() {
 	sys_dir=$2
 	backup=$3
 	if [[ -d ${sys_dir} ]]; then
-		if [[ ${backup} -eq 1 ]]; then
-			if [[ ! -d "${sys_dir}.dist" ]]; then
-				mv "${sys_dir}" "${sys_dir}.dist"
-			fi
-		else
-			rm -rf ${sys_dir}/*
+		if [[ ${backup} -eq 1 -a ! -d "${sys_dir}.dist" ]]; then
+			cp -r "${sys_dir}" "${sys_dir}.dist"
 		fi
+			rm -rf ${sys_dir}/*
 	else
 		mkdir -p "${sys_dir}"
 	fi
