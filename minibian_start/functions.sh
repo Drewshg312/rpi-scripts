@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#-----------------COLORIZE OUTPUT-------------------
+#=================COLORIZE OUTPUT===================
 function print_good() {
     echo -e "\x1B[01;32m[*]\x1B[0m $1"
 }
@@ -12,18 +12,18 @@ function print_error() {
 function print_status() {
     printf "\n\x1B[01;34m[*]\x1B[0m $1\n"
 }
-#---------------------------------------------------
+#===================================================
 
-#--------------------CHECK ROOT---------------------
+#====================CHECK ROOT=====================
 function check_root() {
     if [ "$(id -u)" != "0" ]; then
         print_error "This script must be ran as root"
         exit 1
     fi
 }
-#---------------------------------------------------
+#===================================================
 
-#-------------------SEARCH AND ADD------------------
+#===================SEARCH AND ADD==================
 # Find text pattern (first argument) in the specified file (third argument)
 # and if the pattern is found then substitute it to another pattern (second argument)
 # otherwise - append the pattern (second argument) to the end of the file
@@ -40,9 +40,9 @@ function search_add() {
 	sed -i "s/${search_pattern}/${add_pattern}/" ${file} \
 	|| echo "${add_pattern}" >> ${file}
 }
-#---------------------------------------------------
+#===================================================
 
-#-------------------CHECK EXITCODE------------------
+#===================CHECK EXITCODE==================
 # Check Exit Code.
 # And print out the Success Message (first argumment)
 # or Error message (second argument)
@@ -60,9 +60,9 @@ function check_exit() {
 		return 1
 	fi
 }
-#---------------------------------------------------
+#===================================================
 
-#---------------------CP FILE-----------------------
+#=====================CP FILE=======================
 # Copy file.
 # If the file already exists
 # then back it up by appending '_orig' postfix
@@ -90,9 +90,9 @@ function cp_file() {
 	fi
 	cp ${new_file} ${sys_file}
 }
-#---------------------------------------------------
+#===================================================
 
-#----------------------MV FILE----------------------
+#======================MV FILE======================
 # Move File.
 # If the destination file exists
 # then back it up by appending '_orig' postfix
@@ -125,9 +125,9 @@ function mv_file() {
 	fi
 mv ${sys_file} ${new_filename}
 }
-#---------------------------------------------------
+#===================================================
 
-#------------------COPY DIRECTORY------------------
+#==================COPY DIRECTORY===================
 # Copy all files from specified directory (first argument)
 # to system directory (second argument)
 # and if the system directory already exists, then
@@ -136,7 +136,7 @@ mv ${sys_file} ${new_filename}
 # or     - 0 -- remove original files from system dir
 #
 # call example:
-#  check_dir 'src/etc/skel' '/etc/skel' 1 # backup the old dir to /etc/skel.dist 
+#  check_dir 'src/etc/skel' '/etc/skel' 1 # backup the old dir to /etc/skel.dist
 #                                         # and copy all src/etc/skel content to /etc/skel
 #
 #  check_dir "home/.vim" "~/.vim" 0       # do not backup the originnal directory
@@ -156,9 +156,9 @@ function cp_dir() {
 	fi
 	cp -r ${dir}/. ${sys_dir}/
 }
-#---------------------------------------------------
+#===================================================
 
-#-----------------SERVICE RESTART-------------------
+#=================SERVICE RESTART===================
 # Some services like nsd or unbound return 0 exitcode,
 # but staying in the failed state, as systemctl status showing.
 # This function shows the truth regarding the service state after restart.
@@ -182,8 +182,9 @@ function service_restart() {
 		fi
 	fi
 }
+#===================================================
 
-#-------------------PERFORM TASK--------------------
+#===================PERFORM TASK====================
 # This function takes a Simple array ($1 - first arg)
 # which contains a list of shell commands that needs
 # to be run in order to perform specific task.
@@ -221,4 +222,5 @@ function task() {
 		print_error "${error}"
 	fi
 }
+#===================================================
 
