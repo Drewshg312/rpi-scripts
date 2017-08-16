@@ -1,21 +1,12 @@
 " This must be first, because it changes other options as side effect
 set nocompatible
-"---------------------------------
-"
-" Use pathogen to easily modify the runtime path to include all
-" plugins under the ~/.vim/bundle directory
-call pathogen#helptags()
-call pathogen#infect()
-"---------------------------------
 
 " change the mapleader (default is \)
 let mapleader= ","
-"---------------------------------
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
-"---------------------------------
 
 nnoremap ; :
 
@@ -57,38 +48,41 @@ endif
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:.
 
+set paste
 set pastetoggle=<F2>  " PASTEMODE
 nmap <F3> :NERDTreeToggle<CR>  " NERDTree PLUGIN
-"---------------------------------
-"------------- VUNDLE ------------
+
+set laststatus=2
+
+"=================================
+"============= VUNDLE ============
 filetype off    " Required
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 filetype plugin indent on
 " BUNDLES:
-" original repos on github:
+" Github-Repos:
 "Plugin 'bling/vim-airline'
-"Bundle 'edkolev/tmuxline.vim'
-"
-Bundle 'tpope/vim-git'
+"Plugin 'edkolev/tmuxline.vim'
+Plugin 'tpope/vim-git'
 Plugin 'airblade/vim-gitgutter'
-Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-rails.git'
-Bundle 'scrooloose/nerdtree'
-Bundle 'junegunn/vim-emoji'
-" vim-scripts repos:
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-" non github repos:
-Bundle 'git://git.wincent.com/command-t.git'
-"---------------------------------
-"---------- COLORSCHEME ----------
+Plugin 'tpope/vim-fugitive'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'tpope/vim-rails.git'
+Plugin 'scrooloose/nerdtree'
+Plugin 'junegunn/vim-emoji'
+Plugin 'vim-scripts/L9'
+Plugin 'vim-scripts/FuzzyFinder'
+" Non-Github Repos:
+Plugin 'git://git.wincent.com/command-t.git'
+
+"=================================
+"========== COLORSCHEME ==========
 set t_Co=256 " REQUIRED for Tmux
 if &t_Co >= 256 || has("gui_running")
     colorscheme mustang
@@ -99,14 +93,14 @@ if &t_Co > 2 || has("gui_running")
     syntax on
 endif
 
-"---------------------------------
-set laststatus=2
-"---------- POWERLINE ------------
+"=================================
+"========== POWERLINE ============
 "source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
 
 let g:Powerline_symbols = 'fancy'
-"---------------------------------
-"------------- EMOJI -------------
+
+"=================================
+"============= EMOJI =============
 " Git Gutter
 silent! if emoji#available()
   let g:gitgutter_sign_added = emoji#for('small_blue_diamond')
@@ -131,8 +125,9 @@ set completefunc=emoji#complete
 
 " Replace :emoji_name: into Emojis
 :command Emoji %s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g
-"---------------------------------
-"---------- Vim-AiRLINE ----------
+
+"=================================
+"========== Vim=AiRLINE ==========
 "set guifont=Literation\ Mono\ for\ Powerline\ 16
 "let g:airline_powerline_fonts = 1
 "set ttimeoutlen=50
@@ -146,9 +141,12 @@ set completefunc=emoji#complete
 "" TMUXLINE
 "" make tmuxline have different colors then AiRLINE:
 "let g:airline#extensions#tmuxline#enabled = 0
-"---------------------------------
-"-------------  TMUX  ------------
+
+"=================================
+"=============  TMUX  ============
 " Make color scheme look good in TMUX:
 " Also make sure to add "export TERM='xterm-256color'" line in your ~/.bashrc
 set term=screen-256color
-"---------------------------------
+
+"=================================
+
