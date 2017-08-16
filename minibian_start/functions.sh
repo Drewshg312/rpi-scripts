@@ -10,7 +10,7 @@ function print_error() {
 }
 
 function print_status() {
-    echo -e "\x1B[01;34m[*]\x1B[0m $1"
+    printf "\x1B[01;34m[*]\x1B[0m $1\n\n"
 }
 #---------------------------------------------------
 
