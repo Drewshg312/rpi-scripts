@@ -168,7 +168,6 @@ function cp_dir() {
 #
 function service_restart() {
 	service=$1
-	print_status "Restarting ${service}.service"
 	systemctl restart "${service}.service" 2>> ${LOGFILE} 1> /dev/null
 	if [[ ! $? -eq 0 ]]; then
 		print_error "${service}.service restart failed"
