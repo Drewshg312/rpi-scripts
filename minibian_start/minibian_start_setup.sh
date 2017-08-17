@@ -7,17 +7,17 @@ source 'functions.sh'
 
 set -o nounset
 
-#----------SET LOGGING FORMAT-----------
+#==========SET LOGGING FORMAT===========
 declare NOW=$(date +"%b-%d-%y-%H%M%S")
 declare LOGFILE="/tmp/install-${NOW}.log"
-#---------------------------------------
+#=======================================
 
 check_root
 
 print_status "THE LOG FILE: ${LOGFILE}"
 #==========================================================================
-#-----------------------------NETWORK SETUP--------------------------------
-#==========================================================================
+
+#=============================NETWORK SETUP================================
 #
 # Make sure that wireless interfaces will be assigned permanent names.
 # Make wifi interfaces to be always wlan0 independently of their mac address
@@ -68,7 +68,7 @@ check_exit "/etc/network/interfaces modified" "failed to modify /etc/network/int
 systemctl daemon-reload  2>> ${LOGFILE} 1> /dev/null
 check_exit "Networking Daemon Reloaded" "Networking Daemon Reload Failed"
 service_restart 'networking'
-
+#
 #==========================================================================
 #
 print_status "CONFIGURING HOST SETTINGS (Expanding File System, Setting up Timezone)"
@@ -118,8 +118,8 @@ check_exit "Successfully updated firmware" "Failed to update firmware"
 echo "root:${new_root_passwd}" | chpasswd -c SHA512  2>> ${LOGFILE} 1> /dev/null
 check_exit "Root password changed" "Failed to change root password"
 #==========================================================================
-#------------------------------CONFIGURE PROMPT----------------------------
-#==========================================================================
+
+#==============================CONFIGURE PROMPT============================
 print_status "CONFIGURING SHELL PROMPT"
 cp_dir 'etc/skel' '/etc/skel' 1 2>> ${LOGFILE} 1> /dev/null
 check_exit "Customized /etc/skel content. Original is saved in /etc/skel.dist" \
@@ -128,10 +128,9 @@ check_exit "Customized /etc/skel content. Original is saved in /etc/skel.dist" \
 rm -rf /root/.bashrc /root/.profile  2>> ${LOGFILE} 1> /dev/null
 cp /etc/skel/.bashrc /root/.bashrc  2>> ${LOGFILE} 1> /dev/null
 cp /etc/skel/.profile /root/.profile  2>> ${LOGFILE} 1> /dev/null
+#==========================================================================
 
-#==========================================================================
-#------------------------------CONFIGURE VIM-------------------------------
-#==========================================================================
+#==============================CONFIGURE VIM===============================
 print_status "CONFIGURING VIM"
 #Install vim:
 apt-get install -y vim  2>> ${LOGFILE} 1> /dev/null
@@ -153,10 +152,9 @@ update-alternatives --set editor /usr/bin/vim.basic 2>> ${LOGFILE} 1> /dev/null
 cp etc/profile.d/env_var.sh /etc/profile.d
 check_exit "Environment variables set in /etc/profile.d/env_var.sh" \
            "Failed to set environment variables in /etc/profile.d/env_var.sh"
+#==========================================================================
 
-#==========================================================================
-#------------------------------CLEANUP-------------------------------------
-#==========================================================================
+#==============================CLEANUP=====================================
 print_status "CLEANING THINGS UP"
 # Remove all packages that aren't needed for the system:
 apt-get autoremove  2>> ${LOGFILE} 1> /dev/null
