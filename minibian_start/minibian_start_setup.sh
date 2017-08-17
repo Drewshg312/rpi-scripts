@@ -98,10 +98,11 @@ task cmds[@] \
 	"${LOGFILE}"
 
 # Update packages and upgrade distro:
-apt-get dist-upgrade -y
-check_exit "Distro Successfully Upgraded" "apt-get dist-upgrade failed"
-#apt-get upgrade -y
-#check_exit "Installed rpi-update package" "Failed to install rpi-update package"
+print_good "Updating distro, please wait..."
+apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
+check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
+apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
+check_exit "Upgrading all packages" "'apt-get upgrade' failed"
 
 # Enable Wifi and Bluetooth on the new Raspberry Pi 3:
 apt-get install -y firmware-brcm80211 \
