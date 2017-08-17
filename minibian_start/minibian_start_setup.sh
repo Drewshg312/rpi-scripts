@@ -162,7 +162,7 @@ elif [[ ${serial_console}=='off' ]]; then
 fi
 
 apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
-check_exit "Upgrading all packages" "'apt-get upgrade' failed"
+check_exit "Upgraded all installed packages" "'apt-get upgrade' failed"
 #==========================================================================
 
 #==============================CLEANUP=====================================
