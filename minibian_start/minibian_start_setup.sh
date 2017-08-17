@@ -166,6 +166,8 @@ print_status "CLEANING THINGS UP"
 apt-get autoremove  2>> ${LOGFILE} 1> /dev/null
 check_exit "'apt-get autoremove' succeded" "'atp-get autoremove' failed"
 apt-get clean  2>> ${LOGFILE} 1> /dev/null
+check_exit "'apt-get clean' succeded" "'atp-get clean' failed"
+
 printf "\nDONE!\n"
 echo "Please reboot the host... or at least relogin :)"
 #==========================================================================
