@@ -152,17 +152,21 @@ check_exit "Environment variables set in /etc/profile.d/env_var.sh" \
 
 #==========================UPGRADING DISTRO================================
 # Update packages and upgrade distro:
-print_status "UPGRADING DISTRO (please wait...)"
 if [[ ${serial_console} == 'on' ]]; then
+	print_status "ENABLING SERIAL CONSOLE (ATTENTION: distro will NOT be upgraded!)"
 	raspi-config nonint do_serial 0  2>> ${LOGFILE} 1> /dev/null
 	check_exit "Enabled Serial Console" "Failed to Enable Serial Console"
 elif [[ ${serial_console}=='off' ]]; then
+	print_status "UPGRADING DISTRO (please wait...)"
+	raspi-config nonint do_serial 1  2>> ${LOGFILE} 1> /dev/null
+	check_exit "Disabled Serial Console" "Failed to Disable Serial Console"
 	apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
 	check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
+
+	apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
+	check_exit "Upgraded all installed packages" "'apt-get upgrade' failed"
 fi
 
-apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
-check_exit "Upgraded all installed packages" "'apt-get upgrade' failed"
 #==========================================================================
 
 #==============================CLEANUP=====================================
