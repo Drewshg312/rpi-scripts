@@ -12,21 +12,11 @@ declare NOW=$(date +"%b-%d-%y-%H%M%S")
 declare LOGFILE="/tmp/install-${NOW}.log"
 #---------------------------------------
 
-check_root
+if [[ ${serial_console} == 'on' ]]; then
+	echo "Enabling serial console"
+fi
 
-print_status "THE LOG FILE: ${LOGFILE}"
-print_status "THE LOG FILE: ${LOGFILE}"
-print_status "THE LOG FILE: ${LOGFILE}"
-print_status "THE LOG FILE: ${LOGFILE}"
-
-# Set correct Time Zone:
-#declare -a cmds=(
-#	'sh -c "echo ${timezone}" > /etc/timezone'
-#	"dpkg-reconfigure -f noninteractive tzdata"
-#)
-
-#task cmds[@] \
-#	"Timezone ${timezone} is configured" \
-#	"Failed to configre timezone ${timezone}" \
-#	"${LOGFILE}"
+if [[ ${serial_console} == 'off' ]]; then
+	echo "updating distro"
+fi
 
