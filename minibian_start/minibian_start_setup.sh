@@ -156,7 +156,7 @@ print_status "UPGRADING DISTRO (please wait...)"
 if [[ ${serial_console} == 'on' ]]; then
 	raspi-config nonint do_serial 0  2>> ${LOGFILE} 1> /dev/null
 	check_exit "Enabled Serial Console" "Failed to Enable Serial Console"
-elif [[ ${serial_cable}=='off' ]]; then
+elif [[ ${serial_console}=='off' ]]; then
 	apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
 	check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
 fi
