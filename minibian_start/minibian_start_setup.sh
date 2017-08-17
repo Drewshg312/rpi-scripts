@@ -79,8 +79,10 @@ apt-get install -y raspi-config  2>> ${LOGFILE} 1> /dev/null
 check_exit "raspi-config package is installed" "Failed to install raspi-config package"
 
 # Enable Serial Console:
-raspi-config nonint do_serial 0  2>> ${LOGFILE} 1> /dev/null
-check_exit "Enabled Serial Console" "Failed to Enable Serial Console"
+if [[ ${serial_console} ]]; then
+	raspi-config nonint do_serial 0  2>> ${LOGFILE} 1> /dev/null
+	check_exit "Enabled Serial Console" "Failed to Enable Serial Console"
+fi
 
 # Expand file system:
 raspi-config nonint do_expand_rootfs  2>> ${LOGFILE} 1> /dev/null
@@ -156,9 +158,11 @@ check_exit "Environment variables set in /etc/profile.d/env_var.sh" \
 
 #==========================UPGRADING DISTRO================================
 # Update packages and upgrade distro:
-print_status "UPGRADING DISTRO (please wait...)"
-apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
-check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
+if [[ ! ${serial_cable} ]]; then
+	print_status "UPGRADING DISTRO (please wait...)"
+	apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
+	check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
+fi
 
 apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
 check_exit "Upgrading all packages" "'apt-get upgrade' failed"
