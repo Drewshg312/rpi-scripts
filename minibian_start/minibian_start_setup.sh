@@ -84,7 +84,7 @@ partprobe  2>> ${LOGFILE} 1> /dev/null
 resize2fs /dev/mmcblk0p2  2>> ${LOGFILE} 1> /dev/null
 
 # Set hostname:
-hostnamectl set-hostname "${hostname}"			2>> ${LOGFILE} 1> /dev/null
+hostnamectl set-hostname "${hostname}"  2>> ${LOGFILE} 1> /dev/null
 check_exit "Hostname is changed to ${hostname}" "Failed to change a hostname to ${hostname}"
 
 # Set correct Time Zone:
