@@ -78,6 +78,10 @@ check_exit "apt-get package lists are updated" "Failed to update apt-get package
 apt-get install -y raspi-config  2>> ${LOGFILE} 1> /dev/null
 check_exit "raspi-config package is installed" "Failed to install raspi-config package"
 
+# Enable Serial Console:
+raspi-config nonint do_serial 0  2>> ${LOGFILE} 1> /dev/null
+check_exit "Enabled Serial Console" "Failed to Enable Serial Console"
+
 # Expand file system:
 raspi-config nonint do_expand_rootfs  2>> ${LOGFILE} 1> /dev/null
 partprobe  2>> ${LOGFILE} 1> /dev/null
