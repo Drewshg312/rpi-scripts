@@ -97,13 +97,6 @@ task cmds[@] \
 	"Failed to configre timezone ${timezone}" \
 	"${LOGFILE}"
 
-# Update packages and upgrade distro:
-print_good "Updating distro, please wait..."
-apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
-check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
-apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
-check_exit "Upgrading all packages" "'apt-get upgrade' failed"
-
 # Enable Wifi and Bluetooth on the new Raspberry Pi 3:
 apt-get install -y firmware-brcm80211 \
 	pi-bluetooth \
@@ -157,13 +150,23 @@ check_exit "Environment variables set in /etc/profile.d/env_var.sh" \
            "Failed to set environment variables in /etc/profile.d/env_var.sh"
 #==========================================================================
 
+#==========================UPGRADING DISTRO================================
+# Update packages and upgrade distro:
+print_status "UPGRADING DISTRO (please wait...)"
+apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
+check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
+
+apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
+check_exit "Upgrading all packages" "'apt-get upgrade' failed"
+#==========================================================================
+
 #==============================CLEANUP=====================================
 print_status "CLEANING THINGS UP"
 # Remove all packages that aren't needed for the system:
 apt-get autoremove  2>> ${LOGFILE} 1> /dev/null
+check_exit "'apt-get autoremove' succeded" "'atp-get autoremove' failed"
 apt-get clean  2>> ${LOGFILE} 1> /dev/null
-echo ""
-echo "DONE!"
+printf "\nDONE!\n"
 echo "Please reboot the host... or at least relogin :)"
 #==========================================================================
 
