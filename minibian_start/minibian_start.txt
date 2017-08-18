@@ -11,8 +11,11 @@ users[groups]/passwords:
 
 Interfaces:
     eth0 - wired
-        IP:     192.168.2.2
+        IP1:     192.168.2.2
         subnet: 255.255.255.0
+
+        IP2:	dhcp
+
     wlan0 - Broadcom BCM43438 Built-in Wireless
         IP: dhcp
         Type: managed
