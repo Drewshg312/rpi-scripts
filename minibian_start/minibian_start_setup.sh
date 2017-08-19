@@ -168,7 +168,7 @@ fi
 # Update packages and upgrade distro:
 print_status "UPGRADING DISTRO (please wait...)"
 
-pt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
+apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
 check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
 
 apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
