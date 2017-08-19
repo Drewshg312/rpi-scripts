@@ -161,6 +161,8 @@ if [[ ${serial_console} == 'on' ]]; then
 	search_add 'dtoverlay=.*\$' 'dtoverlay=pi3-disable-bt' '/boot/config.txt'
 	check_exit "Disabled Bluetooth on the UART" "Failed to Disable  Bluetooth on the UART"
 	check_exit "Serial Console access for RPI3 is enabled" "Failed to Enable Serial Console"
+else
+	print_good "Serial Console access for RPI3 is disabled"
 fi
 #==========================================================================
 
