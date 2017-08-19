@@ -49,13 +49,14 @@ iface eth0 inet dhcp
 
 auto eth0:1
 iface eth0:1 inet static
-    address 192.168.2.2
-    netmask 255.255.255.0
-    #dns-nameservers 127.0.0.1
+	address 192.168.2.2
+	netmask 255.255.255.0
+	#dns-nameservers 127.0.0.1
+	post up ip route add default via 192.168.2.1
 
 auto wlan0
 iface wlan0 inet manual
-    wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+	wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
 
 iface default inet dhcp
 
@@ -84,7 +85,7 @@ partprobe  2>> ${LOGFILE} 1> /dev/null
 resize2fs /dev/mmcblk0p2  2>> ${LOGFILE} 1> /dev/null
 
 # Set hostname:
-hostnamectl set-hostname "${hostname}"			2>> ${LOGFILE} 1> /dev/null
+hostnamectl set-hostname "${hostname}"  2>> ${LOGFILE} 1> /dev/null
 check_exit "Hostname is changed to ${hostname}" "Failed to change a hostname to ${hostname}"
 
 # Set correct Time Zone:
@@ -96,13 +97,6 @@ task cmds[@] \
 	"Timezone ${timezone} is configured" \
 	"Failed to configre timezone ${timezone}" \
 	"${LOGFILE}"
-
-# Update packages and upgrade distro:
-print_good "Updating distro, please wait..."
-apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
-check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
-apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
-check_exit "Upgrading all packages" "'apt-get upgrade' failed"
 
 # Enable Wifi and Bluetooth on the new Raspberry Pi 3:
 apt-get install -y firmware-brcm80211 \
@@ -157,13 +151,42 @@ check_exit "Environment variables set in /etc/profile.d/env_var.sh" \
            "Failed to set environment variables in /etc/profile.d/env_var.sh"
 #==========================================================================
 
+#============================SERIAL CONSOLE================================
+print_status "CONFIGURING SERIAL CONSOLE"
+# This actually disables serial,
+# (enabling it breaks serial connection on Raspberry Pi 3)
+raspi-config nonint do_serial 1  2>> ${LOGFILE} 1> /dev/null
+check_exit "UART is disabled in /boot/config.txt" "Failed to disable UART in /boot/config.txt"
+
+if [[ ${serial_console} == 'on' ]]; then
+	search_add 'dtoverlay=.*\$' 'dtoverlay=pi3-disable-bt' '/boot/config.txt'
+	check_exit "Disabled Bluetooth on the UART" "Failed to Disable  Bluetooth on the UART"
+	check_exit "Serial Console access for RPI3 is enabled" "Failed to Enable Serial Console"
+else
+	print_good "Serial Console access for RPI3 is disabled"
+fi
+#==========================================================================
+
+#==========================UPGRADING DISTRO================================
+# Update packages and upgrade distro:
+print_status "UPGRADING DISTRO (please wait...)"
+
+apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
+check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
+
+apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
+check_exit "Upgraded all installed packages" "'apt-get upgrade' failed"
+#==========================================================================
+
 #==============================CLEANUP=====================================
 print_status "CLEANING THINGS UP"
 # Remove all packages that aren't needed for the system:
 apt-get autoremove  2>> ${LOGFILE} 1> /dev/null
+check_exit "'apt-get autoremove' succeded" "'atp-get autoremove' failed"
 apt-get clean  2>> ${LOGFILE} 1> /dev/null
-echo ""
-echo "DONE!"
+check_exit "'apt-get clean' succeded" "'atp-get clean' failed"
+
+printf "\nDONE!\n"
 echo "Please reboot the host... or at least relogin :)"
 #==========================================================================
 
