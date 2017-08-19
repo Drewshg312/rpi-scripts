@@ -150,17 +150,19 @@ check_exit "Environment variables set in /etc/profile.d/env_var.sh" \
            "Failed to set environment variables in /etc/profile.d/env_var.sh"
 #==========================================================================
 
-print_status "ENABLING SERIAL CONSOLE (ONLY FOR RASBERRY PI 3)"
+#============================SERIAL CONSOLE================================
+print_status "CONFIGURING SERIAL CONSOLE"
 # This actually disables serial,
 # (enabling it breaks serial connection on Raspberry Pi 3)
 raspi-config nonint do_serial 1  2>> ${LOGFILE} 1> /dev/null
-check_exit "Switched UART to 1" "Failed to switch UART to 1"
+check_exit "UART is disabled in /boot/config.txt" "Failed to disable UART in /boot/config.txt"
 
 if [[ ${serial_console} == 'on' ]]; then
-	search_add 'dtoverlay=' 'dtoverlay=pi3-disable-bt' '/boot/config.txt'
-	check_exit "Disabled Bluetooth on the UART" "Failed to Disable Bluetooth on the UART"
+	search_add 'dtoverlay=.*\$' 'dtoverlay=pi3-disable-bt' '/boot/config.txt'
+	check_exit "Disabled Bluetooth on the UART" "Failed to Disable  Bluetooth on the UART"
 	check_exit "Serial Console access for RPI3 is enabled" "Failed to Enable Serial Console"
 fi
+#==========================================================================
 
 #==========================UPGRADING DISTRO================================
 # Update packages and upgrade distro:
