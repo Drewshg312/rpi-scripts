@@ -165,7 +165,6 @@ print_status "CONFIGURING SERIAL CONSOLE"
 # This actually disables serial,
 # (enabling it breaks serial connection on Raspberry Pi 3)
 sed '/enable_uart=/ d' /boot/config.txt  2>> ${LOGFILE} 1> /dev/null
-raspi-config nonint do_serial 1  2>> ${LOGFILE} 1> /dev/null
 check_exit "UART is disabled in /boot/config.txt" "Failed to disable UART in /boot/config.txt"
 
 if [[ ${serial_console} == 'on' ]]; then
