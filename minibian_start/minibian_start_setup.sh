@@ -183,9 +183,6 @@ print_status "UPGRADING DISTRO (please wait...)"
 
 apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
 check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
-
-apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
-check_exit "Upgraded all installed packages" "'apt-get upgrade' failed"
 #==========================================================================
 
 #==============================CLEANUP=====================================
