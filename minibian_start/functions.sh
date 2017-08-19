@@ -37,8 +37,8 @@ function search_add() {
 	file=$3
 
 	grep -q "${search_pattern}" ${file} && \
-	sed -i "s/${search_pattern}/${add_pattern}/" ${file} \
-	|| echo "${add_pattern}" >> ${file}
+	sed -i "s/${search_pattern}/${add_pattern}/" ${file} || \
+	echo "${add_pattern}" >> ${file}
 }
 #===================================================
 
@@ -56,7 +56,7 @@ function check_exit() {
 		return 0
 	else
 		print_error "$2"
-		print_error "Please check the log (${LOGFILE})"
+		printf "\tPlease check the log (${LOGFILE})\n"
 		return 1
 	fi
 }
