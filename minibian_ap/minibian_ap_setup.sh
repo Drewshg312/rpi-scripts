@@ -33,8 +33,6 @@ sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 search_add '^.*net.ipv4.ip_forward=.*$' 'net.ipv4.ip_forward=1' '/etc/sysctl.conf'
 search_add '^.*net.ipv6.conf.all.forwarding=.*$' 'net.ipv6.conf.all.forwarding=1' '/etc/sysctl.conf'
 
-
-
 #=============================IPTABLES SETUP================================
 # Install iptables-persistent (non-interactive):
 echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
