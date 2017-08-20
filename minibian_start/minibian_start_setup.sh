@@ -77,7 +77,7 @@ print_status "CONFIGURING HOST SETTINGS (Expanding File System, Setting up Timez
 apt-get update -y  2>> ${LOGFILE} 1> /dev/null
 check_exit "apt-get package lists are updated" "Failed to update apt-get package lists"
 apt-get install -y raspi-config  2>> ${LOGFILE} 1> /dev/null
-check_exit "raspi-config package is installed" "Failed to install raspi-config package"
+check_exit "raspi-config is installed. Updating firmware. Please wait..." "Failed to install raspi-config package"
 
 
 # Expand file system:
@@ -105,6 +105,7 @@ task cmds_tz[@] \
 	"Timezone ${timezone} is configured" \
 	"Failed to configre timezone ${timezone}" \
 	"${LOGFILE}"
+
 
 # Enable Wifi and Bluetooth on the new Raspberry Pi 3:
 apt-get install -y firmware-brcm80211 \
@@ -140,7 +141,7 @@ cp /etc/skel/.profile /root/.profile  2>> ${LOGFILE} 1> /dev/null
 print_status "CONFIGURING VIM"
 #Install vim:
 apt-get install -y vim  2>> ${LOGFILE} 1> /dev/null
-check_exit "Installed vim package (vim.basic and vim.tiny)" "Failed to install vim package"
+check_exit "Installed vim.basic. Configuring plugins. Please wait..." "Failed to install vim package"
 
 #Upload FROM ANOTHER MACHINE CONFIGS:
 cp_dir 'home/.vim' '/root/.vim' 0  2>> ${LOGFILE} 1> /dev/null
