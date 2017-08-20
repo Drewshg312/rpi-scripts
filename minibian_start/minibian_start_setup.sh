@@ -160,6 +160,14 @@ check_exit "Environment variables set in /etc/profile.d/env_var.sh" \
            "Failed to set environment variables in /etc/profile.d/env_var.sh"
 #==========================================================================
 
+#==========================UPGRADING DISTRO================================
+# Update packages and upgrade distro:
+print_status "UPGRADING DISTRO (please wait...)"
+
+apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
+check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
+#==========================================================================
+
 #============================SERIAL CONSOLE================================
 print_status "CONFIGURING SERIAL CONSOLE"
 # This actually disables serial,
@@ -174,14 +182,6 @@ if [[ ${serial_console} == 'on' ]]; then
 else
 	print_good "Serial Console access for RPI3 is disabled"
 fi
-#==========================================================================
-
-#==========================UPGRADING DISTRO================================
-# Update packages and upgrade distro:
-print_status "UPGRADING DISTRO (please wait...)"
-
-apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
-check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
 #==========================================================================
 
 #==============================CLEANUP=====================================
