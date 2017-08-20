@@ -177,7 +177,7 @@ sed '/enable_uart=/ d' /boot/config.txt  2>> ${LOGFILE} 1> /dev/null
 check_exit "UART is disabled in /boot/config.txt" "Failed to disable UART in /boot/config.txt"
 
 if [[ ${serial_console} == 'on' ]]; then
-	search_add 'dtoverlay=.*\$' 'dtoverlay=pi3-disable-bt' '/boot/config.txt'
+	search_add 'dtoverlay=.*$' 'dtoverlay=pi3-disable-bt' '/boot/config.txt'
 	check_exit "Disabled Bluetooth on the UART" "Failed to Disable  Bluetooth on the UART"
 	check_exit "Serial Console access for RPI3 is enabled" "Failed to Enable Serial Console"
 else
