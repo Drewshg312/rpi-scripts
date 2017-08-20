@@ -77,26 +77,35 @@ print_status "CONFIGURING HOST SETTINGS (Expanding File System, Setting up Timez
 apt-get update -y  2>> ${LOGFILE} 1> /dev/null
 check_exit "apt-get package lists are updated" "Failed to update apt-get package lists"
 apt-get install -y raspi-config  2>> ${LOGFILE} 1> /dev/null
-check_exit "raspi-config package is installed" "Failed to install raspi-config package"
+check_exit "raspi-config is installed. Updating firmware. Please wait..." "Failed to install raspi-config package"
+
 
 # Expand file system:
-raspi-config nonint do_expand_rootfs  2>> ${LOGFILE} 1> /dev/null
-partprobe  2>> ${LOGFILE} 1> /dev/null
-resize2fs /dev/mmcblk0p2  2>> ${LOGFILE} 1> /dev/null
+declare -a cmds_fs=(
+	'raspi-config nonint do_expand_rootfs'
+	'partprobe'
+	'resize2fs /dev/mmcblk0p2'
+)
+task cmds_fs[@] \
+	"Filesystem is expanded. No need to reboot" \
+	"Fatal: failed to expand the filesystem" \
+	"${LOGFILE}"
+
 
 # Set hostname:
 hostnamectl set-hostname "${hostname}"  2>> ${LOGFILE} 1> /dev/null
 check_exit "Hostname is changed to ${hostname}" "Failed to change a hostname to ${hostname}"
 
 # Set correct Time Zone:
-declare -a cmds=(
+declare -a cmds_tz=(
 	'sh -c "echo ${timezone}" > /etc/timezone'
 	"dpkg-reconfigure -f noninteractive tzdata"
 )
-task cmds[@] \
+task cmds_tz[@] \
 	"Timezone ${timezone} is configured" \
 	"Failed to configre timezone ${timezone}" \
 	"${LOGFILE}"
+
 
 # Enable Wifi and Bluetooth on the new Raspberry Pi 3:
 apt-get install -y firmware-brcm80211 \
@@ -104,6 +113,7 @@ apt-get install -y firmware-brcm80211 \
 	wpasupplicant  2>> ${LOGFILE} 1> /dev/null
 	#firmware-linux-nonfree
 	#wireless-tools
+
 
 # Update Firmware:
 apt-get install -y rpi-update  2>> ${LOGFILE} 1> /dev/null
@@ -131,7 +141,7 @@ cp /etc/skel/.profile /root/.profile  2>> ${LOGFILE} 1> /dev/null
 print_status "CONFIGURING VIM"
 #Install vim:
 apt-get install -y vim  2>> ${LOGFILE} 1> /dev/null
-check_exit "Installed vim package (vim.basic and vim.tiny)" "Failed to install vim package"
+check_exit "Installed vim.basic. Configuring plugins. Please wait..." "Failed to install vim package"
 
 #Upload FROM ANOTHER MACHINE CONFIGS:
 cp_dir 'home/.vim' '/root/.vim' 0  2>> ${LOGFILE} 1> /dev/null
@@ -151,11 +161,19 @@ check_exit "Environment variables set in /etc/profile.d/env_var.sh" \
            "Failed to set environment variables in /etc/profile.d/env_var.sh"
 #==========================================================================
 
+#==========================UPGRADING DISTRO================================
+# Update packages and upgrade distro:
+print_status "UPGRADING DISTRO (please wait...)"
+
+apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
+check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
+#==========================================================================
+
 #============================SERIAL CONSOLE================================
 print_status "CONFIGURING SERIAL CONSOLE"
 # This actually disables serial,
 # (enabling it breaks serial connection on Raspberry Pi 3)
-raspi-config nonint do_serial 1  2>> ${LOGFILE} 1> /dev/null
+sed '/enable_uart=/ d' /boot/config.txt  2>> ${LOGFILE} 1> /dev/null
 check_exit "UART is disabled in /boot/config.txt" "Failed to disable UART in /boot/config.txt"
 
 if [[ ${serial_console} == 'on' ]]; then
@@ -165,17 +183,6 @@ if [[ ${serial_console} == 'on' ]]; then
 else
 	print_good "Serial Console access for RPI3 is disabled"
 fi
-#==========================================================================
-
-#==========================UPGRADING DISTRO================================
-# Update packages and upgrade distro:
-print_status "UPGRADING DISTRO (please wait...)"
-
-apt-get dist-upgrade -y  2>> ${LOGFILE} 1> /dev/null
-check_exit "Distro Successfully Upgraded" "'apt-get dist-upgrade' failed"
-
-apt-get upgrade -y  2>> ${LOGFILE} 1> /dev/null
-check_exit "Upgraded all installed packages" "'apt-get upgrade' failed"
 #==========================================================================
 
 #==============================CLEANUP=====================================
