@@ -183,6 +183,8 @@ if [[ ${serial_console} == 'on' ]]; then
 else
 	print_good "Serial Console access for RPI3 is disabled"
 fi
+systemctl daemon-reload  2>> ${LOGFILE} 1> /dev/null
+check_exit "Systemctl daemon reloaded successfully" "'systemctl daemon-reload' failed"
 #==========================================================================
 
 #==============================CLEANUP=====================================
