@@ -48,8 +48,8 @@ iptables -A FORWARD -i wlan0 -o wlan1 -m state --state RELATED,ESTABLISHED -j AC
 iptables -A FORWARD -i wlan1 -o wlan0 -j ACCEPT
 
 # FOR LOGGING PURPOSES ONLY:
-iptables -t nat -S  2>> ${LOGFILE} 1> /dev/null
-iptables -S  2>> ${LOGFILE} 1> /dev/null
+iptables -t nat -S  &>> ${LOGFILE}
+iptables -S  &>> ${LOGFILE}
 
 
 #==========================================================================
