@@ -17,7 +17,6 @@ let mapleader= ","
 " Make ; key to be the same s : key:
 nnoremap ; :
 "===========================================================================
-
 set hidden  " do not buffer file and do not store swap file of edited files
 
 "Highlight Current Column and Row:
