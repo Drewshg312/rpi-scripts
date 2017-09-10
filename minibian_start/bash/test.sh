@@ -35,7 +35,7 @@ if [[ ${serial_console} == 'on' ]]; then
 		'raspi-config nonint do_serial 1'
 		"search_add 'dtoverlay=.*\$' 'dtoverlay=pi3-disable-bt' '/boot/config.txt'"
 	)
-	
+
 	task cmds[@] \
 		"Serial Console is Enabled" \
 		"Failed to Enable Serial Console" \

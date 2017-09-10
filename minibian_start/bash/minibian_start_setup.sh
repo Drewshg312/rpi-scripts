@@ -31,9 +31,9 @@ print_status "CONFIGURING NETWORK"
 fgrep -q 'KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*"' \
 	/lib/udev/rules.d/75-persistent-net-generator.rules
 if [[ ! $? -eq 0 ]]; then
-	sed -i '/^KERNEL!="/ s/^/#/' /lib/udev/rules.d/75-persistent-net-generator.rules && \
-	sed -i '/^#KERNEL!="/a KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*", \\' \
-		/lib/udev/rules.d/75-persistent-net-generator.rules  2>> ${LOGFILE} 1> /dev/null
+    sed -i '/^KERNEL!="/ s/^/#/' /lib/udev/rules.d/75-persistent-net-generator.rules && \
+    sed -i '/^#KERNEL!="/a KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*", \\' \
+        /lib/udev/rules.d/75-persistent-net-generator.rules  2>> ${LOGFILE} 1> /dev/null
 fi
 #
 # After boot file will be generated /etc/udev/rules.d/70-persistent-net.rules
@@ -49,14 +49,14 @@ iface eth0 inet dhcp
 
 auto eth0:1
 iface eth0:1 inet static
-	address 192.168.2.2
-	netmask 255.255.255.0
-	#dns-nameservers 127.0.0.1
-	post up ip route add default via 192.168.2.1
+    address 192.168.2.2
+    netmask 255.255.255.0
+    #dns-nameservers 127.0.0.1
+    post up ip route add default via 192.168.2.1
 
 auto wlan0
 iface wlan0 inet manual
-	wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+    wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
 
 iface default inet dhcp
 

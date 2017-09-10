@@ -1,0 +1,7 @@
+Host raspberry
+    HostName 192.168.2.2
+    User root
+    IdentityFile ./id_rsa_insecure
+    ForwardAgent yes
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
