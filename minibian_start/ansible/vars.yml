@@ -1,0 +1,6 @@
+---
+# Variables:
+#
+host_name: raspberry.localdomain
+new_root_passwd: P@ssw0rd
+...

@@ -1,7 +1,7 @@
 ---
 # tasks file for network
 
-- name: Check '/lib/udev/rules.d/75-persistent-net-generator.rules'
+- name: Check '/lib/udev/rules.d/75-persistent-net-generator.rules' RED OUTPUT IS OK!
   command: >
     fgrep -q 'KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*"' \
       /lib/udev/rules.d/75-persistent-net-generator.rules
@@ -9,7 +9,7 @@
   ignore_errors: yes
   become: yes
 
-- name: Commenting old pattern in '75-persistent-net-generator.rules' RED OUTPUT IS OK!
+- name: Commenting old pattern in '75-persistent-net-generator.rules'
   replace:
     path: /lib/udev/rules.d/75-persistent-net-generator.rules
     regexp: '^(KERNEL!=".*$)'
@@ -21,8 +21,8 @@
   lineinfile:
     path: /lib/udev/rules.d/75-persistent-net-generator.rules
     insertafter: '^#KERNEL!=".*$'
-    line: 'KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*"'
-    when: result.rc != 0    # second method to set condition
+    line: 'KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*" \'
+  when: result.rc != 0    # second method to set condition
   become: yes
 
 - name: Copying '/etc/network/interfaces'

@@ -2,6 +2,9 @@
 # handlers file for network
 
 - name: Restart networking service
-  systemd: name=networking daemon_reload=yes state=restarted
+  systemd:
+    name: networking
+    daemon_reload: yes
+    state: restarted
 
 ...

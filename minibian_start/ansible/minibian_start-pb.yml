@@ -1,0 +1,73 @@
+---
+- hosts: raspberrypi_3
+  vars_files:
+    - vars.yml
+  #become: yes
+
+#  pre_tasks:
+#    - name: Include variables
+#      include_vars: vars.yml
+# OR:
+#      include_vars:
+#        file: vars.yml
+#        name: variables
+  pre_tasks:
+    - name: Setting hostname
+      hostname:
+        name: "{{ host_name }}"
+
+    - name: Setting timezone
+      timezone:
+        name: America/Vancouver
+
+#    - name: Temporarily set dns to 8.8.8.8 in order to resolve '*.raspberrypi.org'
+#      command: echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+
+  roles:
+    #- expandfs
+    #- network
+    - vim
+  tasks:
+
+    #========= UPDATING FIRMWARE: ========
+    # needs: echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+    # which is done in 'expandfs' role.
+    - name: Installing latest 'rpi-update'
+      apt:
+        name: rpi-update
+        state: latest
+        force: yes
+      become: yes
+
+    - name: Updating firmware
+      command: rpi-update
+    #=====================================
+
+#    - name: Change root password
+#      user:
+#        name: root
+#        #password: "{new_root_passwd}"
+#        password: P@ssw0rd
+
+    #========= CONFIGURING PROMPT ========
+    - name: Copying /etc/skel contents
+      copy:
+        src: etc/skel/
+        dest: /etc/skel/
+        backup: yes
+
+    - name: Copying .bashrc and .profile to home directory
+      copy:
+        src: etc/skel/
+        dest: "{{ ansible_env.HOME}}/"
+
+    #========== DISTRO UPGRADE ===========
+    - name: Upgrading distro
+      apt:
+        upgrade: dist
+        autoclean: yes
+        autoremove: yes
+    #====================================
+
+
+...

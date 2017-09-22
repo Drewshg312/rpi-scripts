@@ -1,0 +1,60 @@
+---
+
+- name: '[user] Install default configuration'
+  template: src=vimrc.j2 dest="{{ vim_root_config }}" owner="{{ item }}" group="{{ item }}" mode=0644
+  with_items: "{{ vim_users }}"
+  #when: ("{{ vim_users }}" is defined and item != "root")
+  when: ("{{ vim_users }}" is defined)
+  become: yes    # Required for become_user to work
+  become_method: su    # by default it tries to use sudo instead
+  become_user: "{{ item }}"
+  tags:
+    - vim
+
+- name: '[user] Install default plugins'
+  template: src=vimrc.bundles.j2 dest="{{ vim_root_bundles }}" owner="{{ item }}" group="{{ item }}" mode=0644
+  with_items: "{{ vim_users }}"
+  when: ("{{ vim_users }}" is defined)
+  become: yes
+  become_method: su
+  become_user: "{{ item }}"
+  tags:
+    - vim
+
+- name: '[user] Install Vundle'
+  git:
+    repo: https://github.com/gmarik/Vundle.vim.git
+    dest: ~/.vim/bundle/Vundle.vim
+    version: "{{ vim_vundle_version }}"
+  with_items: "{{ vim_users }}"
+  when: ("{{ vim_users }}" is defined)
+  become: yes
+  become_method: su
+  become_user: "{{ item }}"
+  tags:
+    - vim
+
+- name: '[user] Copying .vim folder'
+  copy:
+    src: vim/
+    dest: ~/.vim/
+    owner: "{{ item }}"
+    group: "{{ item }}"
+  with_items: "{{ vim_users }}"
+  when: ("{{ vim_users }}" is defined)
+  become: yes
+  become_method: su
+  become_user: "{{ item }}"
+  tags:
+    - vim
+
+- name: '[user] Download plugins'
+  command: "vim +PluginInstall +qal"
+  with_items: "{{ vim_users }}"
+  when: ("{{ vim_users }}" is defined)
+  become: yes
+  become_method: su
+  become_user: "{{ item }}"
+  tags:
+    - vim
+...

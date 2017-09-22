@@ -73,6 +73,9 @@ service_restart 'networking'
 #==========================================================================
 #
 print_status "CONFIGURING HOST SETTINGS (Expanding File System, Setting up Timezone)"
+# Required for installing raspi-config and rpi-update (stupid problem resolving *.raspbian.org)
+echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+
 # Update packages and install raspi-config:
 apt-get update -y  2>> ${LOGFILE} 1> /dev/null
 check_exit "apt-get package lists are updated" "Failed to update apt-get package lists"
@@ -96,15 +99,20 @@ task cmds_fs[@] \
 hostnamectl set-hostname "${hostname}"  2>> ${LOGFILE} 1> /dev/null
 check_exit "Hostname is changed to ${hostname}" "Failed to change a hostname to ${hostname}"
 
+
 # Set correct Time Zone:
-declare -a cmds_tz=(
-	'sh -c "echo ${timezone}" > /etc/timezone'
-	"dpkg-reconfigure -f noninteractive tzdata"
-)
-task cmds_tz[@] \
-	"Timezone ${timezone} is configured" \
-	"Failed to configre timezone ${timezone}" \
-	"${LOGFILE}"
+timedatectl set-timezone "${timezone}"
+check_exit "Timezone ${timezone} is configured" "Failed to configre timezone ${timezone}"
+#
+# OLD HARD WAY (Here as an info only):
+#declare -a cmds_tz=(
+#	'sh -c "echo ${timezone}" > /etc/timezone'
+#	"dpkg-reconfigure -f noninteractive tzdata"
+#)
+#task cmds_tz[@] \
+#	"Timezone ${timezone} is configured" \
+#	"Failed to configre timezone ${timezone}" \
+#	"${LOGFILE}"
 
 
 # Enable Wifi and Bluetooth on the new Raspberry Pi 3:

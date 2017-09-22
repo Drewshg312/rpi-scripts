@@ -1,0 +1,39 @@
+---
+- name: '[system] Install default configurations'
+  template: src=vimrc.j2 dest='{{ vim_root_config }}' owner=root group=root mode=0644
+  become: yes
+  tags:
+    - vim
+
+- name: '[system] Install default plugins'
+  template: src=vimrc.bundles.j2 dest='{{ vim_root_bundles }}' owner=root group=root mode=0644
+  become: yes
+  tags:
+    - vim
+
+- name: '[system] Copying .vim folder'
+  copy:
+    src: vim/
+    dest: /var/lib/vim/addons/
+  become: yes
+  tags:
+    - vim
+
+- name: '[system] Install Vundle'
+  git:
+    repo: https://github.com/gmarik/Vundle.vim.git
+    dest: /var/lib/vim/addons/Vundle.vim
+    version: "{{ vim_vundle_version }}"
+  become: yes
+  tags:
+    - vim
+
+- name: '[system] Downloads plugins'
+  command: vim +PluginInstall +qal
+#  shell: >
+#    vim -E -s -c "source "${HOME}"/.vimrc" -c PluginInstall -c qa
+#  ignore_errors: yes
+  become: yes
+  tags:
+    - vim
+...
