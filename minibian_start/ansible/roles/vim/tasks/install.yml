@@ -42,25 +42,13 @@
   tags:
     - vim
 
-#- stat: path=/usr/bin/sudo
-#  register: sudo
-#  tags:
-#    -vim
-#
-#- name: Install sudo
-#  apt: name=sudo state=present
-#  when: sudo.stat.exists == False
-#  become: yes
-#  tags:
-#    -vim
-
-#- name: Setting vim default editor for visudo
-#  command: >
-#    #update-alternatives --set editor /usr/bin/vim.basic
-#    update-alternatives --set editor /usr/bin/vim
-#  become: yes
-#  tags:
-#    - vim
+- name: Setting vim default editor for visudo
+  command:
+    update-alternatives --set editor /usr/bin/vim.nox
+    #update-alternatives --set editor /usr/bin/vim.basic
+  become: yes
+  tags:
+    - vim
 
 - name: Setting up environment variable for vim to look good in tmux
   copy:

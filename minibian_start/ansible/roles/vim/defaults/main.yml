@@ -7,29 +7,29 @@ vim_env: user
 
 vim_users:
   - root
-  - drew
-  - pi
+#  - drew
+#  - pi
 
 vim_github_plugins:
 #  - 'tpope/vim-surround'                    # Useful for markup languages
 #  - 'tpope/vim-repeat'                      # Useful for markup languages ***
 ##  - 'plasticboy/vim-markdown'               # Markdown Editor ***
-#  - 'tangledhelix/vim-kickstart'            # Kickstart Files Highlighting
-#  - 'Matt-Deacalion/vim-systemd-syntax'     # Systemd Unit Files Highlighting
-#  - 'pearofducks/ansible-vim'               # Ansible Files Highlighting
-#  - 'hashivim/vim-vagrant'                  # Vagrant Files Highlighting
+  - 'tangledhelix/vim-kickstart'            # Kickstart Files Highlighting
+  - 'Matt-Deacalion/vim-systemd-syntax'     # Systemd Unit Files Highlighting
+  - 'pearofducks/ansible-vim'               # Ansible Files Highlighting
+  - 'hashivim/vim-vagrant'                  # Vagrant Files Highlighting
 #  - 'vim-scripts/bash-support.vim'          # Bash Files Highlighting
-##  - 'junegunn/vim-emoji'                    # EMOJI
+  - 'junegunn/vim-emoji'                    # EMOJI
 ##  - 'vim-airline/vim-airline'               # Lightweight vimscrip-based statusline
 ##  - 'vim-airline/vim-airline-themes'        # vim-airline theme collection
 ##  - 'Lokaltog/vim-easymotion'
 ##  - 'vim-scripts/L9'
 ##  - 'vim-scripts/FuzzyFinder'
-#  - 'tpope/vim-fugitive'                    # Git Integration
+  - 'tpope/vim-fugitive'                    # Git Integration
   - 'airblade/vim-gitgutter'                # Git Integration ***
-#  - 'scrooloose/nerdtree'                   # Navigation (files and folders)
-#  - 'godlygeek/tabular.git'                 # Aligning stuff
-#  - 'Glench/Vim-Jinja2-Syntax'
+  - 'scrooloose/nerdtree'                   # Navigation (files and folders)
+  - 'godlygeek/tabular.git'                 # Aligning stuff
+  - 'Glench/Vim-Jinja2-Syntax'              # Jinja2 Syntax Highlighting
 ##  - 'editorconfig/editorconfig-vim'
 ##  - 'altercation/vim-colors-solarized'
 ##  - 'vim-ruby/vim-ruby'                     # Rubi Files Hightlighting

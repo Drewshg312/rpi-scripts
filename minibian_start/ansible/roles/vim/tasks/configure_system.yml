@@ -1,13 +1,26 @@
 ---
 - name: '[system] Install default configurations'
-  template: src=vimrc.j2 dest='{{ vim_root_config }}' owner=root group=root mode=0644
+  template: src=vimrc.j2 dest="{{ vim_root_config }}" owner=root group=root mode=0644
   become: yes
   tags:
     - vim
 
 - name: '[system] Install default plugins'
-  template: src=vimrc.bundles.j2 dest='{{ vim_root_bundles }}' owner=root group=root mode=0644
+  template: src=vimrc.bundles.j2 dest="{{ vim_root_bundles }}" owner=root group=root mode=0644
   become: yes
+  tags:
+    - vim
+
+- name: '[system] Creating empty /etc/vim/vimrc.emoji if does not exist'
+  copy:
+    content: ""
+    dest: "{{ vim_root_emoji }}"
+    force: no
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  when: '"junegunn/vim-emoji" in vim_github_plugins'
   tags:
     - vim
 
@@ -28,12 +41,29 @@
   tags:
     - vim
 
+# IF this task just hangs, when using:
+#   command: "vim +PluginInstall +qal"
+#
+# this may be because of two things:
+#   EITHER .vimrc or .vim files permissions (see 'which sudo' and become_method: su )
+#   OR errors in .vimrc
+#
+# Instead of command: "vim +PluginInstall +qall" we can use:
+#
+# shell:
+#   vim -E -s -c "source /etc/vim/vimrc" -c PluginInstall -c qa
+# ignore_errors: yes
+#
+# For troubleshooting add -V switch to this command and run it directly on the target
+#
 - name: '[system] Downloads plugins'
   command: vim +PluginInstall +qal
-#  shell: >
-#    vim -E -s -c "source "${HOME}"/.vimrc" -c PluginInstall -c qa
-#  ignore_errors: yes
   become: yes
   tags:
     - vim
+
+- name: '[system] Configure EMOJI for vim'
+  template: src=vimrc.emoji.j2 dest="{{ vim_root_emoji }}" owner=root group=root mode=0644
+  become: yes
+  when: '"junegunn/vim-emoji" in vim_github_plugins' # no need to use "{{ }}" in "when" conditions (Jinja2 feature)
 ...

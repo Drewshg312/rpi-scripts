@@ -1,0 +1,5 @@
+---
+- include: dependencies.yml
+- include: install.yml
+- include: users.yml
+  when: ohmyzsh_users | length > 0

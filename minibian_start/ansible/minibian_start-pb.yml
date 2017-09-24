@@ -20,14 +20,26 @@
       timezone:
         name: America/Vancouver
 
-#    - name: Temporarily set dns to 8.8.8.8 in order to resolve '*.raspberrypi.org'
-#      command: echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+    - name: Temporarily set dns to 8.8.8.8 in order to resolve '*.raspberrypi.org'
+      shell: echo 'nameserver 8.8.8.8' > /etc/resolv.conf
 
   roles:
-    #- expandfs
-    #- network
+    - expandfs
+    - network
     - vim
   tasks:
+
+#    - stat: path=/usr/bin/sudo
+#      register: sudo
+#      tags:
+#        -vim
+#
+#    - name: Install sudo
+#      apt: name=sudo state=present
+#      when: sudo.stat.exists == False
+#      become: yes
+#      tags:
+#        -vim
 
     #========= UPDATING FIRMWARE: ========
     # needs: echo 'nameserver 8.8.8.8' > /etc/resolv.conf
@@ -43,11 +55,13 @@
       command: rpi-update
     #=====================================
 
+#    #========= SET ROOT PASSWORD: ========
 #    - name: Change root password
 #      user:
 #        name: root
-#        #password: "{new_root_passwd}"
-#        password: P@ssw0rd
+#        password: "{{ new_root_passwd }}"
+#        #password: P@ssw0rd
+#    #=====================================
 
     #========= CONFIGURING PROMPT ========
     - name: Copying /etc/skel contents
@@ -60,6 +74,7 @@
       copy:
         src: etc/skel/
         dest: "{{ ansible_env.HOME}}/"
+    #=====================================
 
     #========== DISTRO UPGRADE ===========
     - name: Upgrading distro
@@ -68,6 +83,4 @@
         autoclean: yes
         autoremove: yes
     #====================================
-
-
 ...

@@ -127,8 +127,6 @@ set shm=atIWswxrnmlf                " message formats
 set showmode
 set showcmd                         " show the command we're typing
 "set mouse=a
-set background=dark
-set t_ut=
 
 set tabstop=4                       " a tab is four spaces
 set softtabstop=4                   " delete tabs as one keystroke
@@ -149,33 +147,33 @@ set noexpandtab                     " do not convert tabs to spaces
 "============================== COLORSCHEME ================================
 set t_Co=256 " REQUIRED for Tmux
 
-" MUSTANG
-if &t_Co >= 256 || has("gui_running")
-    colorscheme mustang
-endif
+set background=dark
+set t_ut=                           " disable Background Color Erase
 
-" SOLARIZED
-try
-    let g:solarized_termcolors=256
+if &t_Co >= 256 || has("gui_running")
+    "colorscheme mustang
     colorscheme solarized
-catch /^Vim\%((\a\+)\)\=:E185/
-  " deal with it
-endtry
+endif
 
 if &t_Co > 2 || has("gui_running") && !exists("syntax_on")
     syntax on   " switch syntax highlighting on, when the terminal has colors
 endif
+
+" SOLARIZED colorscheme
+" Schedule automatic LIGHT/DARK background switching:
+"let hour = strftime("%H")
+"if 6 <= hour && hour < 18
+"  set background=dark
+"else
+"  set background=light
+"endif
 "===========================================================================
 "================================== TMUX ===================================
 " Make color scheme look good in TMUX:
 " Also make sure to add "export TERM='xterm-256color'" line in your ~/.bashrc
-set term=screen-256color
-
-" OR (NEED TO BE TESTED):
-" tmux color bug fix
-"if exists('$TMUX')
-"  set term=screen-256color
-"endif
+if exists('$TMUX')
+    set term=screen-256color
+endif
 "===========================================================================
 "=============================== POWERLINE =================================
 " Linux :
@@ -193,39 +191,25 @@ set term=screen-256color
 "===========================================================================
 "================================ VUNDLE ===================================
 {% if vim_env == "system" %}
-  if filereadable(expand("/etc/vim/vimrc.bundles"))
+if filereadable(expand("/etc/vim/vimrc.bundles"))
     source /etc/vim/vimrc.bundles  " load default plugin bundles
-  endif
 {% else %}
-  if filereadable(expand("~/.vimrc.bundles"))
+if filereadable(expand("~/.vimrc.bundles"))
     source ~/.vimrc.bundles  " load custom bundles
-  endif
 {% endif %}
-"===========================================================================
-"================================ EMOJI ====================================
-" Git Gutter
-silent! if emoji#available()
-    let g:gitgutter_sign_added = emoji#for('small_blue_diamond')
-    let g:gitgutter_sign_modified = emoji#for('small_orange_diamond')
-    let g:gitgutter_sign_removed = emoji#for('small_red_triangle')
-    let g:gitgutter_sign_modified_removed = emoji#for('collision')
 endif
-
-"" Append Emoji list to current buffer
-"for e in emoji#list()
-"  call append(line('$'), printf('%s (%s)', emoji#for(e), e))
-"endfor
-
-"" Create emoji database for weechat:
-"for e in emoji#list()
-"  call append(line('$'), printf(':%s:', e))
-"  call append(line('$'), printf('%s', emoji#for(e)))
-"endfor
-
-" Completion
-set completefunc=emoji#complete
-
-" Replace :emoji_name: into Emojis
-:command Emoji %s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g
 "===========================================================================
+{# IF INSTALLING EMOJI ADD THIS: #}
+{% if 'junegunn/vim-emoji' in vim_github_plugins %}
+"================================ EMOJI ====================================
+{% if vim_env == "system" %}
+if filereadable(expand("/etc/vim/vimrc.emoji"))
+    source /etc/vim/vimrc.emoji  " load emoji config
+{% else %}
+if filereadable(expand("~/.vimrc.emoji"))
+    source ~/.vimrc.emoji " load emoji config
+{% endif %}
+endif
+"===========================================================================
+{% endif %}
 

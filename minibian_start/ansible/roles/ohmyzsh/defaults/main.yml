@@ -1,0 +1,34 @@
+---
+ohmyzsh_users: []        # list of users to install zsh and ohmyzsh
+#  - user: mmacia        # user name
+#    theme: robbyrussell # ohmyzsh theme
+#    ssh_ids: []         # list of SSH ids to add to ohmyzsh ssh manager plugin
+#    plugins: []         # list of ohmyzsh plugins to install
+#    state: present      # present or absent, to install/uninstall
+
+ohmyzsh_default_theme: 'robbyrussell'
+
+ohmyzsh_default_plugins:
+  - tmux
+  - ssh-agent
+  - vagrant
+  - cp
+  - comand-not-found
+  - gnu-utils
+  - history
+  - python
+  - pip
+  - git
+  - git-extras
+#  - svn
+#  - mercurial
+#  - osx
+#  - brew
+#  - rails
+#  - ruby
+#  - bundle
+#  - rvm
+
+ohmyzsh_install_dir: /usr/local/share/ohmyzsh
+
+...
