@@ -1,4 +1,5 @@
 ---
+
 - stat: path=/usr/bin/vim.tiny
   register: vim_tiny
   tags:
@@ -28,7 +29,6 @@
   tags:
     - vim
 
-#================================ GIT ====================================
 # added git as it is a dependency (for small debian distros like minibian)
 - stat: path=/usr/bin/git
   register: git
@@ -41,25 +41,14 @@
   become: yes
   tags:
     - vim
-#=========================================================================
 
-#========================= UPDATE ALTERNATIVES ===========================
-- stat: path=/usr/sbin/update-alternatives
-  register: update_alternatives
-  tags:
-    - vim
-
-# Analog of 'update-alternatives --set editor /usr/bin/vim.nox'
 - name: Setting vim default editor for visudo
-  alternatives:
-    name: editor
-    path: /usr/bin/vim.nox
-    #path: /usr/bin/vim.basic
+  command:
+    update-alternatives --set editor /usr/bin/vim.nox
+    #update-alternatives --set editor /usr/bin/vim.basic
   become: yes
-  when: update_alternatives.stat.exists == True
   tags:
     - vim
-#=========================================================================
 
 - name: Setting up environment variable for vim to look good in tmux
   copy:

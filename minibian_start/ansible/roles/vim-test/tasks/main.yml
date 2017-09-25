@@ -7,13 +7,13 @@
     vim_root_config: /etc/vim/vimrc.local
     vim_root_bundles: /etc/vim/vimrc.bundles
     vim_root_emoji: /etc/vim/vimrc.emoji
-  when: (vim_env == "system")
+  when: (vim_env == "system" or vim_env == "both")
 
 - include: configure_user.yml
   vars:
     vim_root_config: ~/.vimrc
     vim_root_bundles: ~/.vimrc.bundles
     vim_root_emoji: ~/.vimrc.emoji
-  when: (vim_env == "user")
+  when: (vim_env == "user" or vim_env == "both")
 
 ...

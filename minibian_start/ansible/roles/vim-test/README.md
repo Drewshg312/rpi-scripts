@@ -1,28 +1,15 @@
-# Ultimate Vim Setup
+# Vim
 
   [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-vim-blue.svg)](https://galaxy.ansible.com/list#/roles/6323)
 
-  This role is forked from [SamyRoad/ansible-vim](https://github.com/SamyRoad/ansible-vim) and modified for my needs.
+  This is a non opinionated vim config: just install vim and a set of common bundles/plugins. All config, key bindings
+  and magical stuff are left to your customizations.
 
-  The role is compatible with Debian/Ubuntu
+  This role it is compatible with Debian/Ubuntu.
 
-  The role does the following:
-    - Removes vim-tiny
-    - Installs vim-nox (needed for Powerline plugin)
-    - Sets EDITOR environment variable to use vim-nox
-    - Installs [Vundle](https://github.com/VundleVim/Vundle.vim) plugin manager for vim
-    - Installs git (as a dependency for Vundle installation)
-    - Installs set of Plugins defined in default/main.yml
-    - Configures vim (system-wide or per-user) as defined in default/main.yml (using my custom configuration)
-    - Installs [Solarized](https://github.com/altercation/vim-colors-solarized#important-note-for-terminal-users) and
-      customized [Mustang](https://hcalves.deviantart.com/art/Mustang-Vim-Colorscheme-98974484) colorschemes.
+  We provide a cascade of config files to allow you to set your custom settings and install your desired plugins without
+  hassle. Check our use cases.
 
-  IT IS NOT A GOOD IDEA to install [Emoji](https://github.com/junegunn/vim-emoji) plugin both system-wide and per user.
-  Vim sources both system-wide and user's vimrc files and complains about duplicated emoji command.
-  This will also cause command 'vim +PluginInstall +qall' to hang or fail.
-
-  If installing current role system-wide and per user, comment 'junegunn/vim-emoji' in default/main.yaml for system
-  installation and uncomment it for per-user installation.
 
 ## Use case #1: install for shared usage
 
@@ -72,7 +59,7 @@
 
 ## Dependencies
 
-  Git
+  None.
 
 ## License
 
