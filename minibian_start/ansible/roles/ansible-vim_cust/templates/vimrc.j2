@@ -9,8 +9,8 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
 set directory=~/.vim/swp//,/tmp//   " directories for .swp files
 "===========================================================================
 "============================== LOCAL CONFIG ===============================
-if filereadable($HOME . "/.vim.local/.vimrc.local")
-    source ~/.vim.local/.vimrc.local
+if filereadable($HOME . "/.vimrc.local")
+    source ~/.vimrc.local
 endif
 "===========================================================================
 "=============================== KEY MAPPINGS ==============================
@@ -18,13 +18,6 @@ endif
 let mapleader= ","
 "now we can do something like ':nnoremap ,d dd'
 
-{% if 'wincent/command-t' in vim_github_plugins %}
-"============================= COMMAND-T PLUGIN ============================
-if filereadable(expand("{{ vim_root_command_t }}"))
-    source {{ vim_root_command_t }}  " load emoji config
-endif
-"===========================================================================
-{% endif %}
 " non-recursive key-mapping for vim Normal Mode
 " Make ; key to be the same s : key:
 nnoremap ; :
@@ -134,6 +127,8 @@ set shm=atIWswxrnmlf                " message formats
 set showmode
 set showcmd                         " show the command we're typing
 "set mouse=a
+set background=dark
+set t_ut=
 
 set tabstop=4                       " a tab is four spaces
 set softtabstop=4                   " delete tabs as one keystroke
@@ -154,32 +149,28 @@ set noexpandtab                     " do not convert tabs to spaces
 "============================== COLORSCHEME ================================
 set t_Co=256 " REQUIRED for Tmux
 
-set background=dark
-set t_ut=                           " disable Background Color Erase
-
+" MUSTANG
 if &t_Co >= 256 || has("gui_running")
     colorscheme mustang
-    "colorscheme solarized
 endif
+
+" SOLARIZED
+try
+    let g:solarized_termcolors=256
+    colorscheme solarized
+catch /^Vim\%((\a\+)\)\=:E185/
+  " deal with it
+endtry
 
 if &t_Co > 2 || has("gui_running") && !exists("syntax_on")
     syntax on   " switch syntax highlighting on, when the terminal has colors
 endif
-
-" SOLARIZED colorscheme
-" Schedule automatic LIGHT/DARK background switching:
-"let hour = strftime("%H")
-"if 6 <= hour && hour < 18
-"  set background=dark
-"else
-"  set background=light
-"endif
 "===========================================================================
 "================================== TMUX ===================================
 " Make color scheme look good in TMUX:
 " Also make sure to add "export TERM='xterm-256color'" line in your ~/.bashrc
 if exists('$TMUX')
-    set term=screen-256color
+  set term=screen-256color
 endif
 "===========================================================================
 "=============================== POWERLINE =================================
@@ -197,36 +188,40 @@ endif
 "let g:Powerline_symbols = 'fancy'
 "===========================================================================
 "================================ VUNDLE ===================================
-if filereadable(expand("{{ vim_root_bundles }}"))
-    source {{ vim_root_bundles }}   " load default plugin bundles
-endif
+{% if vim_env == "system" %}
+  if filereadable(expand("/etc/vim/vimrc.bundles"))
+    source /etc/vim/vimrc.bundles  " load default plugin bundles
+  endif
+{% else %}
+  if filereadable(expand("~/.vimrc.bundles"))
+    source ~/.vimrc.bundles  " load custom bundles
+  endif
+{% endif %}
 "===========================================================================
-
-{# PLUGINS CONFIGURATIONS #}
-{# IF INSTALLING EMOJI ADD THIS: #}
-{% if 'junegunn/vim-emoji' in vim_github_plugins %}
 "================================ EMOJI ====================================
-if filereadable(expand("{{ vim_root_emoji }}"))
-    source {{ vim_root_emoji }}     " load emoji config
+" Git Gutter
+silent! if emoji#available()
+    let g:gitgutter_sign_added = emoji#for('small_blue_diamond')
+    let g:gitgutter_sign_modified = emoji#for('small_orange_diamond')
+    let g:gitgutter_sign_removed = emoji#for('small_red_triangle')
+    let g:gitgutter_sign_modified_removed = emoji#for('collision')
 endif
-"===========================================================================
-{% endif %}
 
-{# IF INSTALLING VIM-AIRLINE ADD THIS: #}
-{% if 'vim-airline/vim-airline' in vim_github_plugins %}
-"============================== VIM-AIRLINE ================================
-if filereadable(expand("{{ vim_root_airline }}"))
-    source {{ vim_root_airline }}   " load vim-airline config
-endif
-"
-"===========================================================================
-{% endif %}
+"" Append Emoji list to current buffer
+"for e in emoji#list()
+"  call append(line('$'), printf('%s (%s)', emoji#for(e), e))
+"endfor
 
-{# IF INSTALLING SYNTASTIC ADD THIS: #}
-{% if 'vim-syntastic/syntastic' in vim_github_plugins %}
-"=============================== SYNTASTIC =================================
-if filereadable(expand("{{ vim_root_syntastic }}"))
-    source {{ vim_root_syntastic }} " load syntastic config
-endif
+"" Create emoji database for weechat:
+"for e in emoji#list()
+"  call append(line('$'), printf(':%s:', e))
+"  call append(line('$'), printf('%s', emoji#for(e)))
+"endfor
+
+" Completion
+set completefunc=emoji#complete
+
+" Replace :emoji_name: into Emojis
+:command Emoji %s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g
 "===========================================================================
-{% endif %}
+

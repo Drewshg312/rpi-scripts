@@ -1,16 +1,16 @@
 " This file is managed by Ansible, all changes will be lost
 "================================ VUNDLE ===================================
 if &compatible
-  set nocompatible
+    set nocompatible
 end
 
-filetype off                    " Required
-  " set the runtime path to include Vundle and initialize
-    " fro system-wide configuration:
+filetype off                              " Required
+
+" set the runtime path to include Vundle and initialize
 {% if vim_env == "system" %}
-  set rtp+=/var/lib/vim/addons/Vundle.vim/
+set rtp+=/var/lib/vim/addons/Vundle.vim/  " for system-wide configuration:
 {% else %}
-  set rtp+=~/.vim/bundle/Vundle.vim/
+set rtp+=~/.vim/bundle/Vundle.vim/
 {% endif %}
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
@@ -21,17 +21,16 @@ Plugin 'gmarik/Vundle.vim'
 
 " Define bundles via Github repos
 {% for plugin in vim_github_plugins %}
-  Plugin '{{plugin}}'
+Plugin '{{plugin}}'
 {% endfor %}
 
 " Define non-Github repos
 {% for plugin in vim_nongithub_plugins %}
-  Plugin '{{plugin}}'
+Plugin '{{plugin}}'
 {% endfor %}
 
-
 if filereadable(expand("~/.vimrc.bundles.local"))
-  source ~/.vimrc.bundles.local
+    source ~/.vimrc.bundles.local
 endif
 
 call vundle#end()
@@ -39,7 +38,7 @@ call vundle#end()
 
 " use filetype based indenting (does not interfere with 'autoindent')
 " although may interfere with 'smartindent' and 'cindent'
-filetype plugin indent on       " required
+filetype plugin indent on                 " required
 
 " To ignore plugin indent changes, instead use:
 "filetype plugin on

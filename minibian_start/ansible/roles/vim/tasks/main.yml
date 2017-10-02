@@ -4,16 +4,24 @@
 
 - include: configure_system.yml
   vars:
-    vim_root_config: /etc/vim/vimrc.local
-    vim_root_bundles: /etc/vim/vimrc.bundles
-    vim_root_emoji: /etc/vim/vimrc.emoji
+    vim_root_config: "/etc/vim/vimrc.local"
+    vim_root_bundles: "/etc/vim/vimrc.bundles"
+    vim_root_emoji: "/etc/vim/vimrc.emoji"
+    vim_root_airline: "/etc/vim/vimrc.airline"
+    vim_root_command_t: "/etc/vim/vimrc.command-t"
+    vim_root_syntastic: "/etc/vim/vimrc.syntastic"
   when: (vim_env == "system")
 
 - include: configure_user.yml
   vars:
-    vim_root_config: ~/.vimrc
-    vim_root_bundles: ~/.vimrc.bundles
-    vim_root_emoji: ~/.vimrc.emoji
+    vim_root_cust_conf_dir: "~/.vim.local"
+    vim_root_cust_conf_plugin_dir: "~/.vim.local/vimrc.plugins"
+    vim_root_config: "~/.vimrc"
+    vim_root_bundles: "{{ vim_root_cust_conf_dir }}/vimrc.bundles"
+    vim_root_emoji: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.emoji"
+    vim_root_airline: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.airline"
+    vim_root_command_t: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.command-t"
+    vim_root_syntastic: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.syntastic"
   when: (vim_env == "user")
 
 ...

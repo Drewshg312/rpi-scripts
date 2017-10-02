@@ -3,7 +3,65 @@
   vars_files:
     - vars.yml
 
-  roles:
+  #roles:
     #- expandfs
-    - vim
+    #- vim
+  tasks:
+    - name: finding old vim configs /etc/vim/ and /root/
+      find:
+        file_type: any
+        paths:
+          - /root/
+          - /etc/vim/
+        patterns:
+          - 'vimrc.*'
+          - '.vim*'
+        hidden: yes
+      register: sys_vim_cfg_files
+      become: yes
+      tags:
+        - vim
+        - vim_cleanup
+
+#    - name: removing old vim configuration from /etc/vim/ and /root/
+#      file: path="{{ item.path }}" state=absent
+#      become: yes
+#      with_items: "{{ sys_vim_cfg_files.files }}"
+#      tags:
+#        - vim
+#        - vim_cleanup
+
+    - name: finding old vim configs in ~/ for all users
+      find:
+        file_type: any
+        paths: ~/
+        patterns:
+          - '.vim*'
+        hidden: yes
+      register: user_vim_cfg_files
+      become: yes
+      become_user: "{{ item }}"
+      become_method: su
+      with_items: "{{ vim_users }}"
+      when: vim_env == 'users' and vim_users is defined
+      tags:
+        - vim
+        - vim_cleanup
+
+#    - debug:
+#        msg: "{{ item.files | map(attribute='path') | list }}"
+#      with_items:
+#        - "{{ users_contents.results}}"
+
+    - name: removing old vim configuration
+      file:
+        path: "{{ (user_vim_cfg_files.results | sum(attribute='files')) | map(attribute='path') | list }}"
+        state: absent
+      become: yes
+      #with_items:
+      #  - "{{ users_contents.results }}"
+      tags:
+        - vim
+        - vim_cleanup
+
 ...

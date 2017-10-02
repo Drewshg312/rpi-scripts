@@ -1,0 +1,9 @@
+---
+- hosts: raspberrypi_3
+#  vars_files:
+#    - vars.yml
+
+  roles:
+    #- expandfs
+    - vim
+...

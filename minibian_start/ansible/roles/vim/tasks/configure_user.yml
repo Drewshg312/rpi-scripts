@@ -1,16 +1,28 @@
 ---
-- name: '[user] Generating ~/.virmc from template'
+# Create a directory ~/.vim.local in order not to pollute home directory
+- name: "[user] Create {{ vim_root_cust_conf_dir }} directory for custom configuration content"
+  file:
+    state: directory
+    path: "{{ vim_root_cust_conf_plugin_dir }}"
+  become: yes    # Required for become_user to work
+  become_method: su    # by default it tries to use 'sudo' instead (comment it if using non-root user for provisioning)
+  become_user: "{{ item }}"
+  with_items: "{{ vim_users }}"
+  tags:
+    - vim
+
+- name: "[user] Generating {{ vim_root_config }} from template"
   template: src=vimrc.j2 dest="{{ vim_root_config }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   #when: ("{{ vim_users }}" is defined and item != "root")
   when: ("{{ vim_users }}" is defined)
-  become: yes    # Required for become_user to work
-  become_method: su    # by default it tries to use 'sudo' instead (comment it if using non-root user for provisioning)
+  become: yes
+  become_method: su
   become_user: "{{ item }}"
   tags:
     - vim
 
-- name: '[user] Generating ~/.vimrc.bundles from template'
+- name: "[user] Generating {{ vim_root_bundles }} from template"
   template: src=vimrc.bundles.j2 dest="{{ vim_root_bundles }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   when: ("{{ vim_users }}" is defined)
@@ -20,7 +32,7 @@
   tags:
     - vim
 
-- name: '[system] Generation ~/.vimrc.emoji from template'
+- name: "[system] Generation {{ vim_root_emoji }} from template"
   template: src=vimrc.emoji.j2 dest="{{ vim_root_emoji }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
@@ -31,16 +43,33 @@
   tags:
     - vim
 
-- name: '[user] Installing Vundle'
-  git:
-    repo: https://github.com/gmarik/Vundle.vim.git
-    dest: ~/.vim/bundle/Vundle.vim
-    version: "{{ vim_vundle_version }}"
+- name: "[system] Generation {{ vim_root_syntastic }} from template"
+  template: src=vimrc.syntastic.j2 dest="{{ vim_root_syntastic }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
-  when: ("{{ vim_users }}" is defined)
   become: yes
   become_method: su
   become_user: "{{ item }}"
+  when: 'vim_users is defined and "vim-syntastic/syntastic" in vim_github_plugins'
+  tags:
+    - vim
+
+- name: "[system] Generation {{ vim_root_airline }} from template"
+  template: src=vimrc.airline.j2 dest="{{ vim_root_airline }}" owner="{{ item }}" group="{{ item }}" mode=0644
+  with_items: "{{ vim_users }}"
+  become: yes
+  become_method: su
+  become_user: "{{ item }}"
+  when: 'vim_users is defined and "vim-airline/vim-airline" in vim_github_plugins'
+  tags:
+    - vim
+
+- name: "[system] Generation {{ vim_root_command_t }} from template"
+  template: src=vimrc.command-t.j2 dest="{{ vim_root_command_t }}" owner="{{ item }}" group="{{ item }}" mode=0644
+  with_items: "{{ vim_users }}"
+  become: yes
+  become_method: su
+  become_user: "{{ item }}"
+  when: 'vim_users is defined and "wincent/command-t" in vim_github_plugins'
   tags:
     - vim
 
@@ -50,6 +79,19 @@
     dest: ~/.vim/
     owner: "{{ item }}"
     group: "{{ item }}"
+  with_items: "{{ vim_users }}"
+  when: ("{{ vim_users }}" is defined)
+  become: yes
+  become_method: su
+  become_user: "{{ item }}"
+  tags:
+    - vim
+
+- name: '[user] Installing Vundle'
+  git:
+    repo: https://github.com/gmarik/Vundle.vim.git
+    dest: ~/.vim/bundle/Vundle.vim
+    version: "{{ vim_vundle_version }}"
   with_items: "{{ vim_users }}"
   when: ("{{ vim_users }}" is defined)
   become: yes

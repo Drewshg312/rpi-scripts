@@ -1,0 +1,7 @@
+---
+
+- hosts: raspberrypi_3
+  remote_user: root
+  roles:
+    - powerline-fonts
+...

@@ -1,0 +1,28 @@
+"============================== VIM-AIRLINE ================================
+let g:airline_powerline_fonts = 1                     " Use Powerline patched fonts (for separators)
+let g:Powerline_symbols = 'fancy'                     " Make Powerline symbols look good
+
+" Fix messed up powerline symbols installed with fontconfig:
+"if !exists('g:airline_symbols')
+"  let g:airline_symbols = {}
+"endif
+"let g:airline_symbols.space = "\ua0"
+
+let g:airline#extensions#tabline#enabled = 1          " Enable Top bar
+
+" DEFINE 'STRAIGHT' TABS :
+"let g:airline#extensions#tabline#left_sep = ' '      " Change left top field shape (better to comment this one)
+"let g:airline#extensions#tabline#left_alt_sep = '|'
+
+" THEMES :
+let g:airline_theme='powerlineish'
+"let g:airline_theme='solarized'
+"let g:airline_theme='badwolf_cust'
+
+" To change theme temporarily run :AirlineTheme <tab>
+
+" CUSTOM SECTORS :
+"let g:airline_section_b = '%{strftime("%c")}'        " Left middle sector: show Date and Time
+"let g:airline_section_y = 'BN: %{bufnr("%")}'         " Right middle sector: show Buffer Number
+"===========================================================================
+

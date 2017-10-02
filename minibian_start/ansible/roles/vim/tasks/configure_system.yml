@@ -18,10 +18,20 @@
   tags:
     - vim
 
-- name: '[system] Copying .vim folder to /var/lib/vim/addons/.vim'
+- name: '[system] Copying .vim folder to /var/lib/vim/addons/'
   copy:
     src: vim/
     dest: /var/lib/vim/addons/
+  become: yes
+  tags:
+    - vim
+
+# remove the old /root/.vim directory for idempotent plugin installation by vundle
+# needed for system-wide installation only
+- name: '[system] removing old /root/.vim directory if present'
+  file:
+    path: /root/.vim
+    state: absent
   become: yes
   tags:
     - vim
