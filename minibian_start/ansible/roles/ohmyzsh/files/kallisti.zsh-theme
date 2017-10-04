@@ -198,7 +198,6 @@ prompt_status() {
 
 function battery_charge {
   echo `/usr/bin/env python ~/.scripts/shell/modules/prompt/batcharge.py`
-  #/usr/bin/env python ~/scripts/shell/modules/prompt/batcharge.py
 }
 
 function prompt_online() {

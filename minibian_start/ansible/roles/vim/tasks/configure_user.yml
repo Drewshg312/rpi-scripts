@@ -1,11 +1,9 @@
 ---
 # Create a directory ~/.vim.local in order not to pollute home directory
 - name: "[user] Create {{ vim_root_cust_conf_dir }} directory for custom configuration content"
-  file:
-    state: directory
-    path: "{{ vim_root_cust_conf_plugin_dir }}"
+  file: path="{{ vim_root_cust_conf_plugin_dir }}" state=directory
   become: yes    # Required for become_user to work
-  become_method: su    # by default it tries to use 'sudo' instead (comment it if using non-root user for provisioning)
+  become_method: su  # only good for root user to become another user when sudo package is not available
   become_user: "{{ item }}"
   with_items: "{{ vim_users }}"
   tags:
@@ -32,6 +30,7 @@
   tags:
     - vim
 
+# CONFIGURE PLUGINS
 - name: "[system] Generation {{ vim_root_emoji }} from template"
   template: src=vimrc.emoji.j2 dest="{{ vim_root_emoji }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
@@ -74,11 +73,7 @@
     - vim
 
 - name: '[user] Copying .vim folder to ~/.vim'
-  copy:
-    src: vim/
-    dest: ~/.vim/
-    owner: "{{ item }}"
-    group: "{{ item }}"
+  copy: src=vim/ dest=~/.vim/ owner="{{ item }}" group="{{ item }}"
   with_items: "{{ vim_users }}"
   when: ("{{ vim_users }}" is defined)
   become: yes
@@ -88,10 +83,7 @@
     - vim
 
 - name: '[user] Installing Vundle'
-  git:
-    repo: https://github.com/gmarik/Vundle.vim.git
-    dest: ~/.vim/bundle/Vundle.vim
-    version: "{{ vim_vundle_version }}"
+  git: repo=https://github.com/gmarik/Vundle.vim.git dest=~/.vim/bundle/Vundle.vim version="{{ vim_vundle_version }}"
   with_items: "{{ vim_users }}"
   when: ("{{ vim_users }}" is defined)
   become: yes

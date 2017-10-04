@@ -13,15 +13,16 @@
 #        name: variables
   pre_tasks:
     - name: Setting hostname
-      hostname:
-        name: "{{ host_name }}"
+      hostname: name="{{ host_name }}"
+      become: yes
 
     - name: Setting timezone
-      timezone:
-        name: America/Vancouver
+      timezone: name=America/Vancouver
+      become: yes
 
     - name: Temporarily set dns to 8.8.8.8 in order to resolve '*.raspberrypi.org'
       shell: echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+      become: yes
 
   roles:
     - expandfs
@@ -31,56 +32,52 @@
 
 #    - stat: path=/usr/bin/sudo
 #      register: sudo
-#      tags:
-#        -vim
 #
-#    - name: Install sudo
-#      apt: name=sudo state=present
-#      when: sudo.stat.exists == False
-#      become: yes
-#      tags:
-#        -vim
+    - name: Install sudo
+      apt: name=sudo state=present
+      when: sudo.stat.exists == False
+      become: yes
 
     #========= UPDATING FIRMWARE: ========
     # needs: echo 'nameserver 8.8.8.8' > /etc/resolv.conf
     # which is done in 'expandfs' role.
     - name: Installing latest 'rpi-update'
-      apt:
-        name: rpi-update
-        state: latest
-        force: yes
+      apt: name=rpi-update state=latest force=yes
       become: yes
 
     - name: Updating firmware
       command: rpi-update
     #=====================================
 
-#    #========= SET ROOT PASSWORD: ========
-#    - name: Change root password
-#      user:
-#        name: root
-#        password: "{{ new_root_passwd }}"
-#        #password: P@ssw0rd
-#    #=====================================
+    #========= SET ROOT PASSWORD: ========
+    - name: Change root password
+      user: name=root password="{{ new_root_passwd }}"
+    #=====================================
 
     #========= CONFIGURING PROMPT ========
+    - name: stat /etc/skel
+      stat: path=/etc/skel
+      register: skel_stat
+
+    - name: stat /etc/skel.dist
+      stat: path=/etc/skel.dist
+      register: skel_dist_stat
+
+    - name: Backup distro /etc/skel
+      command: mv /etc/skel /etc/skel.dist
+      become: yes
+      when: skel_stat.stat.exists == True and skel_dist_stat.stat.exists == False
+
     - name: Copying /etc/skel contents
-      copy:
-        src: etc/skel/
-        dest: /etc/skel/
-        backup: yes
+      copy: src=etc/skel/ dest=/etc/skel
+      become: yes
 
     - name: Copying .bashrc and .profile to home directory
-      copy:
-        src: etc/skel/
-        dest: "{{ ansible_env.HOME}}/"
+      copy: src=etc/skel/ dest="{{ ansible_env.HOME}}/"
     #=====================================
 
     #========== DISTRO UPGRADE ===========
     - name: Upgrading distro
-      apt:
-        upgrade: dist
-        autoclean: yes
-        autoremove: yes
+      apt: upgrade=dist autoclean=yes autoremove=yes
     #====================================
 ...

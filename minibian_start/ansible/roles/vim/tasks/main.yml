@@ -1,5 +1,5 @@
 ---
-
+- include: cfg_cleanup.yml
 - include: install.yml
 
 - include: configure_system.yml
@@ -10,7 +10,7 @@
     vim_root_airline: "/etc/vim/vimrc.airline"
     vim_root_command_t: "/etc/vim/vimrc.command-t"
     vim_root_syntastic: "/etc/vim/vimrc.syntastic"
-  when: (vim_env == "system")
+  when: (vim_env == 'system')
 
 - include: configure_user.yml
   vars:
@@ -22,6 +22,5 @@
     vim_root_airline: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.airline"
     vim_root_command_t: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.command-t"
     vim_root_syntastic: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.syntastic"
-  when: (vim_env == "user")
-
+  when: (vim_env == 'user' or vim_env == 'users')
 ...
