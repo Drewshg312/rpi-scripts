@@ -1,33 +1,32 @@
 ---
-# tasks file for expandfs
+- name: Install parted
+  apt: update_cache=yes name=parted state=present force=yes
+  become: yes
 
-#- name: Temporarily set DNS resolver to 8.8.8.8 in order to resolve '*.raspbian.org'
-#  shell: >
-#    echo 'nameserver 8.8.8.8' > /etc/resolv.conf
-#  become: yes
+- name: Check unpartitioned space
+  shell: /sbin/parted /dev/mmcblk0 unit gb print free | grep 'Free Space' | tail -n1 | awk '{print $3}'
+  register: unpartitioned
+  changed_when: false
+  failed_when: unpartitioned.stderr != ""
 
 - name: Installing raspi-config if not present
-  apt:
-    update_cache: yes
-    name: raspi-config
-    state: present
-    force: yes
+  apt: update_cache=yes name=raspi-config state=present force=yes
   become: yes
+  when: unpartitioned.stdout != "0.00GB"
 
 - name: Expanding filesystem
-  command: >
-    raspi-config nonint do_expand_rootfs
+  command: raspi-config nonint do_expand_rootfs
   become: yes
+  when: unpartitioned.stdout != "0.00GB"
 
 - name: Running 'partprobe'
-  command: >
-    partprobe
+  command: partprobe
   become: yes
+  when: unpartitioned.stdout != "0.00GB"
 
 - name: Running 'resize2fs /dev/mmcblk0p2'
-  command: >
-    resize2fs /dev/mmcblk0p2
+  command: resize2fs /dev/mmcblk0p2
   become: yes
+  when: unpartitioned.stdout != "0.00GB"
   notify: Filesystem is expanded
-
 ...

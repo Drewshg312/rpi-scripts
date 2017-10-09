@@ -1,67 +1,42 @@
 ---
-- stat: path=/usr/bin/vim.tiny
-  register: vim_tiny
-  tags:
-    - vim
-
-- name: Make sure vim-tiny is uninstalled
+- name: '[install] Make sure vim-tiny is uninstalled'
   apt: name=vim-tiny state=absent purge=true
   become: yes
-  when: vim_tiny.stat.exists == True
   tags:
     - vim
 
-- stat: path=/usr/bin/vim.nox
-  register: vim_nox
-  tags:
-    - vim
-
-- name: Make sure vim-nox is installed
+- name: '[install] Make sure vim-nox is installed'
   apt: name=vim-nox state=present
   become: yes
-  when: vim_nox.stat.exists == False
   tags:
     - vim
 
-- name: Install CTags
+- name: '[install] Install CTags'
   apt: name=exuberant-ctags state=present
   tags:
     - vim
 
 #================================ GIT ====================================
 # added git as it is a dependency (for small debian distros like minibian)
-- stat: path=/usr/bin/git
-  register: git
-  tags:
-    - vim
-
-- name: Install git
+- name: '[install] Install git'
   apt: name=git state=present
-  when: git.stat.exists == False
   become: yes
   tags:
     - vim
 #=========================================================================
 
 #========================= UPDATE ALTERNATIVES ===========================
-- stat: path=/usr/sbin/update-alternatives
-  register: update_alternatives
-  tags:
-    - vim
-
 # Analog of 'update-alternatives --set editor /usr/bin/vim.nox'
-- name: Setting vim default editor for visudo
+- name: '[install] Setting vim default editor for visudo'
   alternatives:
     name: editor
     path: /usr/bin/vim.nox
-    #path: /usr/bin/vim.basic
   become: yes
-  when: update_alternatives.stat.exists == True
   tags:
     - vim
 #=========================================================================
 
-- name: Setting up environment variable for vim to look good in tmux
+- name: '[install] Setting up environment variable for vim to look good in tmux'
   copy:
     src: etc/profile.d/env_var.sh
     dest: /etc/profile.d/

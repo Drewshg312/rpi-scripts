@@ -1,7 +1,5 @@
 ---
-# tasks file for network
-
-- name: Check '/lib/udev/rules.d/75-persistent-net-generator.rules' RED OUTPUT IS OK!
+- name: == RED OUTPUT IS OK == Check '/lib/udev/rules.d/75-persistent-net-generator.rules' == RED OUTPUT IS OK ==
   command: >
     fgrep -q 'KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*"' \
       /lib/udev/rules.d/75-persistent-net-generator.rules
@@ -30,6 +28,7 @@
     src: interfaces
     dest: /etc/network/interfaces
   become: yes
-  notify: Restart networking service
+  notify: Reload networking service and systemd daemon
 
+- meta: flush_handlers
 ...

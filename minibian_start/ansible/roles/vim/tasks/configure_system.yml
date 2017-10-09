@@ -11,32 +11,49 @@
   tags:
     - vim
 
-- name: '[system] Generating /etc/vim/vimrc.emoji from template'
+- name: "[system] Generating {{ vim_root_emoji }} from template"
   template: src=vimrc.emoji.j2 dest="{{ vim_root_emoji }}" owner=root group=root mode=0644
   become: yes
   when: '"junegunn/vim-emoji" in vim_github_plugins' # no need to use "{{ }}" in "when" conditions (Jinja2 feature)
   tags:
     - vim
 
-- name: '[system] Copying .vim folder to /var/lib/vim/addons/'
-  copy:
-    src: vim/
-    dest: /var/lib/vim/addons/
+- name: "[system] Generating {{ vim_root_syntastic }} from template"
+  template: src=vimrc.syntastic.j2 dest="{{ vim_root_syntastic }}" owner=root group=root mode=0644
+  become: yes
+  when: '"vim-syntastic/syntastic" in vim_github_plugins'
+  tags:
+    - vim
+
+- name: "[system] Generating {{ vim_root_airline }} from template"
+  template: src=vimrc.airline.j2 dest="{{ vim_root_airline }}" owner=root group=root mode=0644
+  become: yes
+  when: '"vim-airline/vim-airline" in vim_github_plugins'
+  tags:
+    - vim
+
+- name: "[system] Generating {{ vim_root_command_t }} from template"
+  template: src=vimrc.command-t.j2 dest="{{ vim_root_command_t }}" owner=root group=root mode=0644
+  become: yes
+  when: '"wincent/command-t" in vim_github_plugins' # no need to use "{{ }}" in "when" conditions (Jinja2 feature)
+  tags:
+    - vim
+
+- name: "[system] Copying .vim folder to /var/lib/vim/addons/"
+  copy: src=vim/ dest=/var/lib/vim/addons/
   become: yes
   tags:
     - vim
 
-# remove the old /root/.vim directory for idempotent plugin installation by vundle
+# remove the old /root/.vim directory for idempotent plugin installation with vundle
 # needed for system-wide installation only
-- name: '[system] removing old /root/.vim directory if present'
-  file:
-    path: /root/.vim
-    state: absent
+- name: "[system] removing old /root/.vim directory if present"
+  file: path=/root/.vim state=absent
   become: yes
   tags:
     - vim
 
-- name: '[system] Installing Vundle'
+- name: "[system] Installing Vundle"
   git:
     repo: https://github.com/gmarik/Vundle.vim.git
     dest: /var/lib/vim/addons/Vundle.vim

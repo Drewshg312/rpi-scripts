@@ -32,11 +32,11 @@
 
 #    - stat: path=/usr/bin/sudo
 #      register: sudo
-#
-    - name: Install sudo
-      apt: name=sudo state=present
-      when: sudo.stat.exists == False
-      become: yes
+
+#    - name: Install sudo
+#      apt: name=sudo state=present
+#      when: sudo.stat.exists == False
+#      become: yes
 
     #========= UPDATING FIRMWARE: ========
     # needs: echo 'nameserver 8.8.8.8' > /etc/resolv.conf
@@ -49,17 +49,14 @@
       command: rpi-update
     #=====================================
 
-    #========= SET ROOT PASSWORD: ========
-    - name: Change root password
-      user: name=root password="{{ new_root_passwd }}"
-    #=====================================
-
     #========= CONFIGURING PROMPT ========
-    - name: stat /etc/skel
+    # required because 'command: mv ...' will return error
+    # if /etc/skel does not exist
+    - name: check if /etc/skel exists
       stat: path=/etc/skel
       register: skel_stat
 
-    - name: stat /etc/skel.dist
+    - name: check if /etc/skel.dist exists (in case /etc/skel was already backed up)
       stat: path=/etc/skel.dist
       register: skel_dist_stat
 
@@ -79,5 +76,12 @@
     #========== DISTRO UPGRADE ===========
     - name: Upgrading distro
       apt: upgrade=dist autoclean=yes autoremove=yes
+      become: yes
     #====================================
+
+    #========= SET ROOT PASSWORD: ========
+    - name: Change root password
+      user: name=root password="{{ new_root_passwd }}"
+      become: yes
+    #=====================================
 ...

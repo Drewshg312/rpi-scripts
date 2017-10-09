@@ -1,5 +1,5 @@
 ---
-- name: finding old vim configs /etc/vim/ and /root/
+- name: '[cleanup] finding old vim configs /etc/vim/ and /root/'
   find:
     file_type: any
     paths: [ '/root/', '/etc/vim/' ]
@@ -11,7 +11,7 @@
     - vim
     - vim_cleanup
 
-- name: removing old vim configuration from /etc/vim/ and /root/
+- name: '[cleanup] removing old vim configuration from /etc/vim/ and /root/'
   file: path="{{ item.path }}" state=absent
   become: yes
   with_items: "{{ sys_vim_cfg_files.files }}"
@@ -19,7 +19,7 @@
     - vim
     - vim_cleanup
 
-- name: finding old vim configs in ~/ for all users
+- name: '[cleanup] finding old vim configs in ~/ for all users'
   find: file_type=any paths=~/ patterns='.vim*' hidden=yes
   register: user_vim_cfg_files
   become: yes
@@ -31,7 +31,7 @@
     - vim
     - vim_cleanup
 
-- name: removing old vim configuration
+- name: '[cleanup] removing old vim configuration'
   file: path="{{ item }}" state=absent
   become: yes
   with_items:

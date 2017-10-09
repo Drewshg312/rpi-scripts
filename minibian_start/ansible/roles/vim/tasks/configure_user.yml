@@ -31,7 +31,7 @@
     - vim
 
 # CONFIGURE PLUGINS
-- name: "[system] Generation {{ vim_root_emoji }} from template"
+- name: "[user] Generation {{ vim_root_emoji }} from template"
   template: src=vimrc.emoji.j2 dest="{{ vim_root_emoji }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
@@ -42,7 +42,7 @@
   tags:
     - vim
 
-- name: "[system] Generation {{ vim_root_syntastic }} from template"
+- name: "[user] Generation {{ vim_root_syntastic }} from template"
   template: src=vimrc.syntastic.j2 dest="{{ vim_root_syntastic }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
@@ -52,7 +52,7 @@
   tags:
     - vim
 
-- name: "[system] Generation {{ vim_root_airline }} from template"
+- name: "[user] Generation {{ vim_root_airline }} from template"
   template: src=vimrc.airline.j2 dest="{{ vim_root_airline }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
@@ -62,7 +62,7 @@
   tags:
     - vim
 
-- name: "[system] Generation {{ vim_root_command_t }} from template"
+- name: "[user] Generation {{ vim_root_command_t }} from template"
   template: src=vimrc.command-t.j2 dest="{{ vim_root_command_t }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
@@ -99,16 +99,12 @@
 #   EITHER .vimrc or .vim files permissions (see 'which sudo' and become_method: su )
 #   OR errors in .vimrc
 #
-# Instead of command: "vim +PluginInstall +qall" we can use:
-#
-# shell:
-#   vim -E -s -c "source ~/.vimrc" -c PluginInstall -c qa
-# ignore_errors: yes
-#
-# For troubleshooting add -V switch to this command and run it directly on the target
+# For troubleshooting run the following command on the target host:
+#   vim -E -s -c "source ~/.vimrc" -c PluginInstall -c qa -V
 #
 - name: '[user] Downloading plugins'
   command: "vim +PluginInstall +qal"
+  ignore_errors: yes
   with_items: "{{ vim_users }}"
   when: ("{{ vim_users }}" is defined)
   become: yes
