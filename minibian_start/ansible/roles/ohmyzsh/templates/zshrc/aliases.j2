@@ -3,6 +3,6 @@
 # global aliases
 
 # Load custom aliases
-if [ -f $HOME/.zsh/aliases.local ]; then
-  source $HOME/.zsh/aliases.local
+if [ -f {{ ohmyzsh_custom_aliases }} ]; then
+  source {{ ohmyzsh_custom_aliases }}
 fi

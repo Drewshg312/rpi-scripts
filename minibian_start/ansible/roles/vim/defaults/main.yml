@@ -14,25 +14,19 @@ vim_users:
 # only if system-wide configuration is NOT planned to be used on this system
 # For non-root users it is possible to use both system-wide and user configurations
 #
-#  - root
-  - drew
-  - pi
+##  - root
+#  - pi
 
 # Another Tip: installing EMOJI plugin both systemwide AND per user is bad idea.
 # If doing both system-wide and user configuration,
 # then disable Emoji for one of installation variants depending on the goals.
 
 vim_github_plugins:
-#  - 'tpope/vim-surround'                    # Useful for markup languages
-#  - 'tpope/vim-repeat'                      # Useful for markup languages ***
-##  - 'plasticboy/vim-markdown'               # Markdown Editor ***
   - 'tangledhelix/vim-kickstart'            # Kickstart Files Highlighting
   - 'Matt-Deacalion/vim-systemd-syntax'     # Systemd Unit Files Highlighting
   - 'pearofducks/ansible-vim'               # Ansible Files Highlighting
   - 'hashivim/vim-vagrant'                  # Vagrant Files Highlighting
   - 'vim-scripts/bash-support.vim'          # Bash Files Highlighting
-  - 'junegunn/vim-emoji'                    # EMOJI
-##  - 'Lokaltog/vim-easymotion'
   - 'vim-airline/vim-airline'               # Lightweight vimscrip-based statusline
   - 'vim-airline/vim-airline-themes'        # vim-airline theme collection
   - 'tpope/vim-fugitive'                    # Git Integration
@@ -40,12 +34,17 @@ vim_github_plugins:
   - 'scrooloose/nerdtree'                   # Navigation (files and folders)
   - 'godlygeek/tabular.git'                 # Aligning stuff
   - 'Glench/Vim-Jinja2-Syntax'              # Jinja2 Syntax Highlighting
-  - 'wincent/command-t'                     # Fast "fuzzy" engine for switching buffers, searching etc.
-  - 'ctrlpvim/ctrlp.vim'                    # Alternative to command-t (heavy - a lot of features, airline intergration)
-##  - 'vim-scripts/FuzzyFinder'             # Alternative to command-t plugin (Very lightweight, but less features)
-##  - 'vim-scripts/L9'
   - 'vim-syntastic/syntastic'               # syntax checker for different filetypes (airline integration)
-##  - 'editorconfig/editorconfig-vim'
+  - 'ctrlpvim/ctrlp.vim'                    # Alternative to command-t (heavy - a lot of features, airline intergration)
+#  - 'wincent/command-t'                     # Fast "fuzzy" engine for switching buffers, searching etc.
+#  - 'junegunn/vim-emoji'                    # EMOJI
+##  - 'Lokaltog/vim-easymotion'
+#  - 'vim-scripts/FuzzyFinder'               # Alternative to command-t plugin (Very lightweight, but less features)
+##  - 'vim-scripts/L9'
+#  - 'tpope/vim-repeat'                      # Useful for markup languages ***
+##  - 'tpope/vim-surround'                    # Useful for markup languages
+##  - 'plasticboy/vim-markdown'               # Markdown Editor ***
+#  - 'editorconfig/editorconfig-vim'
 ##  - 'altercation/vim-colors-solarized'
 ##  - 'vim-ruby/vim-ruby'                     # Rubi Files Hightlighting
 ##  - 'tpope/vim-rails'                       # Rails (ruby)
@@ -60,3 +59,4 @@ vim_nongithub_plugins: []
 #  - 'git://git.wincent.com/command-t.git'  # Non github repo
 
 vim_vundle_version: 'v0.10.2'
+...

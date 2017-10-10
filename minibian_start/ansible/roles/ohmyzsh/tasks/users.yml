@@ -1,5 +1,5 @@
 ---
-- name: Copy default zshrc in user's home
+- name: Copy default zshrc to user home directory
   template:
     src: zshrc.j2
     dest: "{{ '/root' if item.user == 'root' else '/home/' ~ item.user }}/.zshrc"
@@ -35,6 +35,18 @@
   tags:
     - ohmyzsh
 
+- name: Copy custom aliases
+  template:
+    src: zshrc/aliases.local.j2
+    dest: "{{ '/root' if item.user == 'root' else '/home/' ~ item.user }}/.zsh/aliases.local"
+    mode: 0644
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+  when: item.state is not defined or item.state == "present"
+  with_items: "{{ ohmyzsh_users }}"
+  tags:
+    - ohmyzsh
+
 - name: Set zsh as default shell
   user: name={{ item.user }} shell=/bin/zsh
   when: item.state is not defined or item.state == "present"
@@ -42,10 +54,10 @@
   tags:
     - ohmyzsh
 
-
 - name: Set bash as default shell for uninstalled users
   user: name={{ item.user }} shell=/bin/bash
   when: item.state is defined and item.state == "absent"
   with_items: "{{ ohmyzsh_users }}"
   tags:
     - ohmyzsh
+...

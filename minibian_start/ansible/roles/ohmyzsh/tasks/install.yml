@@ -7,10 +7,10 @@
   tags:
     - ohmyzsh
 
-- name: Copy custom theme
+- name: Copy custom themes to custom directory
   copy:
-    src: samyroad.zsh-theme
-    dest: "{{ ohmyzsh_install_dir }}/themes/samyroad.zsh-theme"
+    src: themes
+    dest: "{{ ohmyzsh_install_dir }}/custom/"
     mode: 0644
   tags:
     - ohmyzsh
@@ -24,3 +24,4 @@
     group: root
   tags:
     - ohmyzsh
+...

@@ -9,8 +9,6 @@ galaxy_info:
     Sets up wired ethernet adapter to get additional static IP address 192.168.2.2 \
     Sets up default IP route via 192.168.2.1
 
-  #company:
-
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker
@@ -33,22 +31,19 @@ galaxy_info:
   #
   # platforms is a list of platforms, and each platform has a name and a list of versions.
   #
-  # platforms:
-  # - name: Fedora
-  #   versions:
-  #   - all
-  #   - 25
-  # - name: SomePlatform
-  #   versions:
-  #   - all
-  #   - 1.0
-  #   - 7
-  #   - 99.99
+  platforms:
+   - name: Debian
+     versions:
+     - all
 
-  galaxy_tags: [ 'raspberrry', 'pi', 'raspberry pi 3', 'minibian' ]
-    # List tags for your role here, one per line. A tag is a keyword that describes
-    # and categorizes the role. Users find roles by searching for tags. Be sure to
-    # remove the '[]' above, if you add tags to this list.
+  galaxy_tags:
+    - 'raspberrry'
+    - 'pi'
+    - 'raspberrypi'
+    - 'minibian'
+    - 'raspbian'
+    - 'network'
+    - 'networking'
     #
     # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
     #       Maximum 20 tags per role.

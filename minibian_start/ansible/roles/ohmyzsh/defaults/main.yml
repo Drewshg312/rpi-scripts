@@ -1,10 +1,15 @@
 ---
-ohmyzsh_users: []        # list of users to install zsh and ohmyzsh
-#  - user: mmacia        # user name
-#    theme: robbyrussell # ohmyzsh theme
+ohmyzsh_install_dir: /usr/local/share/ohmyzsh
+
+ohmyzsh_custom_aliases: $HOME/.zsh/aliases.local
+
+#ohmyzsh_users: []        # list of users to install zsh and ohmyzsh
+ohmyzsh_users:
+  - user: drew           # user name
+    theme: kallisti      # ohmyzsh theme; use "random" for random theme
 #    ssh_ids: []         # list of SSH ids to add to ohmyzsh ssh manager plugin
 #    plugins: []         # list of ohmyzsh plugins to install
-#    state: present      # present or absent, to install/uninstall
+    state: present      # present or absent, to install/uninstall
 
 ohmyzsh_default_theme: 'robbyrussell'
 
@@ -28,7 +33,4 @@ ohmyzsh_default_plugins:
 #  - ruby
 #  - bundle
 #  - rvm
-
-ohmyzsh_install_dir: /usr/local/share/ohmyzsh
-
 ...

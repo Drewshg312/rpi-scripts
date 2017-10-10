@@ -196,10 +196,6 @@ prompt_status() {
   [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
 }
 
-function battery_charge {
-  echo `/usr/bin/env python ~/.scripts/shell/modules/prompt/batcharge.py`
-}
-
 function prompt_online() {
   if [[ -f ~/.offline ]]; then
     echo $OFFLINE
@@ -243,4 +239,5 @@ else
  $FG[241]#%! %{$fg[blue]%}@%* %{$fg[green]%}%#> '
 fi
 # Right prompt:
-RPROMPT="$(battery_charge) $(prompt_ruby) $(prompt_online)"
+RPROMPT="$(prompt_ruby) $(prompt_online)"
+

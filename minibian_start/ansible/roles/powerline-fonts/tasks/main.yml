@@ -1,7 +1,7 @@
 ---
 # tasks file for powerline-fonts
 - name: Make sure /usr/local/share/fonts exists
-  file: dest=/usr/local/share/fonts
+  file: dest=/usr/local/share/fonts state=directory
   become: yes
 
 - name: Make sure unzip and fontconfig are installed
