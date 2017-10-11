@@ -82,6 +82,23 @@
   tags:
     - vim
 
+- name: '[user] Set EDITOR and TERM environment variables'
+  blockinfile:
+    path: ~/.bashrc
+    follow: yes
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    content: |
+      export EDITOR="/usr/bin/vim"
+      export TERM="xterm-256color"  # For vim colors in tmux
+    marker: "# {mark} ======== VIM role: Ansible managed block ========="
+  become: yes
+  become_method: su
+  become_user: "{{ item }}"
+  with_items: "{{ vim_users }}"
+  tags:
+    - vim
+
 - name: '[user] Installing Vundle'
   git: repo=https://github.com/gmarik/Vundle.vim.git dest=~/.vim/bundle/Vundle.vim version="{{ vim_vundle_version }}"
   with_items: "{{ vim_users }}"

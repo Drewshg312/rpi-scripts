@@ -238,6 +238,7 @@ else
     PROMPT='%{%f%b%k%}$(build_prompt)
  $FG[241]#%! %{$fg[blue]%}@%* %{$fg[green]%}%#> '
 fi
+
 # Right prompt:
 RPROMPT="$(prompt_ruby) $(prompt_online)"
 

@@ -99,12 +99,6 @@ alias l='ls -CF'
 alias digextip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias digddnsip='dig bearden-local.ddns.net +short'
 
-ddns() {
-    PASSWD='H*dpkrJ$yJ&t*saFPDDF'
-    IP=`dig +short myip.opendns.com @resolver1.opendns.com`
-    curl 'https://drew-kun:'$PASSWD'@dynupdate.no-ip.com/nic/update?hostname=bearden-local.ddns.net&myip='$IP
-}
-
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -124,6 +118,4 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-export TERM="xterm-256color"  # For vim colors in tmux
 

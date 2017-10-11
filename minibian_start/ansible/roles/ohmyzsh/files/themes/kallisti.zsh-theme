@@ -83,9 +83,9 @@ prompt_end() {
 prompt_context() {
   if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
     if [[ ${EUID} == 0 ]] ; then
-        prompt_segment black default "%(!.%{%F{yellow}%}.)%{$fg[red]%}$USER 🍁 "
+        prompt_segment black default "%(!.%{%F{yellow}%}.)%{$fg[red]%}$USER"
     else
-        prompt_segment black default "%(!.%{%F{yellow}%}.)%{$fg[green]%}\ue0a2 $USER 🍀  "
+        prompt_segment black default "%(!.%{%F{yellow}%}.)%{$fg[green]%}\ue0a2 $USER"
     fi
   fi
 
@@ -243,6 +243,7 @@ else
     PROMPT='%{%f%b%k%}$(build_prompt)
  $FG[241]#%! %{$fg[blue]%}@%* %{$fg[green]%}%#> '
 fi
+
 # Right prompt:
 # For Laptops
 #RPROMPT="$(battery_charge) $(prompt_ruby) $(prompt_online)"

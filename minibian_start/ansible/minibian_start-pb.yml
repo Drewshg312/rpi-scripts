@@ -49,6 +49,22 @@
       command: rpi-update
     #=====================================
 
+    - name: 'Setting EDITOR and TERM environment variables'
+      blockinfile:
+        path: /etc/profile.d/env_var.sh
+        follow: yes
+        create: yes
+        mode: 0644
+        owner: root
+        group: root
+        content: |
+          export EDITOR="/usr/bin/vim"
+          export TERM="xterm-256color"  # For vim colors in tmux
+        marker: "# {mark} ======== VIM role: Ansible managed block ========="
+      become: yes
+      tags:
+        - vim
+
     #========= CONFIGURING PROMPT ========
     # required because 'command: mv ...' will return error
     # if /etc/skel does not exist
@@ -69,7 +85,7 @@
       copy: src=etc/skel/ dest=/etc/skel
       become: yes
 
-    - name: Copying .bashrc and .profile to home directory
+    - name: Copying .bashrc and .profile to home directory of current user
       copy: src=etc/skel/ dest="{{ ansible_env.HOME}}/"
     #=====================================
 

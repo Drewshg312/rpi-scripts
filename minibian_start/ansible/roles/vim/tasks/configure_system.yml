@@ -53,6 +53,22 @@
   tags:
     - vim
 
+- name: '[system] Setting EDITOR and TERM environment variables'
+  blockinfile:
+    path: /etc/profile.d/env_var.sh
+    follow: yes
+    create: yes
+    mode: 0644
+    owner: root
+    group: root
+    content: |
+      export EDITOR="/usr/bin/vim"
+      export TERM="xterm-256color"  # For vim colors in tmux
+    marker: "# {mark} ======== VIM role: Ansible managed block ========="
+  become: yes
+  tags:
+    - vim
+
 - name: "[system] Installing Vundle"
   git:
     repo: https://github.com/gmarik/Vundle.vim.git

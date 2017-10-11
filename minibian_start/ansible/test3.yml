@@ -1,0 +1,36 @@
+---
+- hosts: raspberrypi_3
+  vars_files:
+    - vars.yml
+
+#  roles:
+#    - network
+#    - expandfs
+#    - vim
+#    - powerline-fonts
+#    - ohmyzsh
+
+  tasks:
+
+#    - stat: path=/etc/profile.d/env_var.sh
+#      register: env_var_stat
+#
+#    - name: Create /etc/profile.d/env_var.sh
+#      file: path=/etc/profile.d/env_var.sh
+#      become: yes
+#      when: env_var_stat.exists == False
+
+    - name: Set EDITOR and TERM environment variables
+      blockinfile:
+        path: /etc/profile.d/env_var.sh
+        follow: yes
+        create: yes
+        mode: 0644
+        owner: root
+        group: root
+        content: |
+          export EDITOR="/usr/bin/vim"
+          export TERM="xterm-256color"  # For vim colors in tmux
+        marker: "# {mark} ======== VIM role: Ansible managed block ========="
+      become: yes
+...
