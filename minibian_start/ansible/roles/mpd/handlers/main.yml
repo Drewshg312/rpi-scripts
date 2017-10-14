@@ -7,4 +7,8 @@
     state: restarted
     enabled: yes
   when: mpd_autostart
+
+- name: Restart mpd service with brew services command
+  command: brew services restart mpd
+  when: mpd_autostart
 ...

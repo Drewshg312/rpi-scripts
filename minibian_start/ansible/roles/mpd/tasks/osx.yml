@@ -1,13 +1,26 @@
 ---
-- name: Include OSX-Specific variables
+- name: '[OSX] Include OSX-Specific variables'
   include_vars: osx.yml
 
-- name: Install mpd with Homebrew
+- name: '[OSX] Install mpd with Homebrew'
   homebrew:
     update_homebrew: yes
     name: mpd
-    #state: absent
     state: latest
     install_options: "{{ mpd_osx_install_options }}"
 
+- name: '[OSX] Enable mpd service to start on login'
+  command: brew services start mpd
+  when: mpd_autostart
+
+- name: '[OSX] Generate mpd.conf from template'
+  template:
+    src: mpd.conf.j2
+    dest: ~/.mpd/mpd.conf
+    backup: yes
+    owner: {{ ansible_user_id }}  # Works only if gathering facts. Turns to root if using 'become: yes'
+    group: staff
+    mode: 0644
+  become: no
+  notify: Restart mpd service with brew services command
 ...
