@@ -1,0 +1,22 @@
+---
+# defaults file for mpd
+
+# Currently supported platforms: osx, linux (tested on centos7 and debian8 jessie)
+mpd_platform: linux
+
+mpd_autostart: true
+
+# ATTENTION!
+# OS-Specific variables can be found in vars/ directory of this role
+
+#======================= OS AGNOSTIC VARIABLES =========================
+mpd_port: 6600
+mpd_bind_to_address: any
+
+mpd_name: Music Player Daemon
+mpd_restore_paused: yes
+mpd_auto_update: yes
+mpd_follow_inside_symlinks: yes
+mpd_follow_outside_symlinks: no
+#=======================================================================
+...

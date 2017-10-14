@@ -1,0 +1,9 @@
+
+- name: Install mpd with Homebrew
+  brew:
+    update_homebrew: yes
+    name: mpd
+    state: latest
+    install_options: "{{ mpd_osx_install_options }}"
+
+

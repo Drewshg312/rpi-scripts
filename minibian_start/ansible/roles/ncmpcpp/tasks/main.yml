@@ -1,0 +1,11 @@
+---
+# tasks file for ncmpcpp
+
+- brew:
+    name: ncmpcpp
+    state: latest
+    update_homebrew: yes
+    install_options:
+      - '--with-outputs'
+      - '--with-visualizer'
+      - '--with-clock'

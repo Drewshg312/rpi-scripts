@@ -1,9 +1,14 @@
 ---
 - hosts: raspberrypi_3
-  vars_files:
-    - vars.yml
+#- hosts: localhost
+#  vars_files:
+#    - vars.yml
 
-  tasks:
-    - name: changing root password
-      user: name=root password="{{new_root_passwd}}"
-
+  roles:
+#    - network
+    - expandfs
+#    - vim
+    #- powerline-fonts
+#    - ohmyzsh
+    - mpd
+...

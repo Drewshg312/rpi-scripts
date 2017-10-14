@@ -1,0 +1,18 @@
+---
+# tasks file for mpd
+
+- include: "{{ mpd_platform }}.yml"
+#  vars_files: linux.yml
+
+
+
+
+#- include: osx.yml
+#  include_vars: osx_vars.yml
+#  when: mpd_platform == 'osx'
+#
+#- include: linux.yml
+#  vars_files: vars/linux.yml
+#  when: mpd_platform == 'linux'
+
+...

@@ -1,0 +1,10 @@
+---
+# handlers file for mpd
+
+- name: Restart mpd service
+  service:
+    name: mpd
+    state: restarted
+    enabled: yes
+  when: mpd_autostart
+...
