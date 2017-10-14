@@ -5,19 +5,19 @@ mpd_osx_install_options:
   - '--with-jack'
   - '--with-lame'         # for MP3 encoding when streaming
   - '--with-lastfm'       # for experimental Last.fm radio
-  - '--with-libao'
+#  - '--with-libao'
   - '--with-libmms'
-  - '--with-libmodplug'   # for decoding modules supported by MODPlug
+#  - '--with-libmodplug'   # for decoding modules supported by MODPlug
   - '--with-libnfs'       # for NFS share support
   - '--with-libshout'
   - '--with-libvorbis'    # for Ogg encoding
   - '--with-libzzip'
-  - '--with-libmad'
+#  - '--with-libmad'
   - '--with-opus'         # for Opus encoding and decoding
-  - '--with-mad'
-  - '--with-pulseaudio'   # for sending audio output to a PulseAudio sound server
+#  - '--with-mad'
+#  - '--with-pulseaudio'   # for sending audio output to a PulseAudio sound server
   - '--with-two-lame'     # for MP2 encoding when streaming
-  - '--with-upnp'
+#  - '--with-upnp'
   - '--with-wavpack'      # for .wv files
   - '--with-yajl'         # for playing from soundcloud
 #=======================================================================
@@ -46,11 +46,11 @@ mpd_outputs:
     path: "/tmp/mpd.fifo"
     format: "44100:16:2"
 
-  - name: "http stream"
-    type: "httpd"
-    encoder: "vorbis"
-    port: "6660"
-    quality: "2"
-    format: "44100:16:2"
+#  - name: "http stream"
+#    type: "httpd"
+#    encoder: "vorbis"
+#    port: "6660"
+#    quality: "2"
+#    format: "44100:16:2"
 #=======================================================================
 ...
