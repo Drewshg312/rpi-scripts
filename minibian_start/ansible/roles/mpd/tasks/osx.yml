@@ -9,16 +9,28 @@
     state: latest
     install_options: "{{ mpd_osx_install_options }}"
 
+- stat: path=~/Library/LaunchAgents/homebrew.mxcl.mpd.plist
+  register: mpd_stat_plist
+
 - name: '[OSX] Enable mpd service to start on login'
   command: brew services start mpd
-  when: mpd_autostart
+  when: mpd_autostart and mpd_stat_plist.stat.exists == False
+
+- name: '[OSX] Create ~/.mpd/ directory'
+  file:
+    path: ~/.mpd
+    state: directory
+    owner: "{{ ansible_user_id }}"  # Works only if gathering facts. Turns to root if using 'become: yes'
+    group: staff
+    mode: 0755
+  become: no
 
 - name: '[OSX] Generate mpd.conf from template'
   template:
     src: mpd.conf.j2
     dest: ~/.mpd/mpd.conf
     backup: yes
-    owner: {{ ansible_user_id }}  # Works only if gathering facts. Turns to root if using 'become: yes'
+    owner: "{{ ansible_user_id }}"
     group: staff
     mode: 0644
   become: no
