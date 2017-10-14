@@ -1,9 +1,13 @@
+---
+- name: Include OSX-Specific variables
+  include_vars: osx.yml
 
 - name: Install mpd with Homebrew
-  brew:
+  homebrew:
     update_homebrew: yes
     name: mpd
+    #state: absent
     state: latest
     install_options: "{{ mpd_osx_install_options }}"
 
-
+...
