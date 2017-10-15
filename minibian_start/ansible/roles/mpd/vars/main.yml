@@ -1,5 +1,0 @@
----
-# vars file for mpd
-#vars_files: "{{ mpd_platform }}_vars.yml"
-#include_vars: "{{ mpd_platform }}_vars.yml"
-...

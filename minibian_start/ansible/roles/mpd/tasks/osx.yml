@@ -9,6 +9,14 @@
     state: latest
     install_options: "{{ mpd_osx_install_options }}"
 
+- name: '[OSX] Install mpc with Homebrew'
+  homebrew: name=mpc state=latest
+  when: mpd_install_mpc
+
+- name: '[OSX] Install ncmpcpp with Homebrew'
+  homebrew: name=ncmpcpp state=latest install_options={{ mpd_osx_ncmpcpp_install_options }}
+  when: mpd_install_ncmpcpp
+
 - stat: path=~/Library/LaunchAgents/homebrew.mxcl.mpd.plist
   register: mpd_stat_plist
 

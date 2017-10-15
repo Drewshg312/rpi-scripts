@@ -6,6 +6,10 @@ mpd_platform: osx
 
 mpd_autostart: true
 
+mpd_install_mpc: true
+
+mpd_install_ncmpcpp: true
+
 # ATTENTION!
 # OS-Specific variables can be found in vars/ directory of this role
 
