@@ -2,18 +2,20 @@
 # defaults file for mpd
 
 # Currently supported platforms: osx, linux (tested on centos7 and debian8 jessie)
-mpd_platform: osx
+#mpd_platform: osx
+mpd_platform: linux
 
 mpd_autostart: true
 
 mpd_install_mpc: true
 
 mpd_install_ncmpcpp: true
+mpd_ncmpcpp_mpd_host: localhost
 
 # ATTENTION!
 # OS-Specific variables can be found in vars/ directory of this role
-
-#======================= OS AGNOSTIC VARIABLES =========================
+#
+#================= OS AGNOSTIC MPD CONFIG VARIABLES ====================
 mpd_port: 6600
 mpd_bind_to_address: any
 

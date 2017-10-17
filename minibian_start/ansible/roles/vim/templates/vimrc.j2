@@ -78,7 +78,7 @@ set wrap                            " show long lines as multiple lines (for gpg
 set cpoptions=n
 "===========================================================================
 " set look of tabs, trailing spaces, end of line characters etc.
-set list listchars=tab:▸·,trail:·,precedes:←,extends:→,nbsp:‡   ",eol:§
+set list listchars=tab:▸·,trail:·,precedes:←,extends:→  ",nbsp:‡,eol:§
 
 highlight Underline cterm=underline
 
@@ -125,7 +125,9 @@ set nolazyredraw                    " don't redraw screen while executing macros
 set synmaxcol=125                   " stop rendering syntax colors in long lines (improves rendering performance)
 set ttyscroll=3                     " improves redraw performance when scroll
 set encoding=utf-8
-set fileformat=unix                 " endline setted to \n
+set modifiable                      " Make a buffer modifiable (needed for setting fileformat to unix | mac | dos)
+set fileformat=unix                 " endline set to \n
+
 set cf                              " Enable error files & error jumping
 set autowrite                       " automatically :w before running commands
 
@@ -218,7 +220,7 @@ endif
 if filereadable(expand("{{ vim_root_airline }}"))
     source {{ vim_root_airline }}   " load vim-airline config
 endif
-"
+
 "===========================================================================
 {% endif %}
 
@@ -230,3 +232,13 @@ if filereadable(expand("{{ vim_root_syntastic }}"))
 endif
 "===========================================================================
 {% endif %}
+
+{# IF INSTALLING DEVICONS ADD THIS: #}
+{% if 'ryanoasis/vim-devicons' in vim_github_plugins %}
+"=============================== DEVICONS ==================================
+if filereadable(expand("{{ vim_root_devicons }}"))
+    source {{ vim_root_devicons }} " load syntastic config
+endif
+"===========================================================================
+{% endif %}
+

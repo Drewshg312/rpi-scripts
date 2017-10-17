@@ -1,6 +1,8 @@
 ---
 - name: '[Linux] Include all linux-specific variables'
   include_vars: linux.yml
+  tags:
+    - mpd
 
 # To do something only if some distro installed on the host
 # Even specific distro version can be specified, see:
@@ -8,9 +10,33 @@
 # example:
 #     when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 #
+# ansible_distribuion: ['MacOSX', 'Ubuntu', 'CentOS', 'Red Hat Enterprise Linux' ]
+# ansible_os_family: ['Windows']
+#
 - name: '[Linux] Install mpd package'
   action: >
     {{ ansible_pkg_mgr }} name=mpd state=latest update_cache=yes
+  become: yes
+  tags:
+    - mpd
+
+- name: '[Linux] Install mpc package'
+  action: >
+    {{ ansible_pkg_mgr }} name=mpc state=latest update_cache=yes
+  become: yes
+  when: mpd_install_mpc
+  tags:
+    - mpd
+    - mpc
+
+- name: '[Linux] Install ncmpcpp package'
+  action: >
+    {{ ansible_pkg_mgr }} name=ncmpcpp state=latest update_cache=yes
+  become: yes
+  when: mpd_install_ncmpcpp
+  tags:
+    - mpd
+    - ncmpcpp
 
 - name: '[Linux] Enable and Start mpd service if needed'
   service:
@@ -18,6 +44,8 @@
     enabled: "{{ mpd_autostart }}"
     state: "{% if mpd_autostart %}started{% else %}stopped{% endif %}"
   become: yes
+  tags:
+    - mpd
 
 - name: '[Linux] Enable mpd socket if needed'
   service:
@@ -25,6 +53,8 @@
     enabled: "{% if mpd_autostart %}no{% else %}yes{% endif %}"
     state: "{% if mpd_autostart %}stopped{% else %}started{% endif %}"
   become: yes
+  tags:
+    - mpd
 
 - name: '[Linux] Generate mpd.conf from template'
   template:
@@ -36,12 +66,31 @@
     mode: 0644
   notify: Restart mpd service
   become: yes
+  tags:
+    - mpd
+
+- name: '[Linux] Generate ncmpcpp config from template'
+  template:
+    src: ncmpcpp.conf.j2
+    dest: ~/.ncmpcpp/config
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: 0644
+  become: no
+  when: mpd_install_ncmpcpp
+  tags:
+    - mpd
+    - ncmpcpp
 
 - stat: path=/usr/sbin/firewalld
   register: mpd_stat_1_firewalld
+  tags:
+    - mpd
 
 - stat: path=/sbin/firewalld
   register: mpd_stat_2_firewalld
+  tags:
+    - mpd
 
 - name: '[Linux] Open mpd port in firewall'
   firewalld:
@@ -53,4 +102,6 @@
   with_items: "{{ mpd_firewall_zones }}"
   become: yes
   when: mpd_stat_1_firewalld.stat.exists or mpd_stat_2_firewalld.stat.exists
+  tags:
+    - mpd
 ...

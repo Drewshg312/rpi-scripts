@@ -1,6 +1,8 @@
 ---
 - name: '[OSX] Include OSX-Specific variables'
   include_vars: osx.yml
+  tags:
+    - mpd
 
 - name: '[OSX] Install mpd with Homebrew'
   homebrew:
@@ -8,21 +10,33 @@
     name: mpd
     state: latest
     install_options: "{{ mpd_osx_install_options }}"
+  tags:
+    - mpd
 
 - name: '[OSX] Install mpc with Homebrew'
   homebrew: name=mpc state=latest
   when: mpd_install_mpc
+  tags:
+    - mpd
+    - mpc
 
 - name: '[OSX] Install ncmpcpp with Homebrew'
   homebrew: name=ncmpcpp state=latest install_options={{ mpd_osx_ncmpcpp_install_options }}
   when: mpd_install_ncmpcpp
+  tags:
+    - mpd
+    - ncmpcpp
 
 - stat: path=~/Library/LaunchAgents/homebrew.mxcl.mpd.plist
   register: mpd_stat_plist
+  tags:
+    - mpd
 
 - name: '[OSX] Enable mpd service to start on login'
   command: brew services start mpd
   when: mpd_autostart and mpd_stat_plist.stat.exists == False
+  tags:
+    - mpd
 
 - name: '[OSX] Create ~/.mpd/ directory'
   file:
@@ -32,6 +46,8 @@
     group: staff
     mode: 0755
   become: no
+  tags:
+    - mpd
 
 - name: '[OSX] Generate mpd.conf from template'
   template:
@@ -43,4 +59,6 @@
     mode: 0644
   become: no
   notify: Restart mpd service with brew services command
+  tags:
+    - mpd
 ...

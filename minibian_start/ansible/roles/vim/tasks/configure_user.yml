@@ -31,7 +31,7 @@
     - vim
 
 # CONFIGURE PLUGINS
-- name: "[user] Generation {{ vim_root_emoji }} from template"
+- name: "[user] Generating {{ vim_root_emoji }} from template"
   template: src=vimrc.emoji.j2 dest="{{ vim_root_emoji }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
@@ -42,7 +42,7 @@
   tags:
     - vim
 
-- name: "[user] Generation {{ vim_root_syntastic }} from template"
+- name: "[user] Generating {{ vim_root_syntastic }} from template"
   template: src=vimrc.syntastic.j2 dest="{{ vim_root_syntastic }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
@@ -52,7 +52,7 @@
   tags:
     - vim
 
-- name: "[user] Generation {{ vim_root_airline }} from template"
+- name: "[user] Generating {{ vim_root_airline }} from template"
   template: src=vimrc.airline.j2 dest="{{ vim_root_airline }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
@@ -62,13 +62,23 @@
   tags:
     - vim
 
-- name: "[user] Generation {{ vim_root_command_t }} from template"
+- name: "[user] Generating {{ vim_root_command_t }} from template"
   template: src=vimrc.command-t.j2 dest="{{ vim_root_command_t }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
   become_method: su
   become_user: "{{ item }}"
   when: 'vim_users is defined and "wincent/command-t" in vim_github_plugins'
+  tags:
+    - vim
+
+- name: "[user] Generating {{ vim_root_devicons }} from template"
+  template: src=vimrc.devicons.j2 dest="{{ vim_root_devicons }}" owner="{{ item }}" group="{{ item }}" mode=0644
+  with_items: "{{ vim_users }}"
+  become: yes
+  become_method: su
+  become_user: "{{ item }}"
+  when: 'vim_users is defined and "ryanoasis/devicons" in vim_github_plugins'
   tags:
     - vim
 

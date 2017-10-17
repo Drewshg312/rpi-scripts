@@ -2,5 +2,8 @@
 # tasks file for mpd
 
 - include_tasks: "{{ mpd_platform }}.yml"
-
+  tags:
+    - mpd
+    - mpc
+    - ncmpcpp
 ...

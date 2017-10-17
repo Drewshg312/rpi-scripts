@@ -35,7 +35,14 @@
 - name: "[system] Generating {{ vim_root_command_t }} from template"
   template: src=vimrc.command-t.j2 dest="{{ vim_root_command_t }}" owner=root group=root mode=0644
   become: yes
-  when: '"wincent/command-t" in vim_github_plugins' # no need to use "{{ }}" in "when" conditions (Jinja2 feature)
+  when: '"wincent/command-t" in vim_github_plugins'
+  tags:
+    - vim
+
+- name: "[system] Generating {{ vim_root_devicons }} from template"
+  template: src=vimrc.devicons.j2 dest="{{ vim_root_devicons }}" owner=root group=root mode=0644
+  become: yes
+  when: '"ryanoasis/vim-devicons" in vim_github_plugins'
   tags:
     - vim
 

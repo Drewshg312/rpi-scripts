@@ -5,19 +5,19 @@ mpd_osx_install_options:
   - '--with-jack'
   - '--with-lame'         # for MP3 encoding when streaming
   - '--with-lastfm'       # for experimental Last.fm radio
-  - '--with-libao'  #*
+  - '--with-libao'
   - '--with-libmms'
-  - '--with-libmodplug' #*   # for decoding modules supported by MODPlug
+  - '--with-libmodplug'   # for decoding modules supported by MODPlug
   - '--with-libnfs'       # for NFS share support
   - '--with-libshout'
   - '--with-libvorbis'    # for Ogg encoding
   - '--with-libzzip'
-  - '--with-libmad'  #*
+  - '--with-libmad'
   - '--with-opus'         # for Opus encoding and decoding
-  - '--with-mad' #*
-  - '--with-pulseaudio' #*  # for sending audio output to a PulseAudio sound server
+  - '--with-mad'
+  - '--with-pulseaudio'   # for sending audio output to a PulseAudio sound server
   - '--with-two-lame'     # for MP2 encoding when streaming
-  - '--with-upnp' #*
+  - '--with-upnp'
   - '--with-wavpack'      # for .wv files
   - '--with-yajl'         # for playing from soundcloud
 
@@ -39,7 +39,7 @@ mpd_log_file: ~/.mpd/mpd.log
 mpd_pid_file: ~/.mpd/mpd.pid
 mpd_state_file: ~/.mpd/mpdstate
 
-mpd_user: drew
+mpd_user: "{{ ansible_user_id }}"
 
 mpd_outputs:
   - name: "CoreAudio"

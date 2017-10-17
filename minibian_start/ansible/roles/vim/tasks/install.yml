@@ -36,10 +36,19 @@
     - vim
 #=========================================================================
 
+#============= SET ENVIRONMENT VARIABLES FOR EDITOR AND TMUX =============
 - name: '[install] Setting up environment variable for vim to look good in tmux'
-  copy:
-    src: etc/profile.d/env_var.sh
-    dest: /etc/profile.d/
+  blockinfile:
+    path: /etc/profile.d/env_var.sh
+    follow: yes
+    create: yes
+    mode: 0644
+    owner: root
+    group: root
+    content: |
+      export EDITOR="/usr/bin/vim"
+      export TERM="xterm-256color"  # For vim colors in tmux
+    marker: "# {mark} ======== VIM role: Ansible managed block ========="
   become: yes
   tags:
     - vim

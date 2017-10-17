@@ -1,12 +1,15 @@
 ---
 # defaults file for expandfs
 
-# remove all vim configuration customizations created by this role
-#cleanup: true
+# Supported platforms: Linux, osx
+vim_platform: linux
 
-# where to install vim config: 'system' or 'user' or 'both'
-vim_env: users
-#vim_env: system
+# remove all vim configuration customizations created by this role
+vim_cleanup: true
+
+# where to install vim config: 'system' | 'user' | 'users'
+#vim_env: users
+vim_env: system
 
 vim_users:
 # system-wide vundle plugin installation can only be stored in /root/.vim, so
@@ -54,6 +57,7 @@ vim_github_plugins:
 ##  - 'vim-scripts/matchit.zip'
 ##  - 'Raimondi/delimitMate'
 ##  - 'vim-scripts/MatchTag'
+  - 'ryanoasis/vim-devicons'                # Add icons to plugins (This must be loaded after all other plugins)
 
 vim_nongithub_plugins: []
 #  - 'git://git.wincent.com/command-t.git'  # Non github repo

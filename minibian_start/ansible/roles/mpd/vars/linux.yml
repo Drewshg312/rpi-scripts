@@ -19,5 +19,18 @@ mpd_user: mpd
 mpd_outputs:
   - name: "Null Output"
     type: "null"
+
+  - name: "My ALSA Device"
+    type: "alsa"
+    device: "hw:0,0"            # optional
+    format: "44100:16:2"        # optional
+    mixer_device: "default"     # optional
+    mixer_control: "PCM"        # optional
+    mixer_index: "0"            # optional
+
+#  - name: "MPD PulseAudio Output"
+#    type: "pulse"
+#    server: "remote_server"     # optional
+#    sink: "remote_server_sink"  # optional
 #=======================================================================
 ...

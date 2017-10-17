@@ -1,14 +1,14 @@
 ---
-#- hosts: raspberrypi_3
-- hosts: localhost
+- hosts: raspberrypi_3
+#- hosts: localhost
 #  vars_files:
 #    - vars.yml
 
   roles:
 #    - network
 #    - expandfs
-#    - vim
-    #- powerline-fonts
+    - vim
+#    - powerline-fonts
 #    - ohmyzsh
-    - mpd
+#    - mpd
 ...
