@@ -1,0 +1,24 @@
+---
+#- hosts: raspberrypi_3
+- hosts: localhost
+#  vars_files:
+#    - vars.yml
+#  vars:
+
+  tasks:
+    - name: Check ansible_os_family
+      debug:
+        msg: "{{ ansible_os_family}}"
+
+    - name: Check ansible_distribution
+      debug:
+        msg: "{{ ansible_distribution }}"
+
+#  roles:
+#    - network
+#    - expandfs
+#    - vim
+#    - powerline-fonts
+#    - ohmyzsh
+#    - mpd
+...

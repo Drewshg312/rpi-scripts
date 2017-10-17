@@ -1,6 +1,6 @@
 " Attention!
 " Uncomment this after installing appropriate fonts
-{% if ansible_distribution == 'MacOSX' or ansible_os_family == 'Windows' %}
+{% if ansible_os_family == 'Darwin' or 'Windows' %}
 "set guifont=SauceCodePro\ Nerd\ Font:h12
 {% else %}
 "set guifont=SauceCodePro\ Nerd\ Font 12
@@ -15,6 +15,6 @@ let g:webdevicons_conceal_nerdtree_brackets = 0     " whether or not to show the
 let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '   " the amount of space to use after the glyph character (default ' ')
 let g:WebDevIconsNerdTreeGitPluginForceVAlign = 1   " Extra padding in NERDTree for filetype icons to line up vertically
 
-{% if vim_platform == 'osx' %}
+{% if ansible_os_family == 'Darwin' %}
 let g:WebDevIconsOS = 'Darwin'
 {% endif %}

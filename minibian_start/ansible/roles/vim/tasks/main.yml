@@ -27,5 +27,5 @@
     vim_root_command_t: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.command-t"
     vim_root_syntastic: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.syntastic"
     vim_root_devicons: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.devicons"
-  when: vim_env == 'user' or vim_env == 'users'
+  when: vim_env == 'user' or 'users'
 ...

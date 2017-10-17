@@ -4,7 +4,7 @@ playlist_directory      "{{ mpd_playlist_dir }}"
 db_file                 "{{ mpd_db_file }}"
 sticker_file            "{{ mpd_sticker_file }}"
 log_file                "{{ mpd_log_file }}"
-{% if mpd_platform == 'osx' %}
+{% if ansible_os_family == 'Darwin' %}
 pid_file                "{{ mpd_pid_file }}"
 {% endif %}
 state_file              "{{ mpd_state_file }}"

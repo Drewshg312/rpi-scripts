@@ -1,9 +1,6 @@
 ---
 # defaults file for expandfs
 
-# Supported platforms: Linux, osx
-vim_platform: linux
-
 # remove all vim configuration customizations created by this role
 vim_cleanup: true
 
