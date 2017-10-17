@@ -12,6 +12,7 @@
   git:
     repo: https://github.com/Drewshg312/terminus_powerline_font_osx.git
     dest: "{{ terminus_powerline_fonts_dir }}/terminus_powerline"
+    force: yes
 
 - name: Install fonts
   command: fc-cache -f {{ terminus_powerline_fonts_dir }}
