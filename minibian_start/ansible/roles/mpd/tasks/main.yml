@@ -1,8 +1,7 @@
 ---
 # tasks file for mpd
 
-#- include_tasks: "{{ mpd_platform }}.yml"
-- include_tasks: "{{  }}.yml"
+- include_tasks: "{{ mpd_platform }}.yml"
   tags:
     - mpd
     - mpc
