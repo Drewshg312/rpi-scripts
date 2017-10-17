@@ -42,15 +42,18 @@ mpd_state_file: ~/.mpd/mpdstate
 mpd_user: "{{ ansible_user_id }}"
 
 mpd_outputs:
+# OSX DRIVER
   - name: "CoreAudio"
     type: "osx"
     mixer_type: "software"
 
+# FIFO DRIVER (for visualizer)
   - name: "FIFO"
     type: "fifo"
     path: "/tmp/mpd.fifo"
     format: "44100:16:2"
 
+# HTTP STREAM
 #  - name: "http stream"
 #    type: "httpd"
 #    encoder: "vorbis"

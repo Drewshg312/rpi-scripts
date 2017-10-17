@@ -1,8 +1,9 @@
 ---
-- hosts: raspberrypi_3
-#- hosts: localhost
+#- hosts: raspberrypi_3
+- hosts: localhost
 #  vars_files:
 #    - vars.yml
+#  vars:
 
   roles:
 #    - network
@@ -10,5 +11,6 @@
 #    - vim
 #    - powerline-fonts
 #    - ohmyzsh
-    - mpd
+#    - mpd
+    - ansible-terminus-powerline
 ...
