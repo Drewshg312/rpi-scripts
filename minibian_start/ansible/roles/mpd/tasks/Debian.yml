@@ -1,6 +1,6 @@
 ---
 - name: '[Linux] Include all linux-specific variables'
-  include_vars: linux.yml
+  include_vars: Debian.yml
   tags:
     - mpd
 

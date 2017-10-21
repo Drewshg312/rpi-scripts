@@ -11,6 +11,6 @@
 #    - vim
 #    - powerline-fonts
 #    - ohmyzsh
-#    - mpd
+    - mpd
     - ansible-terminus-powerline
 ...

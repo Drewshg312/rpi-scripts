@@ -1,6 +1,6 @@
 ---
 - name: '[OSX] Include OSX-Specific variables'
-  include_vars: osx.yml
+  include_vars: Darwin.yml
   tags:
     - mpd
 
