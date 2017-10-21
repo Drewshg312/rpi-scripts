@@ -1,9 +1,9 @@
 ---
 # defaults file for mpd
 
-# Currently supported platforms: osx, linux (tested on centos7 and debian8 jessie)
+# Currently supported platforms: osx, linux (tested debian8 jessie)
 #mpd_platform: osx
-mpd_platform: linux
+#mpd_platform: linux
 
 mpd_autostart: true
 

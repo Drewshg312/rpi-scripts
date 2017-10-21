@@ -1,2 +1,14 @@
 ---
 # defaults file for ansible-nerdfonts
+
+# Find all fonts available:
+#   'brew cask -S font | grep nerd'
+
+nerdfonts_fonts:
+  - 'font-soucecodepro-nerd-font'
+  - 'font-soucecodepro-nerd-font-mono'
+  - 'font-anonymouspro-nerd-font'
+  - 'font-anonymouspro-nerd-font-mono'
+  - 'font-ubuntumono-nerd-font'
+  - 'font-ubuntumono-nerd-font-mono'
+...

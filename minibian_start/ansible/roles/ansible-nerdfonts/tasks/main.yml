@@ -1,2 +1,21 @@
 ---
 # tasks file for ansible-nerdfonts
+
+#- name: Check if Homebrew is already installed
+#  stat:
+#    path: /usr/local/bin/brew
+#  register: b
+
+- name: Tap caskroom/fonts
+  homebrew_tap: name=caskroom/fonts state=present
+  become: no
+
+- name: Install Nerd Fonts with homebrew cask
+  homebrew_cask:
+    name: "{{ item }}"
+    state: latest
+    update_homebrew: yes
+  with_items: "{{ nerdfonts_fonts }}"
+  become: no
+
+...
