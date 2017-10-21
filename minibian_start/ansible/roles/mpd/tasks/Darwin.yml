@@ -1,10 +1,10 @@
 ---
-- name: '[OSX] Include OSX-Specific variables'
+- name: '[Darwin] Include OSX-Specific variables'
   include_vars: Darwin.yml
   tags:
     - mpd
 
-- name: '[OSX] Install mpd with Homebrew'
+- name: '[Darwin] Install mpd with Homebrew'
   homebrew:
     update_homebrew: yes
     name: mpd
@@ -13,14 +13,14 @@
   tags:
     - mpd
 
-- name: '[OSX] Install mpc with Homebrew'
+- name: '[Darwin] Install mpc with Homebrew'
   homebrew: name=mpc state=latest
   when: mpd_install_mpc
   tags:
     - mpd
     - mpc
 
-- name: '[OSX] Install ncmpcpp with Homebrew'
+- name: '[Darwin] Install ncmpcpp with Homebrew'
   homebrew: name=ncmpcpp state=latest install_options={{ mpd_osx_ncmpcpp_install_options }}
   when: mpd_install_ncmpcpp
   tags:
@@ -32,13 +32,13 @@
   tags:
     - mpd
 
-- name: '[OSX] Enable mpd service to start on login'
+- name: '[Darwin] Enable mpd service to start on login'
   command: brew services start mpd
   when: mpd_autostart and mpd_stat_plist.stat.exists == False
   tags:
     - mpd
 
-- name: '[OSX] Create ~/.mpd/ directory'
+- name: '[Darwin] Create ~/.mpd/ directory'
   file:
     path: ~/.mpd
     state: directory
@@ -49,7 +49,7 @@
   tags:
     - mpd
 
-- name: '[OSX] Generate mpd.conf from template'
+- name: '[Darwin] Generate mpd.conf from template'
   template:
     src: mpd.conf.j2
     dest: ~/.mpd/mpd.conf

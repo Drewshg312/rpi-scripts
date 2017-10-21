@@ -1,5 +1,5 @@
 ---
-- name: '[Linux] Include all linux-specific variables'
+- name: '[Debian] Include all linux-specific variables'
   include_vars: Debian.yml
   tags:
     - mpd
@@ -11,16 +11,16 @@
 #     when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 #
 # ansible_distribuion: ['MacOSX', 'Ubuntu', 'CentOS', 'Red Hat Enterprise Linux' ]
-# ansible_os_family: ['Windows']
+# ansible_os_family: ['Darwin', 'RedHat', 'Windows']
 #
-- name: '[Linux] Install mpd package'
+- name: '[Debian] Install mpd package'
   action: >
     {{ ansible_pkg_mgr }} name=mpd state=latest update_cache=yes
   become: yes
   tags:
     - mpd
 
-- name: '[Linux] Install mpc package'
+- name: '[Debian] Install mpc package'
   action: >
     {{ ansible_pkg_mgr }} name=mpc state=latest update_cache=yes
   become: yes
@@ -29,7 +29,7 @@
     - mpd
     - mpc
 
-- name: '[Linux] Install ncmpcpp package'
+- name: '[Debian] Install ncmpcpp package'
   action: >
     {{ ansible_pkg_mgr }} name=ncmpcpp state=latest update_cache=yes
   become: yes
@@ -38,7 +38,7 @@
     - mpd
     - ncmpcpp
 
-- name: '[Linux] Enable and Start mpd service if needed'
+- name: '[Debian] Enable and Start mpd service if needed'
   service:
     name: mpd
     enabled: "{{ mpd_autostart }}"
@@ -47,7 +47,7 @@
   tags:
     - mpd
 
-- name: '[Linux] Enable mpd socket if needed'
+- name: '[Debian] Enable mpd socket if needed'
   service:
     name: mpd.socket
     enabled: "{% if mpd_autostart %}no{% else %}yes{% endif %}"
@@ -56,7 +56,7 @@
   tags:
     - mpd
 
-- name: '[Linux] Generate mpd.conf from template'
+- name: '[Debian] Generate mpd.conf from template'
   template:
     src: mpd.conf.j2
     dest: /etc/mpd.conf
@@ -69,7 +69,7 @@
   tags:
     - mpd
 
-- name: '[Linux] Generate ncmpcpp config from template'
+- name: '[Debian] Generate ncmpcpp config from template'
   template:
     src: ncmpcpp.conf.j2
     dest: ~/.ncmpcpp/config
@@ -92,7 +92,7 @@
   tags:
     - mpd
 
-- name: '[Linux] Open mpd port in firewall'
+- name: '[Debian] Open mpd port in firewall'
   firewalld:
     port: "{{ mpd_port }}/tcp"
     zone: "{{ item }}"
