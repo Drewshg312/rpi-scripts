@@ -1,33 +1,17 @@
 ---
-#- name: Install zsh dependencies
-#  apt: name={{ item }} state=latest
-#  with_items:
-#    - zsh
-#    - git
-#  tags:
-#    - ohmyzsh
-#
-#- name: Install powerlevel9k dependencies
-#  apt: name={{ item }} state=latest
-#  with_items:
-#    - bc
-#  when: ohmyzsh_powerlevel9k == true
-#  tags:
-#    - ohmyzsh
-
-
+# Package module does not provide with_items optimisation (same as yum)
+# So it is faster to abstract out package managers via facts:
 - name: Install zsh dependencies
-  package: name={{ item }} state=latest
+  action: "{{ ansible_pkg_mgr }} name={{ item }} state=latest"
   with_items:
     - zsh
     - git
   tags:
     - ohmyzsh
 
+# If installation of just one package needs to be unified:
 - name: Install powerlevel9k dependencies
-  package: name={{ item }} state=latest
-  with_items:
-    - bc
+  package: name=bc state=latest
   when: ohmyzsh_powerlevel9k == true
   tags:
     - ohmyzsh
