@@ -8,6 +8,7 @@
     group: "{{ item.user }}"
   when: item.state is not defined or item.state == "present"
   with_items: "{{ ohmyzsh_users }}"
+  become: yes
   tags:
     - ohmyzsh
 
