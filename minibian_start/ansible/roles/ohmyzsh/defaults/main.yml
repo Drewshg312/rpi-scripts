@@ -8,12 +8,14 @@ ohmyzsh_powerlevel9k: true            # install amazing theme for zsh
 #ohmyzsh_users: []        # list of users to install zsh and ohmyzsh
 ohmyzsh_users:
   - user: root                        # user name
+    group: root
     theme: powerlevel9k/powerlevel9k  # ohmyzsh theme; use "random" for random theme
 #    ssh_ids: []                      # list of SSH ids to add to ohmyzsh ssh manager plugin
 #    plugins: []                      # list of ohmyzsh plugins to install
     state: present                    # present or absent, to install/uninstall
 
   - user: drewshg312                        # user name
+    group: staff
     theme: powerlevel9k/powerlevel9k  # ohmyzsh theme; use "random" for random theme
 #    ssh_ids: []                      # list of SSH ids to add to ohmyzsh ssh manager plugin
 #    plugins: []                      # list of ohmyzsh plugins to install
