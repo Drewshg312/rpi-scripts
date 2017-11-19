@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+
+  roles:
+#    - network
+#    - expandfs
+#    - vim
+#    - powerline-fonts
+    - ohmyzsh
+#    - mpd
+...
