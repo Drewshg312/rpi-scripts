@@ -10,7 +10,7 @@
 #    - expandfs
 #    - vim
 #    - powerline-fonts
-#    - ohmyzsh
-    - mpd
+    - ohmyzsh
+#    - mpd
 #    - ansible-terminus-powerline
 ...

@@ -1,5 +1,17 @@
 ---
-- name: Clone oh-my-zsh repo
+- name: '[install] Include OSX-specific variables'
+  include_vars: Darwin.yml
+  when: ansible_os_family == 'Darwin'
+  tags:
+    - ohmyzsh
+
+- name: '[install] Include Debian-specific variables'
+  include_vars: Debian.yml
+  when: ansible_os_family == 'Debian'
+  tags:
+    - ohmyzsh
+
+- name: '[install] Clone oh-my-zsh repo'
   git:
     repo: https://github.com/robbyrussell/oh-my-zsh.git
     dest: "{{ ohmyzsh_install_dir }}"
@@ -7,15 +19,16 @@
   tags:
     - ohmyzsh
 
-- name: Copy custom themes to custom directory
-  copy:
-    src: themes
-    dest: "{{ ohmyzsh_install_dir }}/custom/"
-    mode: 0644
+- name: '[install] Clone Powerlevel9k theme to custom directory'
+  git:
+    repo: https://github.com/bhilburn/powerlevel9k.git
+    dest: "{{ ohmyzsh_install_dir }}/custom/powerlevel9k"
+    update: yes
+  when: ohmyzsh_powerlevel9k is defined and true
   tags:
     - ohmyzsh
 
-- name: Setup /etc/profile for zsh
+- name: '[install] Setup /etc/profile for zsh'
   template:
     src: zprofile.j2
     dest: /etc/zsh/zprofile
