@@ -6,6 +6,7 @@
   with_items:
     - zsh
     - git
+  when: ansible_os_family != 'Darwin'
   tags:
     - ohmyzsh
 
@@ -16,4 +17,15 @@
   tags:
     - ohmyzsh
 
+# Upper would work for Darwin too, but I want to specify install_options:
+- name: Install zsh dependencies (OSX)
+  homebrew:
+    install_options:
+      - 'with-unicode9'
+      - 'without-etcdir'
+    name: zsh
+    state: latest
+  when: ansible_os_family == 'Darwin'
+  tags:
+    - ohmyzsh
 ...

@@ -28,13 +28,16 @@
   tags:
     - ohmyzsh
 
-- name: '[install] Setup /etc/profile for zsh'
+- name: '[install] Setup zprofile for zsh'
   template:
     src: zprofile.j2
-    dest: /etc/zsh/zprofile
+    dest: "{{ ohmyzsh_zprofile_dir }}/zprofile"
     mode: 0644
     owner: root
     group: root
+  become: yes
+  when: ansible_os_family != 'Darwin'
   tags:
     - ohmyzsh
+
 ...
