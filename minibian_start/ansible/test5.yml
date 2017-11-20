@@ -5,7 +5,7 @@
 #    - network
 #    - expandfs
 #    - vim
-#    - powerline-fonts
+    - ansible-nerdfonts
     - ohmyzsh
 #    - mpd
 ...

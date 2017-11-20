@@ -5,8 +5,8 @@
 #   'brew cask -S font | grep nerd'
 
 nerdfonts_fonts:
-  - 'font-soucecodepro-nerd-font'
-  - 'font-soucecodepro-nerd-font-mono'
+  - 'font-sourcecodepro-nerd-font'
+  - 'font-sourcecodepro-nerd-font-mono'
   - 'font-anonymouspro-nerd-font'
   - 'font-anonymouspro-nerd-font-mono'
   - 'font-ubuntumono-nerd-font'
