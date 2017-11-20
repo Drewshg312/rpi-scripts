@@ -21,6 +21,7 @@
     group: "{{ item.user if ansible_os_family != 'Darwin' else 'wheel' if item.user == 'root' else 'staff' }}"
   when: item.state is not defined or item.state == "present"
   with_items: "{{ ohmyzsh_users }}"
+  become: yes
   tags:
     - ohmyzsh
 
