@@ -3,9 +3,10 @@ POWERLEVEL9K_MODE='nerdfont-complete'
 # TESTS:
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(icons_test)      # Dump all possible icons (TEST PURPOSES)
 
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_SHORTEN_DELIMITER=""
+# truncate_middle, truncate_with_package_name, truncate_with_folder_marker, truncate_to_unique, truncate_from_right:
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1                    # Amount of symbols shown
+POWERLEVEL9K_SHORTEN_DELIMITER=""
 
 # PROMPT SHAPE:
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs newline context root_indicator os_icon)
