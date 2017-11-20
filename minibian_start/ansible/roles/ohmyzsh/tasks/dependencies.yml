@@ -7,6 +7,7 @@
     - zsh
     - git
   when: ansible_os_family != 'Darwin'
+  become: yes  # disable this for MacOS
   tags:
     - ohmyzsh
 
