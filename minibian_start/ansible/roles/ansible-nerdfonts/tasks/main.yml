@@ -8,7 +8,7 @@
 - name: Install Nerd Fonts with homebrew cask
   homebrew_cask:
     name: "{{ item }}"
-    state: latest
+    state: present
     update_homebrew: yes
   with_items: "{{ nerdfonts_fonts }}"
   become: no
