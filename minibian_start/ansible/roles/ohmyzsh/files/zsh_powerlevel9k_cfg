@@ -9,7 +9,7 @@ POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 
 # PROMPT SHAPE:
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs newline context root_indicator os_icon)
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs newline user host root_indicator os_icon)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs newline user host root_indicator os_icon rspec_stats ssh)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status rbenv load disk_usage background_jobs ram battery command_execution_time time)
 #POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status load disk_usage background_jobs rbenv swap ram battery time)
 
