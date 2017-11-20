@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Andrew Shagayev
   description: The role expands the filesystem to the size of partition \

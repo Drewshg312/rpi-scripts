@@ -5,6 +5,7 @@
 #    - ansible-network
 #    - ansible-expandfs
 #    - ansible-vim
+    - ansible-terminus_powerline
     - ansible-nerdfonts
     - ansible-ohmyzsh
 #    - ansible-mpd
