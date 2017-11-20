@@ -13,7 +13,15 @@ galaxy_info:
     - jessie
     - wheezy
   categories:
-  - development
-  - system
+    - development
+    - system
+  galaxy_tags:
+    - vim
+    - Debian
+    - Ubuntu
+    #
+    # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
+    #       Maximum 20 tags per role.
+
 dependencies: []
 ...

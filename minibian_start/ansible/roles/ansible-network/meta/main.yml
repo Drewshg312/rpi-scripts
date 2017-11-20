@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: drew
   description: >
@@ -25,9 +26,15 @@ galaxy_info:
   #github_branch:
 
   platforms:
-   - name: Debian
-     versions:
-     - all
+    - name: Debian
+      versions:
+        - jessie
+    - name: Raspbian
+      versions:
+        - jessie
+    - name: Minibian
+      versions:
+        - jessie
 
   galaxy_tags:
     - 'raspberrry'
@@ -42,3 +49,4 @@ galaxy_info:
     #       Maximum 20 tags per role.
 
 dependencies: []
+...

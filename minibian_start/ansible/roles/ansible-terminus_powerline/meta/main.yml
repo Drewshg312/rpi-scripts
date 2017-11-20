@@ -26,6 +26,11 @@ galaxy_info:
     - terminus
     - font
     - powerline
+    - MacOS
+    - OSX
+    #
+    # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
+    #       Maximum 20 tags per role.
 
 dependencies: []
 ...
