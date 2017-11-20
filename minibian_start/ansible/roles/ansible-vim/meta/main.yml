@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: Andrew Shagayev
+  description: This role installs vim package for terminal usage
+  license: BSD
+  min_ansible_version: 1.9
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+  - name: Debian
+    versions:
+    - jessie
+    - wheezy
+  categories:
+  - development
+  - system
+dependencies: []
+...

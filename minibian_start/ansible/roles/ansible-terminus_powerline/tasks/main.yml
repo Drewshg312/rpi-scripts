@@ -1,0 +1,26 @@
+---
+# tasks file for ansible-terminus-powerline
+
+- name: Install fontconfig package
+  homebrew:
+    update_homebrew: yes
+    name: fontconfig
+    state: latest
+  become: no
+  tags:
+    - terminus_powerline
+
+- name: Clone Terminus Powerline Patched font from my github repo
+  git:
+    repo: https://github.com/Drewshg312/terminus_powerline_font_osx.git
+    dest: "{{ terminus_powerline_fonts_dir }}/terminus_powerline"
+    force: yes
+  tags:
+    - terminus_powerline
+
+- name: Install fonts
+  command: fc-cache -f {{ terminus_powerline_fonts_dir }}
+  tags:
+    - terminus_powerline
+
+...

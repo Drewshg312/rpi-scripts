@@ -4,6 +4,8 @@
 - name: Tap caskroom/fonts
   homebrew_tap: name=caskroom/fonts state=present
   become: no
+  tags:
+    - nerdfonts
 
 - name: Install Nerd Fonts with homebrew cask
   homebrew_cask:
@@ -12,5 +14,7 @@
     update_homebrew: yes
   with_items: "{{ nerdfonts_fonts }}"
   become: no
+  tags:
+    - nerdfonts
 
 ...
