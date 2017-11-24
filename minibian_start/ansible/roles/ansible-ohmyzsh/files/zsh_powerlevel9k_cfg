@@ -9,9 +9,9 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=1                    # Amount of symbols shown
 POWERLEVEL9K_SHORTEN_DELIMITER=""
 
 # PROMPT SHAPE:
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs newline user host root_indicator os_icon)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs newline user host ip ip_public root_indicator os_icon)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status rbenv load disk_usage background_jobs ram battery command_execution_time time)
-
+POWERLEVEL9K_IP_INTERFACE='en2'
 POWERLEVEL9K_PROMPT_ON_NEWLINE=false                 # Two lines prompt
 POWERLEVEL9K_RPROMPT_ON_NEWLINE=false               # Makes Right Prompt to be on the same line as Left Prompt
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true               # Add new line after command execution
