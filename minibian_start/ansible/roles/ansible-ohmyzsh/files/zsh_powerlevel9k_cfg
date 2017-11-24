@@ -78,11 +78,17 @@ POWERLEVEL9K_OS_ICON_BACKGROUND='24'   # bright cyan
 POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_FOREGROUND='red'
 POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_BACKGROUND='178'  # rich yellow
 
-#============================ VCS: GitHub ===============================
+# VCS
+POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
+POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
+POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
+POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='red'
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='yellow'
+#GitHub:
 POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '             #  -- Branch with circles (Font Awesome)
 #POWERLEVEL9K_VCS_BRANCH_ICON=$'\uE725 '              #  --  Branch with circles (Octicons)
 #POWERLEVEL9K_VCS_BRANCH_ICON=$'\uE0A0 '              #  --  Branch with arrow (Powerline)
-
 # Octocat -- 
 #POWERLEVEL9K_VCS_GIT_GITHUB_ICON=$'\uF408 '         #  -- Big Octo-cat (Octicons)
 #POWERLEVEL9K_VCS_GIT_GITHUB_ICON=$'\uF09B '         #  -- Smaller Octo-cat (Font Awesome)
