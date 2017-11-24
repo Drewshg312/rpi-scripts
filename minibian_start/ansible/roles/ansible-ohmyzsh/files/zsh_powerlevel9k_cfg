@@ -97,6 +97,13 @@ POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '             #  -- Branch with circles
 POWERLEVEL9K_VCS_GIT_GITHUB_ICON=$'\uF406 '         #  -- Big Octo-cat (Octicons)
 #POWERLEVEL9K_VCS_GIT_GITHUB_ICON=$'\uF113 '         #  -- Smaller Octo-cat (Awesome)
 #POWERLEVEL9K_VCS_GIT_GITHUB_ICON=$'\uE708 '         #  -- Smallest Octo-cat (Devicons)
+# Bucket -- 
+POWERLEVEL9K_VCS_GIT_BITBUCKET_ICON=$'\uF171 '      #  -- Big Bucket (Font Awesome)
+#POWERLEVEL9K_VCS_GIT_BITBUCKET_ICON=$'\uE703 '      #  -- Small Bucket (Devicons)
+#POWERLEVEL9K_VCS_GIT_BITBUCKET_ICON=$'\uF172 '        #   -- Square Bucket (Font Awesome)
+
+#POWERLEVEL9K_VCS_GIT_GITLAB_ICON=
+#POWERLEVEL9K_VCS_GIT_ICON=
 #========================================================================
 
 #=========================== RIGHT PROMPT ===============================
