@@ -13,7 +13,7 @@ ohmyzsh_users:
 #    plugins: []                      # list of ohmyzsh plugins to install
     state: present                    # present or absent, to install/uninstall
 
-  - user: drewshg312                        # user name
+  - user: drew                        # user name
     theme: powerlevel9k/powerlevel9k  # ohmyzsh theme; use "random" for random theme
 #    ssh_ids: []                      # list of SSH ids to add to ohmyzsh ssh manager plugin
 #    plugins: []                      # list of ohmyzsh plugins to install

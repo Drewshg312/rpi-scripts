@@ -1,12 +1,13 @@
 ---
-- hosts: localhost
+#- hosts: localhost
+- hosts: raspberrypi_3
 
   roles:
 #    - ansible-network
 #    - ansible-expandfs
-#    - ansible-vim
-    - ansible-terminus_powerline
-    - ansible-nerdfonts
+    - ansible-vim
+#    - ansible-terminus_powerline
+#    - ansible-nerdfonts
     - ansible-ohmyzsh
-#    - ansible-mpd
+    - ansible-mpd
 ...

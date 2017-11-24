@@ -12,8 +12,8 @@
 - name: "[user] Generating {{ vim_root_config }} from template"
   template: src=vimrc.j2 dest="{{ vim_root_config }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
-  #when: ("{{ vim_users }}" is defined and item != "root")
-  when: ("{{ vim_users }}" is defined)
+  #when: (vim_users is defined and item != "root")
+  when: vim_users is defined
   become: yes
   become_method: su
   become_user: "{{ item }}"
@@ -23,7 +23,7 @@
 - name: "[user] Generating {{ vim_root_bundles }} from template"
   template: src=vimrc.bundles.j2 dest="{{ vim_root_bundles }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
-  when: ("{{ vim_users }}" is defined)
+  when: vim_users is defined
   become: yes
   become_method: su
   become_user: "{{ item }}"
@@ -38,7 +38,7 @@
   become_method: su
   become_user: "{{ item }}"
   # no need to use "{{ }}" in "when" conditions (Jinja2 feature):
-  when: 'vim_users is defined and "junegunn/vim-emoji" in vim_github_plugins'
+  when: vim_users is defined and "junegunn/vim-emoji" in vim_github_plugins
   tags:
     - vim
 
@@ -48,7 +48,7 @@
   become: yes
   become_method: su
   become_user: "{{ item }}"
-  when: 'vim_users is defined and "vim-syntastic/syntastic" in vim_github_plugins'
+  when: vim_users is defined and "vim-syntastic/syntastic" in vim_github_plugins
   tags:
     - vim
 
@@ -58,7 +58,7 @@
   become: yes
   become_method: su
   become_user: "{{ item }}"
-  when: 'vim_users is defined and "vim-airline/vim-airline" in vim_github_plugins'
+  when: vim_users is defined and "vim-airline/vim-airline" in vim_github_plugins
   tags:
     - vim
 
@@ -68,7 +68,7 @@
   become: yes
   become_method: su
   become_user: "{{ item }}"
-  when: 'vim_users is defined and "wincent/command-t" in vim_github_plugins'
+  when: vim_users is defined and "wincent/command-t" in vim_github_plugins
   tags:
     - vim
 
@@ -78,14 +78,14 @@
   become: yes
   become_method: su
   become_user: "{{ item }}"
-  when: 'vim_users is defined and "ryanoasis/devicons" in vim_github_plugins'
+  when: vim_users is defined and "ryanoasis/vim-devicons" in vim_github_plugins
   tags:
     - vim
 
 - name: '[user] Copying .vim folder to ~/.vim'
   copy: src=vim/ dest=~/.vim/ owner="{{ item }}" group="{{ item }}"
   with_items: "{{ vim_users }}"
-  when: ("{{ vim_users }}" is defined)
+  when: vim_users is defined
   become: yes
   become_method: su
   become_user: "{{ item }}"
@@ -112,7 +112,7 @@
 - name: '[user] Installing Vundle'
   git: repo=https://github.com/gmarik/Vundle.vim.git dest=~/.vim/bundle/Vundle.vim version="{{ vim_vundle_version }}"
   with_items: "{{ vim_users }}"
-  when: ("{{ vim_users }}" is defined)
+  when: vim_users is defined
   become: yes
   become_method: su
   become_user: "{{ item }}"
@@ -133,7 +133,7 @@
   command: "vim +PluginInstall +qal"
   ignore_errors: yes
   with_items: "{{ vim_users }}"
-  when: ("{{ vim_users }}" is defined)
+  when: vim_users is defined
   become: yes
   become_method: su
   become_user: "{{ item }}"

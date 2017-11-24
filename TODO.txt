@@ -1,0 +1,39 @@
+- Put all ansible roles separately on github
+	- create nice README for each ansible role
+
+- network (debian)
+	- adapt for redhat
+
+- expandfs (debian)
+	- adapt for redhat
+
+- mpd (debian, macos)
+- ohmyzsh (debian, macos)
+
+- terminux_powerline (macos)
+	adapt for linux
+
+- nerdfonts (macos)
+	adapt for linux
+
+- vim (debian):
+	- vim-airline theme
+	- fix system/user conditions
+	- adapt for macos
+
+
+- KeepassXC:
+	- ansible-keepassxc role (centos, debian, macos)
+- docker
+	- Start (coreOS, macos)
+	- ansible docker
+	- elasticsearch
+- django
+
+- raspberry pi cluster
+	- mesos
+	- kubernetes
+	- docker
+	- Elastic Stack
+
+

@@ -2,11 +2,11 @@
 # defaults file for expandfs
 
 # remove all vim configuration customizations created by this role
-vim_cleanup: true
+#vim_cleanup: true
 
 # where to install vim config: 'system' | 'user' | 'users'
-#vim_env: users
-vim_env: system
+vim_env: users
+#vim_env: system
 
 vim_users:
 # system-wide vundle plugin installation can only be stored in /root/.vim, so
@@ -16,6 +16,7 @@ vim_users:
 #
 ##  - root
   - pi
+  - drew
 
 # Another Tip: installing EMOJI plugin both systemwide AND per user is bad idea.
 # If doing both system-wide and user configuration,

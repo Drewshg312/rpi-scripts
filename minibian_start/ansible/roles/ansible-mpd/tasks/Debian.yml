@@ -10,8 +10,8 @@
 # example:
 #     when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 #
-# ansible_distribuion: ['MacOSX', 'Ubuntu', 'CentOS', 'Red Hat Enterprise Linux' ]
-# ansible_os_family: ['Darwin', 'RedHat', 'Windows']
+# ansible_distribuion: ['MacOSX', 'Debian', 'Ubuntu', 'CentOS', 'Red Hat Enterprise Linux', 'Windows 10']
+# ansible_os_family: ['Darwin', 'Debian', 'Debian' 'RedHat', 'RedHat' 'Windows']
 #
 - name: '[Debian] Install mpd package'
   action: >
