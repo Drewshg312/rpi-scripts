@@ -1,3 +1,6 @@
+- mpd (debian, macos)
+- ohmyzsh (debian, macos)
+
 - Put all ansible roles separately on github
 	- create nice README for each ansible role
 
@@ -6,9 +9,6 @@
 
 - expandfs (debian)
 	- adapt for redhat
-
-- mpd (debian, macos)
-- ohmyzsh (debian, macos)
 
 - terminux_powerline (macos)
 	adapt for linux

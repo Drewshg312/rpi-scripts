@@ -5,9 +5,9 @@
   roles:
 #    - ansible-network
 #    - ansible-expandfs
-    - ansible-vim
+#    - ansible-vim
 #    - ansible-terminus_powerline
-#    - ansible-nerdfonts
-    - ansible-ohmyzsh
-    - ansible-mpd
+    - ansible-nerdfonts
+#    - ansible-ohmyzsh
+#    - ansible-mpd
 ...

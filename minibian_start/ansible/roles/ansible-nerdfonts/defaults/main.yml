@@ -1,14 +1,166 @@
 ---
 # defaults file for ansible-nerdfonts
 
-# Find all fonts available:
+# Find all brew cask fonts available:
 #   'brew cask -S font | grep nerd'
+#
+nerdfonts_mono: no  # yes | no -- install mono variant of the font from homebrew cask on MacOS.
 
 nerdfonts_fonts:
-  - 'font-sourcecodepro-nerd-font'
-  - 'font-sourcecodepro-nerd-font-mono'
-  - 'font-anonymouspro-nerd-font'
-  - 'font-anonymouspro-nerd-font-mono'
-  - 'font-ubuntumono-nerd-font'
-  - 'font-ubuntumono-nerd-font-mono'
+#  3270:
+#    fontname: '3270'
+#    caskname: 'font-3270-nerd-font'
+#    caskname_mono: 'font-3270-nerd-font-mono'
+  anonymice:
+    fontname: 'AnonymousPro'
+    caskname: 'font-anonymouspro-nerd-font'
+    caskname_mono: 'font-sourcecodepro-nerd-font-mono'
+#  arimo:
+#    fontname: 'Arimo'
+#    caskname: ''
+#    caskname_mono: ''
+#  aurulent_sans_mono:
+#    fontname: 'AurulentSansMono'
+#    caskname: 'font-aurulentsansmono-nerd-font'
+#    caskname_mono: 'font-aurulentsansmono-nerd-font-mono'
+#  bitstream_vera_sans_mono:
+#    fontname: 'BitstreamVeraSansMono'
+#    caskname: 'font-bitstreamverasansmono-nerd-font'
+#    caskname_mono: 'font-bitstreamverasansmono-nerd-font-mono'
+#  code_new_roman:
+#    fontname: 'CodeNewRoman'
+#    caskname: 'font-codenewroman-nerd-font'
+#    caskname_mono: 'font-codenewroman-nerd-font-mono'
+#  cousine:
+#    fontname: 'Cousine'
+#    caskname: ''
+#    caskname_mono: ''
+#  dejavu_sans_mono:
+#    fontname: 'DejaVuSansMono'
+#    caskname: 'font-dejavusansmono-nerd-font'
+#    caskname_mono: 'font-dejavusansmono-nerd-font-mono'
+#  droid_sans_mono:
+#    fontname: 'DroidSansMono'
+#    caskname: 'font-droidsansmono-nerd-font'
+#    caskname_mono: 'font-droidsansmono-nerd-font-mono'
+#  fantasque_sans_mono:
+#    fontname: 'FantasqueSansMono'
+#    caskname: 'font-fantasquesansmono-nerd-font'
+#    caskname_mono: 'font-fantasquesansmono-nerd-font-mono'
+#  fura_code:
+#    fontname: 'FiraCode'
+#    caskname: 'font-firacode-nerd-font'
+#    caskname_mono: 'font-firacode-nerd-font-mono'
+#  fura_mono:
+#    fontname: 'FiraMono'
+#    caskname: 'font-firamono-nerd-font'
+#    caskname_mono: 'font-firamono-nerd-font-mono'
+#  go_mono:
+#    fontname: 'Go-Mono'
+#    caskname: ''
+#    caskname_mono: ''
+#  gohu:
+#    fontname: 'Gohu'
+#    caskname: 'font-gohu-nerd-font'
+#    caskname_mono: 'font-gohu-nerd-font-mono'
+#  hasklug:
+#    fontname: 'Hasklig'
+#    caskname: 'font-hasklig-nerd-font'
+#    caskname_mono: 'font-hasklig-nerd-font-mono'
+#  heavy_data:
+#    fontname: 'HeavyData'
+#    caskname: 'font-heavydata-nerd-font'
+#    caskname_mono: 'font-heavydata-nerd-font-mono'
+#  hurmit:
+#    fontname: 'Hermit'
+#    caskname: 'font-hermit-nerd-font'
+#    caskname_mono: 'font-hermit-nerd-font-mono'
+#  inconsolata:
+#    fontname: 'Inconsolata'
+#    caskname: 'font-inconsolata-nerd-font'
+#    caskname_mono: 'font-inconsolata-nerd-font-mono'
+#  inconsolata_lgc:
+#    fontname: 'InconsolataLGC'
+#    caskname: ''
+#    caskname_mono: ''
+#  inconsolatago:
+#    fontname: 'InconsolataGo'
+#    caskname: ''
+#    caskname_mono: ''
+#  iosevka:
+#    fontname: 'Iosevka'
+#    caskname: 'font-iosevka-nerd-font'
+#    caskname_mono: 'font-iosevka-nerd-font-mono'
+#  knack:
+#    fontname: 'Hack'
+#    caskname: 'font-hack-nerd-font'
+#    caskname_mono: 'font-hack-nerd-font-mono'
+#  lekton:
+#    fontname: 'Lekton'
+#    caskname: 'font-lekton-nerd-font'
+#    caskname_mono: 'font-lekton-nerd-font-mono'
+#  literation_mono:
+#    fontname: 'LiberationMono'
+#    caskname: 'font-liberationmono-nerd-font'
+#    caskname_mono: 'font-liberationmono-nerd-font-mono'
+#  meslo:
+#    fontname: 'Meslo'
+#    caskname: 'font-meslo-nerd-font'
+#    caskname_mono: 'font-meslo-nerd-font-mono'
+#  monofur:
+#    fontname: 'Monofur'
+#    caskname: 'font-monofur-nerd-font'
+#    caskname_mono: 'font-monofur-nerd-font-mono'
+#  monoid:
+#    fontname: 'Monoid'
+#    caskname: 'font-monoid-nerd-font'
+#    caskname_mono: 'font-monoid-nerd-font-mono'
+#  mononoki:
+#    fontname: 'Mononoki'
+#    caskname: 'font-mononoki-nerd-font'
+#    caskname_mono: 'font-mononoki-nerd-font-mono'
+#  mplus:
+#    fontname: 'MPlus'
+#    caskname: 'font-mplus-nerd-font'
+#    caskname_mono: 'font-mplus-nerd-font-mono'
+#  profont:
+#    fontname: 'ProFont'
+#    caskname: 'font-profont-nerd-font'
+#    caskname_mono: 'font-profont-nerd-font-mono'
+#  proggyclean:
+#    fontname: 'ProggyClean'
+#    caskname: 'font-proggyclean-nerd-font'
+#    caskname_mono: 'font-proggyclean-nerd-font-mono'
+#  roboto_mono:
+#    fontname: 'RobotoMono'
+#    caskname: 'font-robotomono-nerd-font'
+#    caskname_mono: 'font-robotomono-nerd-font-mono'
+  sauce_code_pro:
+    fontname: 'SourceCodePro'
+    caskname: 'font-sourcecodepro-nerd-font'
+    caskname_mono: 'font-sourcecodepro-nerd-font-mono'
+#  shuretechmono:
+#    fontname: 'ShareTechMono'
+#    caskname: 'font-sharetechmono-nerd-font'
+#    caskname_mono: 'font-sharetechmono-nerd-font'
+#  space_mono:
+#    fontname: 'SpaceMono'
+#    caskname: 'font-spacemono-nerd-font'
+#    caskname_mono: 'font-spacemono-nerd-font-mono'
+#  terminess:
+#    fontname: 'Terminus'
+#    caskname: 'font-terminus-nerd-font'
+#    caskname_mono: 'font-terminus-nerd-font-mono'
+#  tinos:
+#    fontname: 'Tinos'
+#    caskname: ''
+#    caskname_mono: ''
+#  ubuntu
+#    fontname: 'Ubuntu'
+#    caskname: ''
+#    caskname_mono: ''
+#  ubuntu_mono:
+#    fontname: 'UbuntuMono'
+#    caskname: 'font-ubuntumono-nerd-font'
+#    caskname_mono: 'font-ubuntumono-nerd-font-mono'
 ...

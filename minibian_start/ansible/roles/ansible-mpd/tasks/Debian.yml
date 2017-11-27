@@ -1,5 +1,5 @@
 ---
-- name: '[Debian] Include all linux-specific variables'
+- name: '[Debian] Include all Debian-specific variables'
   include_vars: Debian.yml
   tags:
     - mpd

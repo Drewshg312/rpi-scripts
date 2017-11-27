@@ -1,0 +1,14 @@
+---
+# defaults file for ansible-nerdfonts
+
+
+nerdfonts_env: 'system'  # 'system' | 'user' | users'
+
+nerdfonts_fonts_debian_sys_dir: '/usr/local/share/fonts'
+nerdfonts_fonts_debian_user_dir: '~/.local/share/fonts'
+
+nerdfonts_users:
+  - drew
+  - pi
+
+...

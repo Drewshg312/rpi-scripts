@@ -1,0 +1,9 @@
+---
+- name: '[Dependencies] Install Dependencies for NerdFonts'
+  package:
+    name:
+      - fontconfig
+    state: present
+  tags:
+    - nerdfonts
+...

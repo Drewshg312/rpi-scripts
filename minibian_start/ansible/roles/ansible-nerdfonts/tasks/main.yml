@@ -1,20 +1,9 @@
 ---
 # tasks file for ansible-nerdfonts
+- include_tasks: Darwin.yml
+  when: ansible_os_family == 'Darwin'
 
-- name: Tap caskroom/fonts
-  homebrew_tap: name=caskroom/fonts state=present
-  become: no
-  tags:
-    - nerdfonts
-
-- name: Install Nerd Fonts with homebrew cask
-  homebrew_cask:
-    name: "{{ item }}"
-    state: present
-    update_homebrew: yes
-  with_items: "{{ nerdfonts_fonts }}"
-  become: no
-  tags:
-    - nerdfonts
+- include_tasks: Debian.yml
+  when: ansible_os_family == 'Debian'
 
 ...
