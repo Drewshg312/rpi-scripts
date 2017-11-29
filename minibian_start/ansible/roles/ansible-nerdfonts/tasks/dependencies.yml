@@ -4,6 +4,7 @@
     name:
       - fontconfig
     state: present
+  # note: 'become: yes'(for Linux) or 'become: no'(for MacOS) included in OS-specific playbooks under 'include_tasks'
   tags:
     - nerdfonts
 ...

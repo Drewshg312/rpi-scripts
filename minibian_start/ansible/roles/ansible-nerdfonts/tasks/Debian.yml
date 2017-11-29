@@ -1,5 +1,7 @@
 ---
-- include_tasks: dependencies.yml
+- name: '[Debian] Include Dependencies installation playbook'
+  include_tasks: dependencies.yml
+  become: yes
   tags:
     - nerdfonts
 
