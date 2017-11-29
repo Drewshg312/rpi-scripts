@@ -25,29 +25,23 @@
 
 - name: '[Debian] Setting nerdfonts_install_dir for system-wide installation'
   set_fact:
-    nerdfonts_install_dir: "{{ nerdfonts_fonts_debian_sys_dir }}"
+    nerdfonts_install_dir: "{{ nerdfonts_deb_fonts_sys_dir }}"
   when: nerdfonts_env is defined and nerdfonts_env  == 'system'
   tags:
     - nerdfonts
 
 - name: '[Debian] Setting nerdfonts_install_dir for user-specific installation'
   set_fact:
-    nerdfonts_install_dir: "{{ nerdfonts_fonts_debian_user_dir }}"
+    nerdfonts_install_dir: "{{ nerdfonts_deb_fonts_user_dir }}"
   when: nerdfonts_env is defined and (nerdfonts_env == 'user' or nerdfonts_env == 'users')
   tags:
     - nerdfonts
-
-# from man pages: fc-cache  is run automatically at system boot to ensure font caches are up to date
-# so if fons already in nerdfonts_install_dir, then do not run fc-cache:
-#- stat:
-#    path:
 
 - name: '[Debian] Create NerdFonts folder for system-wode installation'
   file:
     path: "{{ nerdfonts_install_dir }}/NerdFonts"
     state: directory
   when: nerdfonts_env is defined and nerdfonts_env == 'system'
-  become: yes
   tags:
     - nerdfonts
 
@@ -63,15 +57,15 @@
   tags:
     - nerdfonts
 
-- stat:
+- name: '[Debian] Check if there are any NerdFonts already installed'
+  stat:
     path: "{{ nerdfonts_install_dir }}/NerdFonts/{{ item.value.fontname }}"
   with_dict: "{{ nerdfonts_fonts }}"
-  #become: yes
   register: nerdfonts_stat
   tags:
     - nerdfonts
 
-- name: 'Combine the results into dictionary with following structure: {<FontName> : <stat.exists>}'
+- name: '[Debian] Combine the results into dictionary with following structure: {<FontName> : <stat.exists>}'
   set_fact:
     # https://stackoverflow.com/questions/35605603/using-ansible-set-fact-to-create-a-dictionary-from-register-results
     # FLATTENING THE RESULTS AND COMBINING THEM INTO DICTIONARY WITH SPECIFIED KEY:VALUE STRUCTURE:
@@ -82,8 +76,8 @@
 
 - name: '[Debian] Copy fonts for system-wide installation'
   command: "cp -r {{ ansible_env.HOME}}/nerd_fonts/patched-fonts/{{ item.key }} {{ nerdfonts_install_dir }}/NerdFonts/"
-  with_dict: "{{ nerdfonts_exists }}"
   become: yes
+  with_dict: "{{ nerdfonts_exists }}"
   when: item.value == false
   tags:
     - nerdfonts
@@ -102,7 +96,9 @@
 
 - name: '[Debian] Install specified NerdFonts'
   command: "fc-cache -f {{ nerdfonts_install_dir }}"
+  # https://stackoverflow.com/questions/47523815/ansible-how-to-check-if-dictionary-has-at-least-one-specified-value
+  # Execute command only when some dictionary contains at least one 'false' value:
+  when: false in nerdfonts_exists.values()
   tags:
     - nerdfonts
-
 ...
