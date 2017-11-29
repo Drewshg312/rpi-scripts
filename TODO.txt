@@ -1,5 +1,6 @@
 - mpd (debian, macos)
 - ohmyzsh (debian, macos)
+- nerdfonts (debian, macos)
 
 - Put all ansible roles separately on github
 	- create nice README for each ansible role
@@ -11,9 +12,6 @@
 	- adapt for redhat
 
 - terminux_powerline (macos)
-	adapt for linux
-
-- nerdfonts (macos)
 	adapt for linux
 
 - vim (debian):
