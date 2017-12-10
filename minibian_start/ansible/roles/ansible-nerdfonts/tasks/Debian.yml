@@ -1,11 +1,11 @@
 ---
-- name: '[Debian] Include Dependencies installation playbook'
+- name: '[Debian] Include Dependencies installation tasks'
   include_tasks: dependencies.yml
   become: yes
   tags:
     - nerdfonts
 
-- name: '[Debian] Include all Debian specific variables'
+- name: '[Debian] Include Debian-specific variables'
   include_vars: Debian.yml
   tags:
     - nerdfonts

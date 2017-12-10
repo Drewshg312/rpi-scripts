@@ -1,11 +1,8 @@
 ---
 # tasks file for ansible-nerdfonts
-- name: '[main] Include Darwin-specific playbook'
-  include_tasks: Darwin.yml
-  when: ansible_os_family == 'Darwin'
 
-- name: '[main] Include Debian-specific playbook'
-  include_tasks: Debian.yml
-  when: ansible_os_family == 'Debian'
-
+- name: "[main] Include {{ ansible_os_family }}-specific playbook"
+  include_tasks: "{{ ansible_os_family }}.yml"
+  tags:
+    - nerdfonts
 ...

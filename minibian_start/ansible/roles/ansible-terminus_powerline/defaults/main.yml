@@ -1,9 +1,10 @@
 ---
 # defaults file for ansible-terminus-powerline
 
-#terminus_powerline_fonts_dir: ~/.fonts
-#terminus_powerline_fonts_dir: /usr/share/fonts
-terminus_powerline_fonts_dir: /Library/Fonts/
+# system | user | users
+terminus_powerline_env: system
 
-
-
+terminus_powerline_users:
+  - drew
+  - pi
+...

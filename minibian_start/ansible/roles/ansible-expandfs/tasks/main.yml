@@ -1,40 +1,41 @@
 ---
-- name: Install parted
+- name: '[main] Install parted'
   apt: update_cache=yes name=parted state=present force=yes
   become: yes
   tags:
     - expandfs
 
-- name: Check unpartitioned space
+- name: '[main] Check unpartitioned space'
   shell: /sbin/parted /dev/mmcblk0 unit gb print free | grep 'Free Space' | tail -n1 | awk '{print $3}'
   register: unpartitioned
   changed_when: false
   failed_when: unpartitioned.stderr != ""
+  become: yes
   tags:
     - expandfs
 
-- name: Installing raspi-config if not present
+- name: '[main] Installing raspi-config if not present'
   apt: update_cache=yes name=raspi-config state=present force=yes
   become: yes
   when: unpartitioned.stdout != "0.00GB"
   tags:
     - expandfs
 
-- name: Expanding filesystem
+- name: '[main] Expanding filesystem'
   command: raspi-config nonint do_expand_rootfs
   become: yes
   when: unpartitioned.stdout != "0.00GB"
   tags:
     - expandfs
 
-- name: Running 'partprobe'
+- name: '[main] Running partprobe'
   command: partprobe
   become: yes
   when: unpartitioned.stdout != "0.00GB"
   tags:
     - expandfs
 
-- name: Running 'resize2fs /dev/mmcblk0p2'
+- name: '[main] Running resize2fs /dev/mmcblk0p2'
   command: resize2fs /dev/mmcblk0p2
   become: yes
   when: unpartitioned.stdout != "0.00GB"

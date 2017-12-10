@@ -1,7 +1,8 @@
 ---
 # tasks file for mpd
 
-- include_tasks: "{{ ansible_os_family }}.yml"
+- name: '[main] Include {{ ansible_os_family }}-specific playbook'
+  include_tasks: "{{ ansible_os_family }}.yml"
   tags:
     - mpd
     - mpc

@@ -1,5 +1,5 @@
 ---
-- name: == RED OUTPUT IS OK == Check '/lib/udev/rules.d/75-persistent-net-generator.rules' == RED OUTPUT IS OK ==
+- name: '[main] == RED OUTPUT IS OK == Check /lib/udev/rules.d/75-persistent-net-generator.rules == RED OUTPUT IS OK =='
   command: >
     fgrep -q 'KERNEL!="eth*[1-9]|ath*|wlan*[1-9]|msh*|ra*|sta*|ctc*|lcs*|hsi*"' \
       /lib/udev/rules.d/75-persistent-net-generator.rules
@@ -9,7 +9,7 @@
   tags:
     - network
 
-- name: Commenting old pattern in '75-persistent-net-generator.rules'
+- name: '[main] Commenting old pattern in 75-persistent-net-generator.rules'
   replace:
     path: /lib/udev/rules.d/75-persistent-net-generator.rules
     regexp: '^(KERNEL!=".*$)'
@@ -19,7 +19,7 @@
   tags:
     - network
 
-- name: Inserting right pattern into '75-persistent-net-generator.rules'
+- name: '[main] Inserting right pattern into 75-persistent-net-generator.rules'
   lineinfile:
     path: /lib/udev/rules.d/75-persistent-net-generator.rules
     insertafter: '^#KERNEL!=".*$'
@@ -29,7 +29,7 @@
   tags:
     - network
 
-- name: Copying '/etc/network/interfaces'
+- name: '[main] Copying /etc/network/interfaces'
   copy:
     src: interfaces
     dest: /etc/network/interfaces

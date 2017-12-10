@@ -69,14 +69,27 @@
   tags:
     - mpd
 
+- name: '[Debian] Create ~/.ncmpcpp folder'
+  file:
+    path: '~/.ncmpcpp'
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: 755
+  #become: {{ item }}
+  #with_items: mpd_users
+  when: mpd_install_ncmpcpp
+  tags:
+    - mpd
+    - ncmpcpp
+
 - name: '[Debian] Generate ncmpcpp config from template'
   template:
     src: ncmpcpp.conf.j2
-    dest: ~/.ncmpcpp/config
+    dest: '~/.ncmpcpp/config'
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
     mode: 0644
-  become: no
   when: mpd_install_ncmpcpp
   tags:
     - mpd

@@ -16,6 +16,7 @@
     repo: https://github.com/robbyrussell/oh-my-zsh.git
     dest: "{{ ohmyzsh_install_dir }}"
     update: yes
+  become: yes
   tags:
     - ohmyzsh
 
@@ -24,6 +25,7 @@
     repo: https://github.com/bhilburn/powerlevel9k.git
     dest: "{{ ohmyzsh_install_dir }}/custom/powerlevel9k"
     update: yes
+  become: yes
   when: ohmyzsh_powerlevel9k is defined and true
   tags:
     - ohmyzsh

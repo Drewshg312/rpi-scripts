@@ -3,7 +3,7 @@
 - name: "[user] Create {{ vim_root_cust_conf_dir }} directory for custom configuration content"
   file: path="{{ vim_root_cust_conf_plugin_dir }}" state=directory
   become: yes    # Required for become_user to work
-  become_method: su  # only good for root user to become another user when sudo package is not available
+  #become_method: su  # only good for root user to become another user when sudo package is not available
   become_user: "{{ item }}"
   with_items: "{{ vim_users }}"
   tags:
@@ -15,7 +15,6 @@
   #when: (vim_users is defined and item != "root")
   when: vim_users is defined
   become: yes
-  become_method: su
   become_user: "{{ item }}"
   tags:
     - vim
@@ -25,7 +24,6 @@
   with_items: "{{ vim_users }}"
   when: vim_users is defined
   become: yes
-  become_method: su
   become_user: "{{ item }}"
   tags:
     - vim
@@ -35,7 +33,6 @@
   template: src=vimrc.emoji.j2 dest="{{ vim_root_emoji }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
-  become_method: su
   become_user: "{{ item }}"
   # no need to use "{{ }}" in "when" conditions (Jinja2 feature):
   when: vim_users is defined and "junegunn/vim-emoji" in vim_github_plugins
@@ -46,7 +43,6 @@
   template: src=vimrc.syntastic.j2 dest="{{ vim_root_syntastic }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
-  become_method: su
   become_user: "{{ item }}"
   when: vim_users is defined and "vim-syntastic/syntastic" in vim_github_plugins
   tags:
@@ -56,7 +52,6 @@
   template: src=vimrc.airline.j2 dest="{{ vim_root_airline }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
-  become_method: su
   become_user: "{{ item }}"
   when: vim_users is defined and "vim-airline/vim-airline" in vim_github_plugins
   tags:
@@ -66,7 +61,6 @@
   template: src=vimrc.command-t.j2 dest="{{ vim_root_command_t }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
-  become_method: su
   become_user: "{{ item }}"
   when: vim_users is defined and "wincent/command-t" in vim_github_plugins
   tags:
@@ -76,7 +70,6 @@
   template: src=vimrc.devicons.j2 dest="{{ vim_root_devicons }}" owner="{{ item }}" group="{{ item }}" mode=0644
   with_items: "{{ vim_users }}"
   become: yes
-  become_method: su
   become_user: "{{ item }}"
   when: vim_users is defined and "ryanoasis/vim-devicons" in vim_github_plugins
   tags:
@@ -87,7 +80,6 @@
   with_items: "{{ vim_users }}"
   when: vim_users is defined
   become: yes
-  become_method: su
   become_user: "{{ item }}"
   tags:
     - vim
@@ -103,7 +95,6 @@
       export TERM="xterm-256color"  # For vim colors in tmux
     marker: "# {mark} ======== VIM role: Ansible managed block ========="
   become: yes
-  become_method: su
   become_user: "{{ item }}"
   with_items: "{{ vim_users }}"
   tags:
@@ -114,7 +105,6 @@
   with_items: "{{ vim_users }}"
   when: vim_users is defined
   become: yes
-  become_method: su
   become_user: "{{ item }}"
   tags:
     - vim
@@ -135,7 +125,6 @@
   with_items: "{{ vim_users }}"
   when: vim_users is defined
   become: yes
-  become_method: su
   become_user: "{{ item }}"
   tags:
     - vim
