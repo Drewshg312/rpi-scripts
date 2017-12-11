@@ -6,6 +6,13 @@ mpd_autostart: true
 mpd_install_mpc: true
 
 mpd_install_ncmpcpp: true
+
+mpd_ncmpcpp_users:
+  - "{{ ansible_user_id }}"
+  - root
+  - drew
+  - pi
+
 mpd_ncmpcpp_mpd_host: localhost
 
 # ATTENTION!

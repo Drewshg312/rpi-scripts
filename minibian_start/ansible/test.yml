@@ -1,6 +1,7 @@
 ---
 - hosts: raspberrypi_3
 #- hosts: localhost
+
 #  vars_files:
 #    - vars.yml
 #  vars:
@@ -9,7 +10,8 @@
 #    - ansible-network
 #    - ansible-expandfs
 #    - ansible-vim
-    - ansible-ohmyzsh
-#    - ansible-mpd
+#    - ansible-ohmyzsh
 #    - ansible-terminus_powerline
+#    - ansible-nerdfonts
+    - ansible-mpd
 ...

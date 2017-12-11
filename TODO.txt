@@ -1,9 +1,11 @@
 - mpd (debian, macos)
 - ohmyzsh (debian, macos)
 - nerdfonts (debian, macos)
+- terminux_powerline (debian, macos)
 
-- Put all ansible roles separately on github
+- Put all ansible roles separately on GitLab and GitHub
 	- create nice README for each ansible role
+	- add Virustotal devops test to github
 
 - network (debian)
 	- adapt for redhat
@@ -11,27 +13,22 @@
 - expandfs (debian)
 	- adapt for redhat
 
-- terminux_powerline (macos)
-	adapt for linux
 
 - vim (debian):
 	- vim-airline theme
-	- fix system/user conditions
 	- adapt for macos
 
 
 - KeepassXC:
 	- ansible-keepassxc role (centos, debian, macos)
+
 - docker
 	- Start (coreOS, macos)
 	- ansible docker
 	- elasticsearch
-- django
+- django/python
 
-- raspberry pi cluster
+- raspberry pi cluster (docker/kubernetes)
 	- mesos
-	- kubernetes
-	- docker
-	- Elastic Stack
-
+	- amsterdam (or at least Elastic Stack)
 

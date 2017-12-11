@@ -57,40 +57,34 @@
     - mpd
 
 - name: '[Debian] Generate mpd.conf from template'
-  template:
-    src: mpd.conf.j2
-    dest: /etc/mpd.conf
-    backup: yes
-    owner: root
-    group: root
-    mode: 0644
+  template: src=mpd.conf.j2 dest=/etc/mpd.conf backup=yes owner=root group=root mode=0644
   notify: Restart mpd service
   become: yes
   tags:
     - mpd
 
-- name: '[Debian] Create ~/.ncmpcpp folder'
-  file:
-    path: '~/.ncmpcpp'
-    state: directory
-    owner: "{{ ansible_user_id }}"
-    group: "{{ ansible_user_id }}"
-    mode: 755
-  #become: {{ item }}
-  #with_items: mpd_users
-  when: mpd_install_ncmpcpp
+- name: '[Debian] Create ~/.ncmpcpp folder for each mpd_ncmpcpp_user'
+  file: path='~/.ncmpcpp' state=directory owner="{{ item }}" group="{{ item }}" mode=0755
+  become: yes
+  become_user: "{{ item }}"
+  with_items: "{{ mpd_ncmpcpp_users }}"
+  when:
+    - mpd_install_ncmpcpp
+    - mpd_ncmpcpp_users is defined
+    - mpd_ncmpcpp_users | length > 0
   tags:
     - mpd
     - ncmpcpp
 
 - name: '[Debian] Generate ncmpcpp config from template'
-  template:
-    src: ncmpcpp.conf.j2
-    dest: '~/.ncmpcpp/config'
-    owner: "{{ ansible_user_id }}"
-    group: "{{ ansible_user_id }}"
-    mode: 0644
-  when: mpd_install_ncmpcpp
+  template: src=ncmpcpp.conf.j2 dest='~/.ncmpcpp/config' owner="{{ item }}" group="{{ item }}" mode=0644
+  become: yes
+  become_user: "{{ item }}"
+  with_items: "{{ mpd_ncmpcpp_users }}"
+  when:
+    - mpd_install_ncmpcpp
+    - mpd_ncmpcpp_users is defined
+    - mpd_ncmpcpp_users | length > 0
   tags:
     - mpd
     - ncmpcpp
@@ -106,12 +100,7 @@
     - mpd
 
 - name: '[Debian] Open mpd port in firewall'
-  firewalld:
-    port: "{{ mpd_port }}/tcp"
-    zone: "{{ item }}"
-    permanent: true
-    immediate: yes
-    state: enabled
+  firewalld: port="{{ mpd_port }}/tcp" zone="{{ item }}" permanent=true immediate=yes state=enabled
   with_items: "{{ mpd_firewall_zones }}"
   become: yes
   when: mpd_stat_1_firewalld.stat.exists or mpd_stat_2_firewalld.stat.exists
