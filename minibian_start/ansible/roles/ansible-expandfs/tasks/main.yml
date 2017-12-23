@@ -1,22 +1,17 @@
 ---
-- name: '[create_users] == RED OUTPUT IS OK == Check if dns is already set to 8.8.8.8'
-  command: >
-    fgrep -q 'nameserver 8.8.8.8' /etc/resolv.conf
-  register: minibian_core_dns
-  ignore_errors: yes
-  changed_when: false
+- name: '[main] Include Dependencies installation tasks'
+  include_tasks: dependencies.yml
   tags:
     - expandfs
+    - expandfs_dependencies
 
 - name: '[main] Temporarily set dns to 8.8.8.8 in order to resolve *.raspberrypi.org'
-  shell: echo 'nameserver 8.8.8.8' > /etc/resolv.conf
-  become: yes
-  when: minibian_core_dns|failed
-  tags:
-    - expandfs
-
-- name: '[main] Install parted'
-  apt: update_cache=yes name=parted state=present force=yes
+  copy:
+    src: resolv.conf
+    dest: /etc/resolv.conf
+    mode: 0644
+    owner: root
+    group: root
   become: yes
   tags:
     - expandfs
@@ -27,13 +22,6 @@
   changed_when: false
   failed_when: expandfs_unpartitioned.stderr != ""
   become: yes
-  tags:
-    - expandfs
-
-- name: '[main] Installing raspi-config if not present'
-  apt: update_cache=yes name=raspi-config state=present force=yes
-  become: yes
-  when: expandfs_unpartitioned.stdout != "0.00GB"
   tags:
     - expandfs
 

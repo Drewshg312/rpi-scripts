@@ -6,6 +6,7 @@
   become: no
   tags:
       - nerdfonts
+      - nerdfonts_dependencies
 
 - name: '[Darwin] Tap caskroom/fonts'
   homebrew_tap: name=caskroom/fonts state=present

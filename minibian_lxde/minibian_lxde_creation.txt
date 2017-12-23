@@ -65,7 +65,7 @@ Copy icons and wallpapers:
     $ scp -r drew@macpro:/Users/drew/PrivateCloud/multimedia/icons/picons ~/media/picons
 
 
-MAKING THE WHOLE WINDOWS DARK
+MAKING THE WHOLE WINDOW DARK
 
 Install dependencies for arc-theme:
     $ sudo apt-get install -y gtk2-engines-murrine gtk2-engines-pixbuf gtk3-engines-unico

@@ -1,10 +1,24 @@
 ---
-- import_tasks: cleanup.yml
+- name: '[main] Import cleanup tasks'
+  import_tasks: cleanup.yml
   when: vim_cleanup is defined and true
+  tags:
+    - vim
+    - vim_cleanup
 
-- include_tasks: install.yml
+- name: '[main] Include dependencies installation tasks'
+  include_tasks: dependencies.yml
+  tags:
+    - vim
+    - vim_dependencies
 
-- include_tasks: configure_system.yml
+- name: '[main] Include vim installation tasks'
+  include_tasks: install.yml
+  tags:
+    - vim
+
+- name: '[main] Include system configuration tasks'
+  include_tasks: configure_system.yml
   vars:
     vim_root_dir: "/etc/vim"
     vim_root_config: "{{ vim_root_dir }}/vimrc.local"
@@ -15,8 +29,11 @@
     vim_root_syntastic: "{{ vim_root_dir }}/vimrc.syntastic"
     vim_root_devicons: "{{ vim_root_dir }}/vimrc.devicons"
   when: vim_env == 'system'
+  tags:
+    - vim
 
-- include_tasks: configure_user.yml
+- name: '[main] Include user configuration tasks'
+  include_tasks: configure_user.yml
   vars:
     vim_root_config: "~/.vimrc"
     vim_root_cust_conf_dir: "~/.vim/vim.local"
@@ -28,4 +45,6 @@
     vim_root_syntastic: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.syntastic"
     vim_root_devicons: "{{ vim_root_cust_conf_plugin_dir }}/vimrc.devicons"
   when: vim_env == 'user' or vim_env == 'users'
+  tags:
+    - vim
 ...

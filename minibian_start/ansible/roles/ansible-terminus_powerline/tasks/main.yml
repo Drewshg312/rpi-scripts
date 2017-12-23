@@ -3,6 +3,7 @@
   include_tasks: dependencies.yml
   tags:
     - terminus_powerline
+    - terminus_powerline_dependencies
 
 - name: "[main] Include {{ ansible_os_family }} installation tasks"
   include_vars: "{{ ansible_os_family }}.yml"

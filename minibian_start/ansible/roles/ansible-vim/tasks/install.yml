@@ -11,20 +11,6 @@
   tags:
     - vim
 
-- name: '[install] Install CTags'
-  apt: name=exuberant-ctags state=present
-  tags:
-    - vim
-
-#================================ GIT ====================================
-# added git as it is a dependency (for small debian distros like minibian)
-- name: '[install] Install git'
-  apt: name=git state=present
-  become: yes
-  tags:
-    - vim
-#=========================================================================
-
 #========================= UPDATE ALTERNATIVES ===========================
 # Analog of 'update-alternatives --set editor /usr/bin/vim.nox'
 - name: '[install] Setting vim default editor for visudo'

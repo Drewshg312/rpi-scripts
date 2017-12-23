@@ -4,6 +4,7 @@
   become: yes
   tags:
     - nerdfonts
+    - nerdfonts_dependencies
 
 - name: '[Debian] Include Debian-specific variables'
   include_vars: Debian.yml

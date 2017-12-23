@@ -1,0 +1,41 @@
+---
+# tasks file for ansible-minibian_lxde
+
+- name: '[main] Install Desktop environment: Xserver, LXDE, Login Manager, Window Manager, VNC Server'
+  apt:
+    install_recommends: no
+    name:
+      - xserver-xorg
+      - lxde-core
+      - lxappearance
+      - lightdm
+      - awesome
+      - tightvncserver
+    state: present
+  become: yes
+
+#- name: '[main] Run VNC Server first time'
+#  command: 'tightvncserver -geometry 1920x1080 -depth 24 -dpi 69'
+
+- name: '[main] Generate the VNC service unit'
+  template:
+    src: vncserver@.service
+    dest: /etc/systemd/system/vncserver@.service
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: '[main] Reload systemctl daemon'
+  systemd: daemon_reload=yes
+  become: yes
+
+- name: '[main] Enable the VNC service'
+  service: name=vncserver@1.service state=started enabled=yes
+  become: yes
+
+
+
+
+
+...

@@ -9,8 +9,9 @@
   roles:
 #    - ansible-expandfs
 #    - ansible-network
-    - ansible-minibian_core
-#    - ansible-vim
+#    - ansible-minibian_core
+#    - ansible-minibian_lxde
+    - ansible-vim
 #    - ansible-ohmyzsh
 #    - ansible-terminus_powerline
 #    - ansible-nerdfonts

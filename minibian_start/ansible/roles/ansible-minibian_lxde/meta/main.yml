@@ -1,8 +1,6 @@
 galaxy_info:
   author: Andrew Shagayev
-  description: The role bootstraps vanilla Debian based Minibian distro for RaspberryPi, \
-    expands filesystem, configures hostname, timezone, network, updates firmware, \
-    creates and configures specified users, changes /etc/skel, upgrades distro, changes root password.
+  description: The
 
   license: BSD
 
@@ -22,16 +20,15 @@ galaxy_info:
   platforms:
   - name: Minibian
     versions:
-    - Jessie
+    - all
 
   galaxy_tags:
     - Minibian
-    - Headless
+    - LXDE
     #
     # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
     #       Maximum 20 tags per role.
 
 dependencies:
-  - ansible-expandfs
-  - ansible-network
+  - ansible-minibian_core
 ...

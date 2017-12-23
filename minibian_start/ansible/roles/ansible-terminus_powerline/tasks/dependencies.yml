@@ -2,20 +2,25 @@
 - name: '[dependencies] Install fontconfig package on Darwin'
   homebrew:
     update_homebrew: yes
-    name: fontconfig
+    name:
+      - fontconfig
+      - git
     state: latest
   become: no
   when: ansible_os_family == 'Darwin'
   tags:
     - terminus_powerline
+    - terminus_powerline_dependencies
 
 - name: '[dependencies] Install fontconfig package on Linux'
   package:
-    name: fontconfig
+    name:
+      - fontconfig
+      - git
     state: latest
   become: yes
   when: ansible_os_family == 'Debian'
   tags:
     - terminus_powerline
-
+    - terminus_powerline_dependencies
 ...
