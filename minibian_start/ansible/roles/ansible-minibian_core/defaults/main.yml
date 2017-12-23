@@ -1,0 +1,35 @@
+---
+# defaults file for ansible-minibian_core
+
+# ATTENTION!
+# Following instructions for some reason does not work on Mac
+#
+# Generate a new hash using the following:
+# Python2.7:
+#     echo 'import crypt,getpass; print crypt.crypt(getpass.getpass(), "$6$16_CHARACTER_SALT_HERE")' | python -
+#   For in-script usage (Non-interactive Mode without prompt):
+#     python -c 'import crypt; print crypt.crypt("P@$$w0rd", "$6$16_CHARACTER_SALT_HERE")'
+#
+# Python3:
+#     echo 'import crypt,getpass; print(crypt.crypt(getpass.getpass(), crypt.mksalt(crypt.METHOD_SHA512)))' | python3 -
+#   For in-script usage (Non-interactive Mode without prompt):
+#     python3 -c 'import crypt; print(crypt.crypt("P@$$w0rd", crypt.mksalt(crypt.METHOD_SHA512)))'
+#
+minibian_core_new_root_passwd:
+  $6$EdZMNNzg0IlF4Tlh$do6JoTDstrRVqv7l76dlpMOwlBEPtA.PWR4HTAuaz5X47DXvwOsWlVwK8fDxTOslSy16s2Mnch60m0CKq/d9T.
+
+minibian_core_user0_passwd:
+  $6$4ZWW9CZ2osyIvgMv$IiVx6njlX2kONVN1hQ23.a1xPzKl/0Dkb8ubZ2o1bCawlG2Cpcod0/VZoXYKJ700CtGZD80xiMgo3vzOb/c20.
+  # P@ssw0rd
+  # $6$dP-_+r4%UL5jq5$JxlusgNtOpoDfeFh8U.xn4HyvKyzQL94tB/IR3u.uTlYGwlCvWAvUWX2atNlmhz9/kXHpkPlMmjlxW58yJnsJ0
+
+minibian_core_sudonopasswd: true
+
+minibian_core_users:
+  - username: 'drew'
+    passwd: "{{ minibian_core_user0_passwd }}"
+    groups:
+      - 'sudo'
+
+minibian_core_host_name: raspberry.localdomain
+...

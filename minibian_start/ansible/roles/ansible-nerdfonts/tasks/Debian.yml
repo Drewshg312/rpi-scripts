@@ -61,8 +61,8 @@
 
 - name: '[Debian] Check if there are any NerdFonts already installed'
   stat:
-    path: "{{ nerdfonts_install_dir }}/NerdFonts/{{ item.value.fontname }}"
-  with_dict: "{{ nerdfonts_fonts }}"
+    path: "{{ nerdfonts_install_dir }}/NerdFonts/{{ item.fontname }}"
+  with_items: "{{ nerdfonts_fonts }}"
   register: nerdfonts_stat
   tags:
     - nerdfonts
@@ -71,7 +71,11 @@
   set_fact:
     # https://stackoverflow.com/questions/35605603/using-ansible-set-fact-to-create-a-dictionary-from-register-results
     # FLATTENING THE RESULTS AND COMBINING THEM INTO DICTIONARY WITH SPECIFIED KEY:VALUE STRUCTURE:
-    nerdfonts_exists: "{{ nerdfonts_exists|default({}) | combine( {item.item.value.fontname: item.stat.exists} ) }}"
+    #
+    # IF nerdfonts_fonts IS DICTIONARY:
+    # nerdfonts_exists: "{{ nerdfonts_exists|default({}) | combine( {item.item.value.fontname: item.stat.exists} ) }}"
+    # IF nerdfonts_fonts IS LIST:
+    nerdfonts_exists: "{{ nerdfonts_exists|default({}) | combine( {item.item.fontname: item.stat.exists} ) }}"
   with_items: "{{ nerdfonts_stat.results }}"
   tags:
     - nerdfonts

@@ -1,7 +1,7 @@
 - mpd (debian, macos)
 - ohmyzsh (debian, macos)
 - nerdfonts (debian, macos)
-- terminux_powerline (debian, macos)
+- terminus_powerline (debian, macos)
 
 - Put all ansible roles separately on GitLab and GitHub
 	- create nice README for each ansible role

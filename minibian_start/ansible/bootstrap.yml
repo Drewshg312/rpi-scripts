@@ -7,11 +7,12 @@
 #  vars:
 
   roles:
-#    - ansible-network
 #    - ansible-expandfs
+#    - ansible-network
+    - ansible-minibian_core
 #    - ansible-vim
 #    - ansible-ohmyzsh
 #    - ansible-terminus_powerline
 #    - ansible-nerdfonts
-    - ansible-mpd
+#    - ansible-mpd
 ...

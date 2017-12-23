@@ -1,16 +1,2 @@
 ---
-# Variables:
-#
-#vim_env: users
-#vim_users:
-#  - root
-#  - drew
-#  - pi
-host_name: raspberry.localdomain
-#new_root_passwd: P@ssw0rd
-new_root_passwd:
-  $6$dP-_+r4%UL5jq5$JxlusgNtOpoDfeFh8U.xn4HyvKyzQL94tB/IR3u.uTlYGwlCvWAvUWX2atNlmhz9/kXHpkPlMmjlxW58yJnsJ0
-#vim_managed_files:
-#  - vimrc
-#  - /etc/vim/vimrc
 ...

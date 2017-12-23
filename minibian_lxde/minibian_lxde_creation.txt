@@ -15,20 +15,23 @@ Switch user:
 #-------------------------------------------------------------------------------
 #-----------------------INSTALL LIGHTWEIGHT GUI (LXDE)--------------------------
 Istall the Display Server
-    $ sudo apt-get install --no-install-recommends xserver-xorg
+    $ sudo apt-get install -y --no-install-recommends xserver-xorg
 
 Install Desktop Environment
     $ sudo apt-get install -y lxde-core lxappearance
 
-Install Window Manager:
-    $ sudo apt-get install -y openbox
+# THIS STEP IS NOT NEEDED AS openbox IS A DEPENDENCY OF lxde-core:
+# Install Window Manager:
+#     $ sudo apt-get install -y openbox
+
+
 Install Login Manager:
     $ sudo apt-get install -y lightdm
 
 INSTALL VNC SERVER:
     $ sudo apt-get install -y tightvncserver
 Run VNC first (needed for being run automatically)
-    $ tightvncserver -geometry 1920x1080 -depth 24 -dpi 96
+    $ tightvncserver -geometry 1920x1080 -depth 24 -dpi 69
     $ sudo -s
     # cat >>/etc/systemd/system/vncserver@.service<< "EOF"
 [Unit]
@@ -51,6 +54,10 @@ EOF
 Enable the service:
     $ sudo systemctl daemon-reload && sudo systemctl enable vncserver@1.service
 #-------------------------------------------------------------------------------
+
+Install Awesome Windows Manager:
+    $ sudo apt-get install -y awesome
+
 #-----------------------------CUSTOMIZE GUI-------------------------------------
 Copy icons and wallpapers:
     $ mkdir media
@@ -61,10 +68,10 @@ Copy icons and wallpapers:
 MAKING THE WHOLE WINDOWS DARK
 
 Install dependencies for arc-theme:
-    $ sudo apt-get install gtk2-engines-murrine gtk2-engines-pixbuf gtk3-engines-unico
+    $ sudo apt-get install -y gtk2-engines-murrine gtk2-engines-pixbuf gtk3-engines-unico
 Download the arc-theme:
 https://software.opensuse.org/download.html?project=home%3AHorst3180&package=arc-theme
-    $ wget http://download.opensuse.org/repositories/home:/Horst3180/Debian_8.0/all/arc-theme_1480088096.9047b20_all.deb
+    $ wget https://download.opensuse.org/repositories/home:/Horst3180/Debian_8.0/all/arc-theme_1488477732.766ae1a-0_all.deb
     $ reboot
 Install the theme:
     $ sudo dpkg -i arc-theme_*.deb
@@ -92,8 +99,8 @@ Ubo: https://www.gnome-look.org/p/1012539/
     $ cp -r ubo-icons-0.1alpha ~/.icons/ubo-icons-0.1alpha
 Compass: https://www.gnome-look.org/p/1012529/
     $ wget https://launchpad.net/~nitrux-team/+archive/ubuntu/nitrux-artwork/+files/compass-icon-theme_1.3.8.tar.gz
-    $ tar -zxvf compass-icon-theme-1.3.8.tar.gz
-    $ cp -r compass-icon-theme_1.3.8/Compass ~/.icons/Compass
+    $ tar -zxvf compass-icon-theme_1.3.8.tar.gz -C compass-icon-theme_1.3.8
+    $ cp -r compass-icon-theme-1.3.8/Compass ~/.icons/Compass
 
 
 FIXING FONTS
