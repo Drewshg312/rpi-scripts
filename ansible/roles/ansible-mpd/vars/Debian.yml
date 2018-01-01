@@ -22,7 +22,8 @@ mpd_outputs:
     type: "null"
 
 # ALSA DRIVER
-# Install: apt-get install alsa-utils
+# Install driver:
+#   apt-get install alsa-utils
   - name: "My ALSA Device"
     type: "alsa"
     device: "hw:0,0"            # optional
@@ -32,8 +33,10 @@ mpd_outputs:
     mixer_index: "0"            # optional
 
 # PULSEAUDIO DRIVER
+# Does not work well on Raspberry Pi 3 for some reason
 # https://raspberrypi.stackexchange.com/questions/12339/pulseaudio-mpd-http-streaming-installation-guide
-# Install driver: apt-get install pulseaudio
+# Install driver:
+#   apt-get install pulseaudio
 # Optional packages:
 #     - pulseaudio-module-zeroconf
 #     - mpg321

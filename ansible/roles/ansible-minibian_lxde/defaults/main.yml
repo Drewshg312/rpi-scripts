@@ -1,0 +1,6 @@
+---
+# defaults file for ansible-minibian_lxde
+
+minibian_lxde_user: drew
+
+...

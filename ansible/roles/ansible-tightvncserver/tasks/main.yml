@@ -1,17 +1,8 @@
 ---
-# tasks file for ansible-minibian_lxde
+# tasks file for ansible-tightvncserver
 
-- name: '[main] Install Desktop environment: Xserver, LXDE, Login Manager, Window Manager, VNC Server'
-  apt:
-    install_recommends: no
-    name:
-      - xserver-xorg
-      - lxde-core
-      - lxappearance
-      - lightdm
-      - awesome
-      - tightvncserver
-    state: present
+- name: '[main] Install TightVNC Server'
+  apt: name=tightvncserver state=present
   become: yes
 
 #- name: '[main] Run VNC Server first time'

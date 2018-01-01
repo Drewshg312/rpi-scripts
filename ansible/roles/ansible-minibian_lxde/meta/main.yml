@@ -22,9 +22,9 @@ galaxy_info:
     versions:
     - all
 
-  galaxy_tags:
-    - Minibian
-    - LXDE
+  galaxy_tags: []
+#    - Minibian
+#    - LXDE
     #
     # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
     #       Maximum 20 tags per role.

@@ -1,0 +1,15 @@
+---
+# tasks file for ansible-minibian_lxde
+
+- name: '[main] Install Desktop environment: Xserver, LXDE, Login Manager, Window Manager, VNC Server'
+  apt:
+    install_recommends: no
+    name:
+      - xserver-xorg
+      - lxde-core
+      - lxappearance
+      - lightdm
+      - awesome
+    state: present
+  become: yes
+...
