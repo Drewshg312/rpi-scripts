@@ -18,4 +18,6 @@
 #    - ansible-nerdfonts
 #    - ansible-mpd
     - ansible-macos_setup
+#    - ansible-homebrew
+
 ...

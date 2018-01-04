@@ -1,19 +1,9 @@
 ---
 # defaults file for ansible-macos_setup
 
-homebrew_installed_packages:
-  #- brew-cask-completion
-  - ssh-copy-id
-  - pv
+macos_setup_homebrew_upgrade_all_packages: no
+macos_setup_homebrew_use_brewfile: yes
+macos_setup_homebrew_brewfile_dir: '~'
 
-homebrew_uninstalled_packages: []
-
-homebrew_upgrade_all_packages: no
-
-homebrew_cask_apps:
-  - firefox
-  - keepassxc
-
-homebrew_cask_appdir: ~/Applications
-
+macos_setup_homebrew_cask_appdir: "{{ homebrew_cask_appdir }}"  # by default: ~/Applications
 ...

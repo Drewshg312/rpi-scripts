@@ -1,0 +1,19 @@
+---
+dependencies:
+  - elliotweiser.osx-command-line-tools
+
+galaxy_info:
+  author: Andrew Shagayev
+  description: Homebrew for MacOS. This is a fork of geerlingguy role.
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.9
+  platforms:
+    - name: MacOSX
+      versions:
+        - all
+        - any
+  galaxy_tags:
+    - development
+    - system
+    - packaging

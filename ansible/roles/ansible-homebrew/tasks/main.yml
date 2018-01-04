@@ -1,0 +1,114 @@
+---
+# Homebrew setup prerequisites.
+
+- name: "[main] Ensure Homebrew parent directory has correct permissions (on High Sierra)."
+  file:
+    path: "{{ homebrew_prefix }}"
+    owner: "{{ ansible_user_id }}"
+    state: directory
+  become: yes
+  when: "ansible_distribution_version.startswith('10.13')"
+
+- name: "[main] Ensure Homebrew parent directory has correct permissions (on non-'High Sierra' versions of Mac OS X)."
+  file:
+    path: "{{ homebrew_prefix }}"
+    owner: "{{ ansible_user_id }}"
+    group: admin
+    state: directory
+    mode: 0775
+  become: yes
+  when: "not ansible_distribution_version.startswith('10.13')"
+
+- name: "[main] Ensure Homebrew directory exists."
+  file:
+    path: "{{ homebrew_install_path }}"
+    owner: "{{ ansible_user_id }}"
+    group: admin
+    state: directory
+    mode: 0775
+  become: yes
+
+# Clone Homebrew.
+- name: "[main] Ensure Homebrew is installed."
+  git:
+    repo: "{{ homebrew_repo }}"
+    version: master
+    dest: "{{ homebrew_install_path }}"
+    update: no
+    accept_hostkey: yes
+    depth: 1
+
+# Adjust Homebrew permissions.
+- name: "[main] Ensure proper permissions and ownership on homebrew_brew_bin_path dirs."
+  file:
+    path: "{{ homebrew_brew_bin_path }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: admin
+    mode: 0775
+  become: yes
+
+- name: "[main] Ensure proper ownership on homebrew_install_path subdirs."
+  file:
+    path: "{{ homebrew_install_path }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: admin
+    recurse: true
+  become: yes
+
+# Place brew binary in proper location and complete setup.
+- name: "[main] Check if homebrew binary is already in place."
+  stat: "path={{ homebrew_brew_bin_path }}/brew"
+  register: homebrew_binary
+
+- name: "[main] Symlink brew to homebrew_brew_bin_path."
+  file:
+    src: "{{ homebrew_install_path }}/bin/brew"
+    dest: "{{ homebrew_brew_bin_path }}/brew"
+    state: link
+  when: homebrew_binary.stat.exists == false
+  become: yes
+
+# This is needed in order the next task to work on High Sierra
+- name: "[main] Create \'{{ homebrew_prefix }}/var\' directory (on High Sierra)"
+  file:
+    path: "{{ homebrew_prefix }}/var"
+    owner: "{{ ansible_user_id }}"
+    group: admin
+    state: directory
+    mode: 0775
+  when: "ansible_distribution_version.startswith('10.13')"
+  become: yes
+
+- name: "[main] Force update brew after installation."
+  command: "{{ homebrew_brew_bin_path }}/brew update --force"
+  when: homebrew_binary.stat.exists == false
+
+# Tap.
+- name: "[main] Ensure configured taps are tapped."
+  homebrew_tap: "tap={{ item }} state=present"
+  with_items: "{{ homebrew_taps }}"
+
+# Cask.
+- name: "[main] Check if ~/.profile exists"
+  stat:
+    path: ~/.profile
+  register: homebrew_profile
+
+- name: "[main] Ensure ~/.profile exists"
+  file:
+    path: ~/.profile
+    owner: "{{ ansible_user_id }}"
+    group: staff
+    mode: 0644
+    state: touch
+  when: not homebrew_profile.stat.exists
+
+- name: "[main] Ensure all casks are installed in user-specific {{ homebrew_cask_appdir }} directory"
+  lineinfile:
+    path: ~/.profile
+    regexp: 'HOMEBREW_CASK_OPTS=.*'
+    line: >
+      export HOMEBREW_CASK_OPTS="--appdir={{ homebrew_cask_appdir }} --fontdir=/Library/Fonts"
+...
