@@ -11,7 +11,7 @@
     - mpd
 
 - name: Restart mpd service with brew services command
-  command: brew services restart mpd
+  command: /usr/local/bin/brew services restart mpd
   when: mpd_autostart
   tags:
     - mpd

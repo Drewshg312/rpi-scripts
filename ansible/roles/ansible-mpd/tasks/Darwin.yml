@@ -33,7 +33,7 @@
     - mpd
 
 - name: '[Darwin] Enable mpd service to start on login'
-  command: brew services start mpd
+  command: /usr/local/bin/brew services start mpd
   when: mpd_autostart and mpd_stat_plist.stat.exists == False
   tags:
     - mpd
@@ -58,7 +58,7 @@
     group: staff
     mode: 0644
   become: no
-  notify: Restart mpd service with brew services command
+  notify: Restart mpd service #with brew services command
   tags:
     - mpd
 ...

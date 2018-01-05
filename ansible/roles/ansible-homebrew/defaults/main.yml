@@ -21,7 +21,7 @@ homebrew_taps:
   - homebrew/bundle   # Enables 'brew bundle' for using Brewfile (like Ruby Gemfile)
   - gapple/services       # Enables 'brew services' command
   #- telemachus/desc       # Enables 'brew desc formulae' command
-  #- homebrew/dupes
+  #- homebrew/dupes        # Contains openssh
   #- homebrew/versions
   - brona/iproute2mac     # Enables linux 'ip' set of commands
   - jlhonora/lsusb        # Enables 'lsusb' command on macos

@@ -1,0 +1,124 @@
+{% if sshd_port is defined %}
+Port {{ sshd_port }}
+{% else %}
+#Port 22
+{% endif %}
+
+# Restrict to IPv4. inet = IPv4, inet6 = IPv6, any = both:
+AddressFamily inet
+
+# Listen only on the internal network address:
+#ListenAddress 192.168.1.0
+
+# Only use protocol version 2:
+Protocol 2
+
+# Disable XForwarding unless you need it:
+X11Forwarding no
+
+# Disable TCPKeepAlive and use ClientAliveInterval instead to prevent TCP Spoofing attacks:
+TCPKeepAlive no
+# Or prevent zombies:
+#TCPKeepAlive yes
+
+### DISCONNECT SSH WHEN NO ACTIVITY ###
+# 600 - 10 min (600seconds):
+ClientAliveInterval 600
+# Total number of checkalive messages from server with no response. Default - 3:
+ClientAliveCountMax 0
+#===============================================================================
+#=========================== KEY CONFIGURATION =================================
+# HostKeys for protocol version 2:
+HostKey /usr/local/etc/ssh/ssh_host_rsa_key
+HostKey /usr/local/etc/ssh/ssh_host_dsa_key
+HostKey /usr/local/etc/ssh/ssh_host_ecdsa_key
+HostKey /usr/local/etc/ssh/ssh_host_ed25519_key
+
+#Privilege Separation is turned on for security:
+UsePrivilegeSeparation yes
+
+# Use public key authentication:
+PubkeyAuthentication yes
+#AuthorizedKeysFile   .ssh/authorized_keys
+AuthorizedKeysFile      %h/.ssh/authorized_keys
+
+# Disable black listed key usage (update your keys!)
+#PermitBlacklistedKeys no
+#===============================================================================
+#=================================== LOGGING ===================================
+# obsoletes QuietMode and FascistLogging
+SyslogFacility AUTHPRIV
+# If disk spase is not concern, use 'LogLevel INFO'
+LogLevel ERROR
+#===============================================================================
+#================================== AUTHENTICATION =============================
+# time in seconds to enter passphrase. Default - 120. The less - the less DDoS vector:
+LoginGraceTime 60
+
+# Whitelist allowed users:
+AllowUsers drew
+
+# No root login:
+PermitRootLogin no
+# If need root login, never use 'PermitRootLogin yes' - use:
+#PermitRootLogin without-password
+
+# Force permissions checks on keyfiles and directories
+StrictModes yes
+
+# Don't read the user's ~/.rhosts and ~/.shosts files
+IgnoreRhosts yes
+
+# similar for protocol version 2
+HostbasedAuthentication no
+
+# Don't trust ~/.ssh/known_hosts for RhostsRSAAuthentication
+IgnoreUserKnownHosts yes
+
+# To enable empty passwords, change to yes (NOT RECOMMENDED)
+PermitEmptyPasswords no
+
+# Disable challenge and response auth. Unessisary when using keys
+ChallengeResponseAuthentication no
+
+# Disable the use of passwords completly, only use public/private keys
+PasswordAuthentication no
+# This for some reason didn’t work for my “git” user
+
+# Just enforce the key authentication (default is yes)
+RSAAuthentication yes
+
+# Using keys, no need for PAM. Also allows SSHD to be run as a non-root user
+UsePAM no
+
+# Don't use the traditional login(1) service. Because we are using privilege separation, as soon as the user logs in ths login(1) service is disabled.
+UseLogin no
+#===============================================================================
+#================================== MISC =======================================
+# Print the last time the user logged in
+PrintLastLog yes
+
+# By default - up to 6 tries:
+MaxAuthTries 2
+
+#MaxStartups 2
+MaxStartups 10:30:60
+
+MaxSessions 5
+
+# Display login banner
+Banner /usr/local/etc/ssh/issue.net
+
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+
+#Subsystem    sftp    /usr/libexec/sftp-server
+Subsystem       sftp    internal-sftp -f DAEMON -u 000
+ChrootDirectory /
+
+# Allow SSH Tunnelling for specific users:
+Match User drew
+     AllowTcpForwarding yes
+     X11Forwarding yes
+#===============================================================================
+

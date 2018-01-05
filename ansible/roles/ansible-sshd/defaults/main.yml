@@ -1,0 +1,6 @@
+---
+# defaults file for ansible-sshd
+
+sshd_port: 22222
+
+...

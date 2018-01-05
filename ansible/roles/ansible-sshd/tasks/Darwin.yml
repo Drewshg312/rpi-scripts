@@ -1,0 +1,76 @@
+---
+- name: Install latest openssh package from homebrew
+  homebrew:
+    name: homebrew/dupes/openssh  # install from homebrew/dupes tap without actually tapping
+    state: latest
+    update_homebrew: yes
+  become: no
+
+# Do it only for non High Sierra distros (worked on Yosemite)
+- name: Modify <Program> key statement in the original .plist file to use homebrew sshd
+  lineinfile:
+    dest: /System/Library/LaunchDaemons/ssh.plist
+    regexp: '^(\t*)\<string\>\/usr\/libexec\/sshd-keygen-wrapper\<\/string\>'
+    line: '\1<string>/usr/local/sbin/sshd</string>'
+    state: present
+    backrefs: yes  # THIS IS REALLY IMPORTANT
+  become: yes
+  when: ansible_distribution_version < 10.13
+
+- name: Modify <Program> key statement in the original .plist file to use homebrew sshd
+  lineinfile:
+    dest: /System/Library/LaunchDaemons/ssh.plist
+    regexp: '^(\t*)<string>/usr/sbin/sshd</string>'
+    line: '\1<string>/usr/local/sbin/sshd</string>'
+    state: present # DO NOT FORGET THIS
+    backrefs: yes
+  become: yes
+
+- name: Modify <ProgramArguments> key statement in the original .plist file to use homebrew sshd
+  lineinfile:
+    dest: /System/Library/LaunchDaemons/ssh.plist
+    regexp: '^(\t*)<string>/usr/sbin/sshd</string>'
+    line: '\1<string>/usr/local/sbin/sshd</string>'
+    state: present
+    backrefs: yes
+  become: yes
+
+#- name: "Modify <SockServiceName> key statement from ssh to {{ sshd_port }}"
+#  lineinfile:
+#    dest: /System/Library/LaunchDaemons/ssh.plist
+#    regexp: '^(\t*)<string>ssh</string>'
+#    line: '\1<string>{{ sshd_port }}</string>'
+#    state: present
+#    backrefs: yes
+#  become: yes
+#  when: sshd_port is defined and sshd_port != 22
+
+- name: Generate /usr/local/etc/ssh/issue.net ssh banner
+  copy:
+    src: issue.net
+    dest: /usr/local/etc/ssh/
+    backup: yes
+    owner: "{{ ansible_user_id }}"
+    group: admin
+    mode: 0600
+
+- name: Generate secure /usr/local/etc/ssh/sshd_config
+  template:
+    src: sshd_config.j2
+    dest: /usr/local/etc/ssh/
+    backup: yes
+    owner: "{{ ansible_user_id }}"
+    group: admin
+    mode: 0600
+
+- name: 'ATTENTION!'
+  debug:
+    msg: "do not forget to restart sshd daemon later.."
+#- name: Unload ssh daemon
+#  command: launchctl unload -w /System/Library/LaunchDaemons/ssh.plist
+#  become: yes
+#
+#- name: Load ssh daemon
+#  command: launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+#  become: yes
+...

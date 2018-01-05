@@ -1,7 +1,19 @@
+DONE:
 - mpd (debian, macos)
 - ohmyzsh (debian, macos)
 - nerdfonts (debian, macos)
 - terminus_powerline (debian, macos)
+
+
+TODOs:
+
+- iTerm ()
+- SSH role
+	- VAULT (encrypted keys and passwords research)
+
+- PF role
+	- adapt for macos
+	- adapt for freebsd
 
 - Put all ansible roles separately on GitLab and GitHub
 	- create nice README for each ansible role

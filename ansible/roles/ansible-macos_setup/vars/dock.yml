@@ -14,8 +14,8 @@ macos_setup_dockitems_to_remove:
   - "iTunes"
   - "iBooks"
   - "Calendar"
-  - "'App Store'"           # names containing spaces must be in single quotes
-
+  - "'App Store'" # names containing spaces must be in single quoted within double quotes
+                  # otherwise diskutil takes it as two separate arguments
 macos_setup_dockitems_to_persist:
   - app: "AppCleaner"
     path: "{{ homebrew_cask_appdir }}/AppCleaner.app"

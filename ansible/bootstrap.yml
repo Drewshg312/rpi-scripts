@@ -17,7 +17,7 @@
 #    - ansible-terminus_powerline
 #    - ansible-nerdfonts
 #    - ansible-mpd
-    - ansible-macos_setup
+#    - ansible-macos_setup
 #    - ansible-homebrew
-
+    - ansible-sshd
 ...
