@@ -7,7 +7,14 @@ DONE:
 
 TODOs:
 
-- iTerm ()
+- macos_setup (macos)
+	- installation of apps from App Store (mas ansible module)
+
+- Terminal role (macos)
+	- REQIREMENTS: homebrew (if terminal_iterm2: yes)
+	- iterm switch (yes/no)
+	- depends (nerdfonts and terminus_powerline - if iterm: yes)
+
 - SSH role
 	- VAULT (encrypted keys and passwords research)
 
