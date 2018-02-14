@@ -15,7 +15,7 @@ vim_users:
 # For non-root users it is possible to use both system-wide and user configurations
 #
 ##  - root
-#  - pi
+  - pi
   - drew
 
 # Another Tip: installing EMOJI plugin both systemwide AND per user is bad idea.

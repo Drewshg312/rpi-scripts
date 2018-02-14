@@ -1,76 +1,54 @@
 ---
-- name: Install latest openssh package from homebrew
-  homebrew:
-    name: homebrew/dupes/openssh  # install from homebrew/dupes tap without actually tapping
-    state: latest
-    update_homebrew: yes
-  become: no
+#- name: "[Darwin] Include vars from Darwin.yml only if configuring system sshd (not from homebrew)"
+- name: "[Darwin] Include vars from Darwin.yml"
+  include_vars: Darwin.yml
+#  when: not sshd_from_homebrew
+  tags:
+    - sshd
 
-# Do it only for non High Sierra distros (worked on Yosemite)
-- name: Modify <Program> key statement in the original .plist file to use homebrew sshd
-  lineinfile:
-    dest: /System/Library/LaunchDaemons/ssh.plist
-    regexp: '^(\t*)\<string\>\/usr\/libexec\/sshd-keygen-wrapper\<\/string\>'
-    line: '\1<string>/usr/local/sbin/sshd</string>'
-    state: present
-    backrefs: yes  # THIS IS REALLY IMPORTANT
+- name: "[Darwin] Include tasks from hombrew.yml only if configuring sshd from homebrew (overwrites some vars from Darwin.yml)"
+  include_tasks: homebrew.yml
+  when: sshd_from_homebrew
+  tags:
+    - sshd
+
+# Make sure MacOS uses the correct port for SSH:
+- name: "[Darwin] Modify ssh.plist: <SockServiceName> key statement setting port to {{ sshd_port }}"
+  replace:
+    path: /System/Library/LaunchDaemons/ssh.plist
+    regexp: '^(.*<key>SockServiceName</key>\n.*)<string>.*</string>'
+    replace: '\1<string>{{ sshd_port }}</string>'
   become: yes
-  when: ansible_distribution_version < 10.13
+  when: sshd_port is defined and sshd_port != 22
+  tags:
+    - sshd
 
-- name: Modify <Program> key statement in the original .plist file to use homebrew sshd
-  lineinfile:
-    dest: /System/Library/LaunchDaemons/ssh.plist
-    regexp: '^(\t*)<string>/usr/sbin/sshd</string>'
-    line: '\1<string>/usr/local/sbin/sshd</string>'
-    state: present # DO NOT FORGET THIS
-    backrefs: yes
+# If using standard port, make ssh.plist look "natural": use 'ssh' port name instead of '22'
+- name: "[Darwin] Modify ssh.plist: make <SockServiceName> key statement use 'ssh' port name instead of '22'"
+  replace:
+    path: /System/Library/LaunchDaemons/ssh.plist
+    regexp: '^(.*<key>SockServiceName</key>\n.*)<string>.*</string>'
+    replace: '\1<string>ssh</string>'
   become: yes
+  when: sshd_port == 22
+  tags:
+    - sshd
 
-- name: Modify <ProgramArguments> key statement in the original .plist file to use homebrew sshd
-  lineinfile:
-    dest: /System/Library/LaunchDaemons/ssh.plist
-    regexp: '^(\t*)<string>/usr/sbin/sshd</string>'
-    line: '\1<string>/usr/local/sbin/sshd</string>'
-    state: present
-    backrefs: yes
+- name: "[Darwin] Modify ssh.plist: <Program> key to use system {{ sshd_wrapper_path }}"
+  replace:
+    path: /System/Library/LaunchDaemons/ssh.plist
+    regexp: '^(.*<key>Program</key>\n.*)<string>.*</string>'
+    replace: '\1<string>{{ sshd_wrapper_path }}</string>'
   become: yes
+  tags:
+    - sshd
 
-#- name: "Modify <SockServiceName> key statement from ssh to {{ sshd_port }}"
-#  lineinfile:
-#    dest: /System/Library/LaunchDaemons/ssh.plist
-#    regexp: '^(\t*)<string>ssh</string>'
-#    line: '\1<string>{{ sshd_port }}</string>'
-#    state: present
-#    backrefs: yes
-#  become: yes
-#  when: sshd_port is defined and sshd_port != 22
-
-- name: Generate /usr/local/etc/ssh/issue.net ssh banner
-  copy:
-    src: issue.net
-    dest: /usr/local/etc/ssh/
-    backup: yes
-    owner: "{{ ansible_user_id }}"
-    group: admin
-    mode: 0600
-
-- name: Generate secure /usr/local/etc/ssh/sshd_config
-  template:
-    src: sshd_config.j2
-    dest: /usr/local/etc/ssh/
-    backup: yes
-    owner: "{{ ansible_user_id }}"
-    group: admin
-    mode: 0600
-
-- name: 'ATTENTION!'
-  debug:
-    msg: "do not forget to restart sshd daemon later.."
-#- name: Unload ssh daemon
-#  command: launchctl unload -w /System/Library/LaunchDaemons/ssh.plist
-#  become: yes
-#
-#- name: Load ssh daemon
-#  command: launchctl load -w /System/Library/LaunchDaemons/ssh.plist
-#  become: yes
+- name: "[Darwin] Modify ssh.plist: <ProgramArguments> key to use {{ sshd_bin_path }}"
+  replace:
+    path: /System/Library/LaunchDaemons/ssh.plist
+    regexp: '^(.*<key>ProgramArguments</key>\n.*<array>\n.*)<string>.*</string>'
+    replace: '\1<string>{{ sshd_bin_path }}</string>'
+  become: yes
+  tags:
+    - sshd
 ...

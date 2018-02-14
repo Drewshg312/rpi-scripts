@@ -1,2 +1,8 @@
 ---
 # vars file for ansible-sshd
+
+sshd_bin_path: /usr/sbin/sshd
+sshd_cfg_dir: /etc/ssh
+sshd_cfg_user: root
+sshd_cfg_group: root
+...

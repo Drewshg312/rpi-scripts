@@ -1,6 +1,15 @@
 ---
 # defaults file for ansible-sshd
 
-sshd_port: 22222
+sshd_port: 22
 
+sshd_users:
+  - "{{ ansible_user_id }}"
+#  - dummy
+
+#sshd_pub_keys:
+#  - keys/id_rsa.pub
+#  - keys/github_rsa.pub
+
+sshd_from_homebrew: no
 ...

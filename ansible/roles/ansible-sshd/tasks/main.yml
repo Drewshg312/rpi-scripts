@@ -1,6 +1,53 @@
 ---
 # tasks file for ansible-sshd
 
-- include_tasks: Darwin.yml
+- name: "[main] Include Darwin-specific tasks if provisioning MacOS"
+  include_tasks:  Darwin.yml
   when: ansible_os_family == 'Darwin'
+  tags:
+    - sshd
+
+- name: "[main] Copy {{ sshd_cfg_dir }}/issue.net ssh banner"
+  copy:
+    src: issue.net
+    dest: "{{ sshd_cfg_dir }}/issue.net"
+    owner: "{{ sshd_cfg_user }}"
+    group: "{{ sshd_cfg_group }}"
+    mode: 0600
+  become: yes
+  tags:
+    - sshd
+
+- name: "[main] Generate secure {{ sshd_cfg_dir }}/sshd_config"
+  template:
+    src: sshd_config.j2
+    dest: "{{ sshd_cfg_dir }}/sshd_config"
+    backup: yes
+    owner: "{{ sshd_cfg_user }}"
+    group: "{{ sshd_cfg_group }}"
+    mode: 0600
+  become: yes
+  tags:
+    - sshd
+
+- name: "[main] Adding public ssh-key to ~/.ssh/authorized_keys"
+  authorized_key:
+    user: "{{ item }}"
+    state: present
+    key: "{{ lookup('file', 'pub_keys/id_rsa.pub') }}"
+  become_user: "{{ item }}"
+  with_items: "{{ sshd_users }}"
+  tags:
+    - sshd
+
+- name: "[main] 'ATTENTION!'"
+  debug:
+    msg:
+    - "As sshd is an essential service for ansible, it was not restarted."
+    - "Please, do not forget to restart sshd daemon later, e.g.:"
+    - "  launchctl unload -w /System/Library/LaunchDaemons/ssh.plist"
+    - "  launchctl load -w /System/Library/LaunchDaemons/ssh.plist"
+  tags:
+    - sshd
+
 ...

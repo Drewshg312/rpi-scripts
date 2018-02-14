@@ -9,8 +9,14 @@ DONE:
 
 TODOs:
 ======================
+- mpd
+	- adapt for centos
+
 - Put all ansible roles separately on GitLab and GitHub
 	- create nice README for each ansible role
+
+- terminus_powerline
+	- add user-specific install
 
 - macos_setup (macos)
 	- installation of apps from App Store (mas ansible module)
@@ -30,6 +36,7 @@ TODOs:
 
 - network (debian)
 	- adapt for redhat
+	- adapt for FreeBSD
 
 - expandfs (debian)
 	- adapt for redhat

@@ -1,7 +1,0 @@
----
-# handlers file for ansible-minibian_core
-
-- name: 'Change root password'
-  user: name=root password={{ minibian_core_new_root_passwd }}
-  become: yes
-...

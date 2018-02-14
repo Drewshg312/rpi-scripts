@@ -1,0 +1,16 @@
+---
+- hosts: macbooks
+  vars:
+    sshd_users:
+    - drew
+    - dummy
+
+  tasks:
+  - name: "[Darwin] Adding public key to ~/.ssh/authorized_keys"
+    authorized_key:
+      user: "{{ item }}"
+      state: present
+      key: "{{ lookup('file', 'pub_keys/id_rsa.pub') }}"
+    become_user: "{{ item }}"
+    with_items: "{{ sshd_users }}"
+...
