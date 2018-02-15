@@ -8,16 +8,15 @@
 #  vars:
 
   roles:
-#    - ansible-expandfs
-#    - ansible-network
-#    - ansible-minibian_core
-#    - ansible-minibian_lxde        # deps: minibian_core
+#    - drew-kun.minibian_core
+    - ansible-sshd                 # deps: homebrew
+#    - drew-kun.ohmyzsh
+
+#   - ansible-minibian_lxde        # deps: minibian_core
 #    - ansible-vim
-    - drew-kun.ohmyzsh
 #    - ansible-terminus_powerline   # deps: homebrew (fontconfig)
 #    - ansible-nerdfonts            # deps: homebrew cask (fontconfig, cask-fonts)
 #    - drew-kun.mpd                  # deps: homebrew
-##    - ansible-sshd                 # deps: homebrew
 #    - ansible-homebrew             # deps: eliottweiser.osx-command-line-tools
 #    - drew-kun.mac_terminal              # deps: homebrew; terminus_powerline, nerdfonts
 #    - drew-kun.macos_setup           # deps: homebrew

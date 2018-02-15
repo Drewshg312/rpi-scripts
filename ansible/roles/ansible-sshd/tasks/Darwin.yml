@@ -20,6 +20,7 @@
     replace: '\1<string>{{ sshd_port }}</string>'
   become: yes
   when: sshd_port is defined and sshd_port != 22
+  notify: Restart sshd
   tags:
     - sshd
 
@@ -31,6 +32,7 @@
     replace: '\1<string>ssh</string>'
   become: yes
   when: sshd_port == 22
+  notify: Restart sshd
   tags:
     - sshd
 
@@ -40,6 +42,7 @@
     regexp: '^(.*<key>Program</key>\n.*)<string>.*</string>'
     replace: '\1<string>{{ sshd_wrapper_path }}</string>'
   become: yes
+  notify: Restart sshd
   tags:
     - sshd
 
@@ -49,6 +52,7 @@
     regexp: '^(.*<key>ProgramArguments</key>\n.*<array>\n.*)<string>.*</string>'
     replace: '\1<string>{{ sshd_bin_path }}</string>'
   become: yes
+  notify: Restart sshd
   tags:
     - sshd
 ...

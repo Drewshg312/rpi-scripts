@@ -15,6 +15,7 @@
     group: "{{ sshd_cfg_group }}"
     mode: 0600
   become: yes
+  notify: Restart sshd
   tags:
     - sshd
 
@@ -27,27 +28,24 @@
     group: "{{ sshd_cfg_group }}"
     mode: 0600
   become: yes
+  notify: Restart sshd
   tags:
     - sshd
 
+# NOTE: in order to manage multiple users, the sshd on the managed host must allow enough sessions.
+# Paramiko module spits out the Warning and Error.
+# Warning: No handlers could be found for logger "paramiko.transport"
+# Error: 'Failed to open session'
+# Solution: set 'MaxSessions 4' (or higher)in sshd_config before provisioning
+#
 - name: "[main] Adding public ssh-key to ~/.ssh/authorized_keys"
   authorized_key:
     user: "{{ item }}"
     state: present
     key: "{{ lookup('file', 'pub_keys/id_rsa.pub') }}"
-  become_user: "{{ item }}"
+  become: yes   # this module required for this module; 'become_user: item' won't work
   with_items: "{{ sshd_users }}"
+  notify: Restart sshd
   tags:
     - sshd
-
-- name: "[main] 'ATTENTION!'"
-  debug:
-    msg:
-    - "As sshd is an essential service for ansible, it was not restarted."
-    - "Please, do not forget to restart sshd daemon later, e.g.:"
-    - "  launchctl unload -w /System/Library/LaunchDaemons/ssh.plist"
-    - "  launchctl load -w /System/Library/LaunchDaemons/ssh.plist"
-  tags:
-    - sshd
-
 ...

@@ -1,16 +1,20 @@
 ---
-- hosts: macbooks
+- hosts: rpi
   vars:
-    sshd_users:
-    - drew
-    - dummy
+    #sshd_users:
 
   tasks:
-  - name: "[Darwin] Adding public key to ~/.ssh/authorized_keys"
-    authorized_key:
-      user: "{{ item }}"
-      state: present
-      key: "{{ lookup('file', 'pub_keys/id_rsa.pub') }}"
-    become_user: "{{ item }}"
-    with_items: "{{ sshd_users }}"
-...
+    - name: Make test dir ~/test
+      file: path=~/test state=directory
+      notify: Untagged handler
+      tags:
+        - test
+
+    - name: Untagged task
+      debug:
+        msg: task without tag
+
+  handlers:
+    - name: Untagged handler
+      debug:
+        msg: Handler without tag
