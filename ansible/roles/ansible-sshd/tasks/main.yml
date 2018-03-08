@@ -7,6 +7,18 @@
   tags:
     - sshd
 
+- name: "[main] Copy /etc/motd message of the day"
+  copy:
+    src: motd
+    dest: /etc/motd
+    owner: root
+    group: "{{ sshd_cfg_group }}"
+    mode: 0600
+  become: yes
+  notify: Restart sshd
+  tags:
+    - sshd
+
 - name: "[main] Copy {{ sshd_cfg_dir }}/issue.net ssh banner"
   copy:
     src: issue.net
@@ -40,9 +52,10 @@
 #
 - name: "[main] Adding public ssh-key to ~/.ssh/authorized_keys"
   authorized_key:
-    user: "{{ item }}"
+    user: "{{ item.username }}"
     state: present
-    key: "{{ lookup('file', 'pub_keys/id_rsa.pub') }}"
+    key: "{{ item.key }}"
+    comment: "{{ item.comment }}"
   become: yes   # this module required for this module; 'become_user: item' won't work
   with_items: "{{ sshd_users }}"
   notify: Restart sshd

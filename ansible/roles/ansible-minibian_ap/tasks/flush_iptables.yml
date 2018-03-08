@@ -1,0 +1,17 @@
+---
+- name: "[iptables] iptables -t filter -F"
+  iptables: flush=yes
+  become: yes
+  tags:
+    - minibian_ap
+    - minibian_ap_iptables
+    - minibian_ap_flush_iptables
+
+- name: "[iptables] iptables -t nat -F"
+  iptables: table=nat flush=yes
+  become: yes
+  tags:
+    - minibian_ap
+    - minibian_ap_iptables
+    - minibian_ap_flush_iptables
+...

@@ -1,0 +1,16 @@
+---
+- hosts:
+  - macbooks
+#  - localhost
+
+  roles:
+#  - drew-kun.macos_setup           # deps: homebrew
+#  - drew-kun.ohmyzsh
+#  - drew-kun.macos_terminal              # deps: homebrew; terminus_powerline, nerdfonts
+#    - drew-kun.mpd                  # deps: homebrew
+  - drew-kun.sshd                 # deps: homebrew
+
+#    - ansible-vim
+#    - ansible-terminus_powerline   # deps: homebrew (fontconfig)
+#    - ansible-nerdfonts            # deps: homebrew cask (fontconfig, cask-fonts)
+...

@@ -1,0 +1,17 @@
+---
+# defaults file for ansible-minibian_ap
+
+minibian_ap_WAN: eth0
+minibian_ap_WLAN: wlan0
+
+minibian_ap_WLAN_subnet: 192.168.42.0
+minibian_ap_WLAN_netmask: 255.255.255.0
+minibian_ap_WLAN_broadcast: 192.168.42.255
+minibian_ap_WLAN_ip: 192.168.42.1
+minibian_ap_dhcp_range: [192.168.42.100, 192.168.42.199]
+
+minibian_ap_essid: AnonAP
+minibian_ap_wpa_psk: P@ssw0rd
+
+minibian_ap_flush_iptables: no      # no - for fresh install; yes - removes idempotency (always yellow).
+...

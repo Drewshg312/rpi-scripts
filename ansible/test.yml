@@ -1,20 +1,11 @@
 ---
-- hosts: rpi
+- hosts: syno
   vars:
     #sshd_users:
 
   tasks:
-    - name: Make test dir ~/test
-      file: path=~/test state=directory
-      notify: Untagged handler
-      tags:
-        - test
-
-    - name: Untagged task
+    - name: Message
       debug:
-        msg: task without tag
-
-  handlers:
-    - name: Untagged handler
-      debug:
-        msg: Handler without tag
+        msg:
+          - "ansible_distribution: {{ ansible_distribution }};"
+          - "ansibile_os_family: {{ ansibile_os_family }}"

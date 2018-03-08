@@ -1,0 +1,50 @@
+---
+
+# Flush all tables first:
+- name: "[iptables] Include tasks from flush_iptables.yml"
+  include_tasks: flush_iptables.yml
+  when: minibian_ap_flush_iptables
+  tags:
+    - minibian_ap
+    - minibian_ap_iptables
+
+# -i wlan1 -o wlan0
+- name: "[iptables] iptables -A FORWARD -i {{ minibian_ap_WLAN }} -o {{ minibian_ap_WAN }} -j ACCEPT"
+  iptables:
+    action: append
+    chain: FORWARD
+    in_interface: "{{ minibian_ap_WLAN }}"
+    out_interface: "{{ minibian_ap_WAN }}"
+    jump: ACCEPT
+  become: yes
+  notify: '[minibian_ap] Save iptables rules with iptables-save > /etc/iptables/rules.v4'
+  tags:
+    - minibian_ap
+    - minibian_ap_iptables
+
+# -i wlan0 -o wlan1
+- name: "[iptables] iptables -A FORWARD -i {{ minibian_ap_WAN }} -o {{ minibian_ap_WLAN }} -m state --state RELATED,ESTABLISHED -j ACCEPT"
+  iptables:
+    action: append
+    chain: FORWARD
+    in_interface: "{{ minibian_ap_WAN }}"
+    out_interface: "{{ minibian_ap_WLAN }}"
+    match: state
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+  become: yes
+  notify: '[minibian_ap] Save iptables rules with iptables-save > /etc/iptables/rules.v4'
+  tags:
+    - minibian_ap
+    - minibian_ap_iptables
+
+# configure NAT between the built in wifi and the AP wifi interface:
+# -o wlan1
+- name: "[iptables] iptables -t nat -A POSTROUTING -o {{ minibian_ap_WAN }} -j MASQUERADE"
+  iptables: table=nat action=append chain=POSTROUTING out_interface="{{ minibian_ap_WAN }}" jump=MASQUERADE
+  become: yes
+  notify: '[minibian_ap] Save iptables rules with iptables-save > /etc/iptables/rules.v4'
+  tags:
+    - minibian_ap
+    - minibian_ap_iptables
+...

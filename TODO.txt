@@ -4,16 +4,14 @@ DONE:
 - ohmyzsh (debian, macos)
 - nerdfonts (debian, macos)
 - terminus_powerline (debian, macos)
-
 - add Virustotal devops test to github
 
 TODOs:
 ======================
-- mpd
-	- adapt for centos
+- change variables to tables
 
-- Put all ansible roles separately on GitLab and GitHub
-	- create nice README for each ansible role
+- mpd
+	- adopt for centos
 
 - terminus_powerline
 	- add user-specific install
@@ -30,22 +28,20 @@ TODOs:
 	- VAULT (encrypted keys and passwords research)
 
 - PF role
-	- adapt for macos
-	- adapt for freebsd
-
+	- adopt for macos
+	- adopt for freebsd
 
 - network (debian)
-	- adapt for redhat
-	- adapt for FreeBSD
+	- add variables to README
+	- adopt for redhat
+	- adopt for FreeBSD
 
 - expandfs (debian)
-	- adapt for redhat
-
+	- adopt for redhat
 
 - vim (debian):
 	- vim-airline theme
-	- adapt for macos
-
+	- adopt for macos
 
 - KeepassXC:
 	- ansible-keepassxc role (centos, debian, macos)

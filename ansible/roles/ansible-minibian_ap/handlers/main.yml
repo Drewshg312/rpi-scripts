@@ -1,0 +1,28 @@
+---
+# handlers file for ansible-minibian_ap
+
+# Networking service does not need restart as host reboots for iptables kernel modules reload.
+# But systemd daemon still must be reloaded as reboot does not reload it automatically.
+- name: '[minibian_ap] Systemd daemon-reload'
+  systemd:
+    daemon_reload: yes
+  become: yes
+
+- name: '[minibian_ap] Restart dhcp daemon'
+  service:
+    name: isc-dhcp-server
+    state: restarted
+    enabled: yes
+  become: yes
+
+- name: '[minibian_ap] Restart hostapd daemon'
+  service:
+    name: hostapd
+    state: restarted
+    enabled: yes
+  become: yes
+
+- name: '[minibian_ap] Save iptables rules with iptables-save > /etc/iptables/rules.v4'
+  shell: sh -c "iptables-save > /etc/iptables/rules.v4"
+  become: yes
+...

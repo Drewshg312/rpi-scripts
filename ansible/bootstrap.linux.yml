@@ -1,0 +1,10 @@
+---
+- hosts:
+  - raspberrypi_3
+
+  roles:
+#  - drew-kun.bootstrap_core
+#  - ansible-minibian_ap
+  - drew-kun.ohmyzsh
+#  - drew-kun.sshd                 # deps: homebrew
+...

@@ -20,7 +20,8 @@ SyslogFacility AUTHPRIV 	# obsoletes QuietMode and FascistLogging
 LogLevel ERROR 			# If disk spase is not concern, use 'LogLevel INFO'
 
 #================================== AUTHENTICATION =============================
-AllowUsers {% for user in sshd_users %}{{ user }} {% endfor %}	# Whitelist allowed users
+# Whitelist allowed users
+AllowUsers {% for user in sshd_users %}{{ user.username }} {% endfor %}
 
 LoginGraceTime 60 		# time in seconds to enter passphrase.
 				# The less - the less DDoS vector
@@ -101,7 +102,7 @@ ChrootDirectory /
 
 # Allow SSH Tunnelling for specific users:
 {% for user in sshd_users %}
-Match User  {{ user }}
+Match User  {{ user.username }}
      AllowTcpForwarding yes
      X11Forwarding yes
 
