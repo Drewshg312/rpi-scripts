@@ -1,0 +1,52 @@
+---
+- name: '[installer_fix] Fix installer script issue on pre-stretch distros by "manually" trigering packages configuration'
+  apt:
+    name: "{{ item }}"
+    state: latest
+    install_recommends: no
+  with_items:
+    - php5-common
+    - php5-cgi
+    - php5-sqlite
+  become: yes
+  when: ansible_distribution_version < 9
+  tags:
+    - pihole
+    - pihole_fix
+    - pihole_dependencies
+
+- name: '[installer_fix] Create user pihole because installer fails to create the one'
+  user:
+    name: pihole
+    shell: /usr/sbin/nologin
+    password: "{{ pihole_user_passwd }}"
+    append: yes
+  become: yes
+  tags:
+    - pihole
+    - pihole_fix
+
+- name: '[installer_fix] Restart pihole-FTL service'
+  service: name=pihole-FTL state=restarted
+  become: yes
+  tags:
+    - pihole
+    - pihole_fix
+
+- name: '[installer_fix] Run `lighty-enable-mod fastcgi fastcgi-php`'
+  command: lighty-enable-mod fastcgi fastcgi-php
+  become: yes
+  register: pihole_lighty
+  changed_when: pihole_lighty.rc == 0
+  failed_when: pihole_lighty.rc != 0 and pihole_lighty.rc !=2 # $? = 2 - already enabled
+  tags:
+    - pihole
+    - pihole_fix
+
+- name: '[installer_fix] Force-reload lighttpd service'
+  command: service lighttpd force-reload
+  become: yes
+  tags:
+    - pihole
+    - pihole_fix
+...

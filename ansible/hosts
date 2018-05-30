@@ -1,6 +1,12 @@
+[database]
+localhost ansible_connection=local
+
 # Raspberry pi
 [raspberrypi_3]
-rpi ansible_ssh_host=192.168.2.14
+rpi ansible_ssh_host=172.16.42.8
+#rpi ansible_ssh_host=172.16.42.9
+#rpi ansible_ssh_host=192.168.1.2
+#rpi ansible_ssh_host=192.168.1.189
 #rpi ansible_ssh_host=192.168.2.2
 
 #ansible_ssh_private_key_file = ~/.ssh/id_rsa

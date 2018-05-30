@@ -1,0 +1,25 @@
+---
+- name: "[wpa_supplicant] Include tasks from dependencies.yml"
+  include_tasks: dependencies.yml
+
+#- debug:
+#    msg: "{{ rpi3_network_wifi_APs }}"
+
+- name: "[wpa_supplicant] "
+  shell: echo {{ item.passphrase }} | wpa_passphrase {{ item.essid }}
+  register: rpi3_network_psk
+  with_items: "{{ rpi3_network_wifi_APs }}"
+
+#- debug:
+#    msg: "{{ rpi3_network_psk }}"
+
+#- debug:
+#    msg: "{{ rpi3_network_psk.results[0].stdout }}"
+
+- template:
+    src: wpa_supplicant.conf.j2
+    dest: "{{ rpi3_network_wpa_supplicant_conf }}"
+  become: yes
+
+
+...

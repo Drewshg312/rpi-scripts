@@ -1,0 +1,54 @@
+---
+# defaults file for ansible-pihole
+
+# PIHOLE
+pihole_force_upgrade: yes  # if yes, then will reinstall pihole even if it's already installed
+
+# Password for pihole Web Interface must be stored as double sha256 hash
+# (see pihole source code - https://github.com/pi-hole/AdminLTE/blob/master/scripts/pi-hole/php/password.php#L41):
+#
+# Hash password on Linux:
+#   echo -n P@ssw0rd | sha256sum | awk '{printf "%s",$1 }' | sha256sum
+#
+# Hash password on MacOS:
+#   echo -n P@ssw0rd | shasum -a 256 | awk '{printf "%s",$1 }' | shasum -a 256
+#
+pihole_setupVars_conf_WEBPASSWD: "WEBPASSWORD={{ vault_pihole_setupVars_conf_WEBPASSWD }}"
+
+pihole_setupVars_conf: |
+  PIHOLE_INTERFACE=eth0
+  IPV4_ADDRESS=192.168.1.2/24
+  IPV6_ADDRESS=fdb3:5ed:8a99:0:ba27:ebff:fef2:ef97
+  QUERY_LOGGING=true
+  INSTALL_WEB=true
+  DNSMASQ_LISTENING=single
+  PIHOLE_DNS_1=208.67.222.222
+  PIHOLE_DNS_2=208.67.220.220
+  PIHOLE_DNS_3=2620:0:ccc::2
+  PIHOLE_DNS_4=2620:0:ccd::2
+  DNS_FQDN_REQUIRED=true
+  DNS_BOGUS_PRIV=true
+  DNSSEC=true
+  TEMPERATUREUNIT=C
+  WEBUIBOXEDLAYOUT=traditional
+  API_EXCLUDE_DOMAINS=
+  API_EXCLUDE_CLIENTS=
+  API_QUERY_LOG_SHOW=all
+  API_PRIVACY_MODE=false
+
+pihole_dnsmasq_custom_conf: |
+  # Local DNS:
+  server=/bearden.local/192.168.1.1
+  server=/bearden.lan/192.168.1.1
+  server=/bearden.home/192.168.1.1
+
+pihole_user_passwd: "{{ vault_pihole_user_passwd }}"
+
+
+# TFT DISPLAY
+pihole_pitft: no  # Setup tft display for pihole (autologin + autorun chronometer.sh)
+
+
+# DNSCRYPT
+pihole_dnscrypt: no                      # Install dnscrypt?
+...

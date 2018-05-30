@@ -1,51 +1,54 @@
 DONE:
 =====================
+
+- bootstrap_core (debian)
 - mpd (debian, macos)
 - ohmyzsh (debian, macos)
 - nerdfonts (debian, macos)
 - terminus_powerline (debian, macos)
-- add Virustotal devops test to github
+- expandfs (debian, redhat)
+- Terminal role (macos)
+- PF role (macos)
+- ssh role (debian, macos, redhat)
+- pihole (non-root, debian)
+
+- change variables to tables in README.md
+- add fact gathering to playbook examples in README.md
 
 TODOs:
 ======================
-- change variables to tables
+- dnscrypt (freebsd, macos, redhat)
+	- remove unnecessary handlers
+	- deal with different arch (maybe choose arch based on fact gathering)
+
+- nerdfonts (fix git clone)
 
 - mpd
 	- adopt for centos
 
-- terminus_powerline
-	- add user-specific install
-
 - macos_setup (macos)
 	- installation of apps from App Store (mas ansible module)
 
-- Terminal role (macos)
-	- REQIREMENTS: homebrew (if terminal_iterm2: yes)
-	- iterm switch (yes/no)
-	- depends (nerdfonts and terminus_powerline - if iterm: yes)
-
-- SSH role
-	- VAULT (encrypted keys and passwords research)
-
 - PF role
-	- adopt for macos
 	- adopt for freebsd
 
 - network (debian)
-	- add variables to README
 	- adopt for redhat
 	- adopt for FreeBSD
-
-- expandfs (debian)
-	- adopt for redhat
 
 - vim (debian):
 	- vim-airline theme
 	- adopt for macos
 
+
 - KeepassXC:
 	- ansible-keepassxc role (centos, debian, macos)
 
+- terminus_powerline
+	- add user-specific install
+
+
+- telegram bot (python)
 - docker
 	- Start (coreOS, macos)
 	- ansible docker

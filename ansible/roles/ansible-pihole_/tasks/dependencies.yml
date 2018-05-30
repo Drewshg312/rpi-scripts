@@ -1,0 +1,10 @@
+---
+- name: '[dependencies] Make sure curl package is installed'
+  package:
+    name: curl
+    state: present
+  become: yes
+  tags:
+    - pihole
+    - pihole_dependencies
+...

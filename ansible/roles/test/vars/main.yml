@@ -1,0 +1,13 @@
+---
+# vars file for rpi3_network
+
+vault_rpi3_network_wifi_APs:
+- id_str: home
+  essid: bearden_wifi_5GHz
+  passphrase: Pa$$w0rd
+
+- id_str: android
+  essid: Android
+  passphrase: Serkjvlkjxsa
+
+...

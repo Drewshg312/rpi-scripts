@@ -1,0 +1,11 @@
+---
+# defaults file for rpi3_network
+
+- name: '[main] Include tasks from wpa_supplicant.yml'
+  include_tasks: wpa_supplicant.yml
+  when: rpi3_network_wpa_supplicant
+
+- meta: flush_handlers
+  tags:
+    - network
+...

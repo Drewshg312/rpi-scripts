@@ -1,23 +1,29 @@
 ---
 - hosts:
+#  - macbooks
   - raspberrypi_3
+#  - localhost
+
+#  vars_files:
+#    - vars.yml
+#  vars:
 
   roles:
-  - { role: drew-kun.bootstrap_core,
-    bootstrap_core_hostname: pihole.bearden.local }
+#  - { drew-kun.bootstrap_core,
+#      bootstrap_core_hostname: pihole.bearden.local }
 #  - drew-kun.resolv
 #  - drew-kun.rpi_expandfs
 #  - drew-kun.rpi3_network
 #  - drew-kun.wifi_ap
-#  - drew-kun.pihole
-#  - ansible-pihole
-#  - drew-kun.dnscrypt
+  - { role: drew-kun.pihole, pihole_dnscrypt: yes }
+#  - ansible-pihole # test
+#  - drew-kun.dnscrypt  # TEST ONLY, be run in playbook, separate from pihole role.
 #  - ansible-vim
 #  - drew-kun.ohmyzsh
 #  - drew-kun.mpd                  # deps: homebrew
 #  - ansible-terminus_powerline    # deps: homebrew (fontconfig)
 #  - drew-kun.nerdfonts
-  - drew-kun.sshd                 # deps: homebrew
+#  - drew-kun.sshd                 # deps: homebrew
 #  - test
 
 #  - ansible-homebrew             # deps: eliottweiser.osx-command-line-tools
